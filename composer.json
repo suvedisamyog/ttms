@@ -3,15 +3,16 @@
 	"description": "Tour and Travel Management System.",
 	"type": "webapp",
 	"autoload": {
+		"files": [
+			"CoreFunctions.php"
+		  ],
 	  "psr-4": {
 		"App\\TTMS\\": "src/"
 	  }
 	},
 	"require": {
-	  "composer/installers": "1.9.0"
-	},
-	"require-dev": {
-
+	  "composer/installers": "1.9.0",
+		"robmorgan/phinx": "^0.14.0"
 	},
 	"scripts": {
 
