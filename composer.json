@@ -1,0 +1,32 @@
+{
+	"name": "app/ttms",
+	"description": "Tour and Travel Management System.",
+	"type": "webapp",
+	"autoload": {
+	  "psr-4": {
+		"App\\TTMS\\": "src/"
+	  }
+	},
+	"require": {
+	  "composer/installers": "1.9.0"
+	},
+	"require-dev": {
+
+	},
+	"scripts": {
+
+	},
+	"extra": {
+	  "scripts-description": {
+
+	  }
+	},
+	"config": {
+	  "allow-plugins": {
+		"composer/installers": true
+	  },
+	  "platform": {
+		"php": "7.4.3"
+	  }
+	}
+  }
