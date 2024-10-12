@@ -2,12 +2,20 @@
 
 if ( ! defined ( 'ASSETS_URL') ){
 
-	define('ASSETS_URL', '/assets'); //Path for assets.
+	define('ASSETS_URL', '/assets'); //URL for assets.
+}
+if ( ! defined ( 'ASSETS_DIR') ){
+
+	define('ASSETS_DIR', '/assets'); //DIR for assets.
 }
 
 if ( ! defined ( 'TEMPLATE_PATH') ){
 
 	define('TEMPLATE_PATH', __DIR__ . '/templates/'); //Path for templates.
+}
+
+if ( ! defined ('ADMIN_URL') ){
+	define ('ADMIN_URL' , 'https://ttms.me/admin.php');
 }
 
 
@@ -26,11 +34,11 @@ if ( ! function_exists ( 'get_current_user' ) ){
 	//Get the current user attribute.
 	function get_current_user( $attr = 'user_id' ){
 		switch ( $attr ){
-			case 'id':
+			case 'user_id':
 				return isset($_SESSION['user_id']) ? $_SESSION['user_id'] : false;
 				break;
 			case 'username':
-				return isset($_SESSION['user_name']) ? $_SESSION['username'] : false;
+				return isset($_SESSION['username']) ? $_SESSION['username'] : false;
 				break;
 			case 'email':
 				return isset($_SESSION['email']) ? $_SESSION['email'] : false;
@@ -61,26 +69,37 @@ if ( ! function_exists ('get_stylesheet') ){
 	}
 }
 
-if ( ! function_exists ('get_script') ){
-	//Get the script URL.
-	function get_script(  ){
-		$jsDir = __DIR__ . '/assets/js/';
-		$js_files = scandir($jsDir);
-		$js_files = array_filter($js_files, function($file){
-			return preg_match('/\.min\.js$|\.js$|^bundle\.js$/', $file);
-		});
-		foreach ($js_files as $script) {
-			echo"<script src='" . ASSETS_URL . "/js/$script''></script>";
-			echo  "\n";
+	if ( ! function_exists ('get_script') ){
+		//Get the script URL.
+		function get_script(  ){
+			// $jsDir = __DIR__ . '/assets/js/';
+			// $js_files = scandir($jsDir);
+			// $js_files = array_filter($js_files, function($file){
+			// 	return preg_match('/\.min\.js$|\.js$|^bundle\.js$/', $file);
+			// });
+			// foreach ($js_files as $script) {
+			// 	echo"<script src='" . ASSETS_URL . "/js/$script''></script>";
+			// 	echo  "\n";
+			// }
+			//commented above code because jquey needs to be loaded before bootstrap
+
+			echo "<script src='" . ASSETS_URL . "/js/jquery.min.js'></script>";
+			echo "\n";
+			echo "<script src='" . ASSETS_URL . "/js/bootstrap.bundle.min.js'></script>";
+			echo "\n";
+			echo "<script src='" . ASSETS_URL . "/js/script.js'></script>";
+			echo "\n";
+			echo "<script src='" . ASSETS_URL . "/js/sweetalert2.all.min.js'></script>";
+			echo "\n";
+
+
 		}
-
 	}
-}
 
-if ( ! function_exists ('admin_header') ){
+if ( ! function_exists ('template_header') ){
 	//Get the header.
-	function admin_header($header = 'Dashboard'){
-		include_once TEMPLATE_PATH . 'admin/header.php';
+	function template_header($header = 'Dashboard'){
+		include_once TEMPLATE_PATH . 'header.php';
 	}
 }
 
@@ -98,9 +117,40 @@ if ( ! function_exists ('admin_header_nav') ){
 	}
 }
 
-if ( ! function_exists ('admin_footer') ){
-	//Admin panel footer
-	function admin_footer(  ){
-		include_once TEMPLATE_PATH . 'admin/footer.php';
+if ( ! function_exists ('template_footer') ){
+	//template_footer
+	function template_footer(  ){
+		include_once TEMPLATE_PATH . 'footer.php';
+	}
+}
+
+if ( ! function_exists ('sidebar_menu') ){
+	//template_login
+	function sidebar_menu(  ){
+		$menu = [
+			'Home' => ADMIN_URL,
+			'Users' => ADMIN_URL .'?page=users',
+			'About' => ADMIN_URL . '?page=about',
+			'Pages' => [
+				'id' => 'pageSubmenu',
+				'submenu' => [
+					'Page 1' => '#',
+					'Page 2' => '#',
+					'Page 3' => '#'
+				]
+			]
+
+		];
+		return $menu;
+	}
+}
+
+
+if ( ! function_exists ('lg') ){
+	ini_set('log_errors', 'On');
+	ini_set('error_log', (__DIR__) . '/debug.log');
+	//For Debuggin purpose only
+	function lg($message) {
+		error_log(date('[Y-m-d H:i:s] ') . print_r($message, true) . PHP_EOL, 3, (__DIR__) . '/debug.log');
 	}
 }

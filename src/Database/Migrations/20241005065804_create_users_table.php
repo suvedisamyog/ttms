@@ -38,6 +38,18 @@ final class CreateUsersTable extends AbstractMigration
                   'null' => false,
                   'default' => 'user',
               ])
+			  ->addColumn('address', 'string', [
+				'limit' => 255,
+				'null' => true,
+			])
+			->addColumn('site', 'string', [
+				'limit' => 100,
+				'null' => true,
+			])
+			->addColumn('profile_pic', 'string', [
+				'limit' => 255,
+				'null' => false,
+			])
               ->addIndex(['email'], ['unique' => true])
               ->create();
 

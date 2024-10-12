@@ -4,44 +4,24 @@
             </div>
 
             <ul class="list-unstyled components">
-                <p>Dummy Heading</p>
-                <li class="active">
-                    <a href="#homeSubmenu" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle">Home</a>
-                    <ul class="collapse list-unstyled" id="homeSubmenu">
-                        <li>
-                            <a href="#">Home 1</a>
-                        </li>
-                        <li>
-                            <a href="#">Home 2</a>
-                        </li>
-                        <li>
-                            <a href="#">Home 3</a>
-                        </li>
-                    </ul>
-                </li>
-                <li>
-                    <a href="#">About</a>
-                </li>
-                <li>
-                    <a href="#pageSubmenu" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle">Pages</a>
-                    <ul class="collapse list-unstyled" id="pageSubmenu">
-                        <li>
-                            <a href="#">Page 1</a>
-                        </li>
-                        <li>
-                            <a href="#">Page 2</a>
-                        </li>
-                        <li>
-                            <a href="#">Page 3</a>
-                        </li>
-                    </ul>
-                </li>
-                <li>
-                    <a href="#">Portfolio</a>
-                </li>
-                <li>
-                    <a href="#">Contact</a>
-                </li>
+				<?php
+					$menues = sidebar_menu();
+
+					foreach ( $menues as $title =>$menu ) {
+
+						if ( ! is_array($menu )){
+							echo "<li><a href='$menu'>$title</a></li>";
+						} else {
+							echo "<li class=''><a href='#{$menu['id']}' data-bs-toggle='collapse' data-toggle='collapse' aria-expanded='false' class='dropdown-toggle'>$title</a>";
+							echo "<ul class='collapse list-unstyled' id='{$menu['id']}'>";
+							foreach ( $menu['submenu'] as $sub_title => $sub_url ) {
+								echo "<li><a href='$sub_url'>$sub_title</a></li>";
+							}
+							echo "</ul></li>";
+						}
+					}
+				?>
+               
             </ul>
 
         </nav>

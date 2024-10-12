@@ -6,16 +6,16 @@ if ( file_exists( __DIR__ . '/vendor/autoload.php' ) ) {
 	die( 'Vendor directory not found. Please run composer install.' );
 	}
 use App\TTMS\Admin\Dashboard;
-
+print_r($_GET);
 $page = isset( $_GET['page'] ) ? $_GET['page'] : 'dashboard';
-$title = ucfirst( $page );
+print_r($page);
 
-admin_header($title);
+template_header( ucfirst( $page ));
 admin_sidebar();
 admin_header_nav();
 switch ( $page ) {
 	case 'dashboard':
-		Dashboard::dashboard_header();
+		new Dashboard();
 		break;
 	case 'about':
 		include 'about.php';
@@ -27,7 +27,7 @@ switch ( $page ) {
 		include '404.php';
 		break;
 }
-admin_footer();
+template_footer();
 
 
 

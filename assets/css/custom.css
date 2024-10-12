@@ -1,0 +1,19 @@
+/*
+  	Override the default style of bootstrap
+*/
+
+
+#sidebar ul li.active>a,
+a[aria-expanded="true"] {
+    color: #000000 !important;
+    background: #fff !important;
+	font-weight: bold;
+}
+
+#sidebar ul li a:hover {
+    color: #7386D5;
+    background: #D3D3D3 !important; ;
+}
+#user-tab , #admin-tab:hover{
+	cursor: pointer;
+}
