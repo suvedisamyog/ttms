@@ -21,7 +21,9 @@ if ( ! defined ('ADMIN_URL') ){
 
 if ( ! function_exists ( 'is_logged_in' ) ){
 	//Check if the user is logged in.
+
 	function is_logged_in(){
+
 		if ( isset ( $_SESSION['user_id'] ) ){
 			return true;
 		} else {
@@ -30,9 +32,10 @@ if ( ! function_exists ( 'is_logged_in' ) ){
 	}
 }
 
-if ( ! function_exists ( 'get_current_user' ) ){
+if ( ! function_exists ( 'get_current_user_attr' ) ){
 	//Get the current user attribute.
-	function get_current_user( $attr = 'user_id' ){
+	function get_current_user_attr( $attr = 'user_id' ){
+
 		switch ( $attr ){
 			case 'user_id':
 				return isset($_SESSION['user_id']) ? $_SESSION['user_id'] : false;
@@ -91,6 +94,8 @@ if ( ! function_exists ('get_stylesheet') ){
 			echo "\n";
 			echo "<script src='" . ASSETS_URL . "/js/sweetalert2.all.min.js'></script>";
 			echo "\n";
+			echo "<script src='" . ASSETS_URL . "/js/bootstrap-table.min.js'></script>";
+			echo "\n";
 
 
 		}
@@ -130,6 +135,7 @@ if ( ! function_exists ('sidebar_menu') ){
 		$menu = [
 			'Home' => ADMIN_URL,
 			'Users' => ADMIN_URL .'?page=users',
+			'Settings' => ADMIN_URL . '?page=settings',
 			'About' => ADMIN_URL . '?page=about',
 			'Pages' => [
 				'id' => 'pageSubmenu',

@@ -1,1 +1,25 @@
-[12-Oct-2024 08:25:21 UTC] PHP Fatal error:  Class App\TTMS\Database\Operations\UserOperations contains 1 abstract method and must therefore be declared abstract or implement the remaining methods (App\TTMS\Database\Operations\BaseOperation::get_individual_data) in C:\laragon\www\ttms\src\Database\Operations\UserOperations.php on line 7
+[2024-10-13 03:00:59] Array
+(
+    [0] => Array
+        (
+            [id] => 1
+            [name] => USA
+            [symbol] => $	
+            [created_at] => 2024-10-13 08:37:31
+            [updated_at] =>
+        )
+
+)
+[2024-10-13 03:03:59] Array
+(
+    [0] => Array
+        (
+            [id] => 1
+            [name] => USA
+            [symbol] => $
+            [created_at] => 2024-10-13 08:37:31
+            [updated_at] => 
+        )
+
+)
+

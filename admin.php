@@ -6,9 +6,13 @@ if ( file_exists( __DIR__ . '/vendor/autoload.php' ) ) {
 	die( 'Vendor directory not found. Please run composer install.' );
 	}
 use App\TTMS\Admin\Dashboard;
-print_r($_GET);
+use App\TTMS\Admin\Settings;
+session_start();
+if ( ! is_logged_in()  && get_current_user_attr('role') !== 'admin' ) {
+	header('Location: login.php');
+	exit;
+}
 $page = isset( $_GET['page'] ) ? $_GET['page'] : 'dashboard';
-print_r($page);
 
 template_header( ucfirst( $page ));
 admin_sidebar();
@@ -22,6 +26,9 @@ switch ( $page ) {
 		break;
 	case 'contact':
 		include 'contact.php';
+		break;
+	case 'settings':
+		new Settings();
 		break;
 	default:
 		include '404.php';

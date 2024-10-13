@@ -8,10 +8,12 @@ use PDO;
 
 abstract class BaseOperation {
     protected PDO $conn;
+	protected string $table;
 
 
-    public function __construct() {
+    public function __construct($table) {
         $this->conn = Config::getConnection();
+		$this->table = $table;
     }
 
     abstract public function get_all_data(): array;

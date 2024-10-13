@@ -17,3 +17,6 @@ a[aria-expanded="true"] {
 #user-tab , #admin-tab:hover{
 	cursor: pointer;
 }
+.caret{
+	margin :10px !important
+}

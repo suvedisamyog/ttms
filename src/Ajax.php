@@ -17,6 +17,9 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST'){
 		case 'login':
 			handel_login();
 			break;
+		case 'add_currency':
+			handel_currency();
+			break;
 	}
 }
 
@@ -94,7 +97,7 @@ function handel_registration(){
 
 	}
 
-	$registration = new Database\Operations\UserOperations();
+	$registration = new Database\Operations\UserOperations('users');
 	$result = $registration->insert_data($data);
     if ($result) {
 		if(is_array($result)){
@@ -129,7 +132,7 @@ function handel_login(){
 
 	$response = array();
 
-	$login = new Database\Operations\UserOperations();
+	$login = new Database\Operations\UserOperations('users');
 	$result = $login->get_individual_data_from_email($email);
 	if ($result && is_array($result) ) {
 		if (!password_verify($password, $result['password'])){
@@ -139,6 +142,7 @@ function handel_login(){
 			echo json_encode($response);
 			return;
 		}else{
+			session_start();
 			$_SESSION['user_id'] = $result['id'];
 			$_SESSION['username'] = $result['username'];
 			$_SESSION['email'] = $result['email'];
@@ -146,8 +150,7 @@ function handel_login(){
 			$response['status'] = 1;
 			$response['message'] = "Login successful!";
 			$response['action'] = 'login';
-			$response['redirect_url'] = 'dashboard.php';
-			$response['redirect_url'] = $result['role'] == 'admin' ? ADMIN_URL : 'index.php';
+			$response['redirect_url'] = $result['role'] == 'admin' ? 'admin.php' : 'index.php';
 
 		}
 
@@ -162,12 +165,49 @@ function handel_login(){
 }
 
 /**
+ * Handle currency addition
+ */
+function handel_currency(){
+	$name = isset($_POST['name']) ? $_POST['name'] : '';
+	$symbol = isset($_POST['symbol']) ? $_POST['symbol'] : '';
+	$response = array();
+
+	$data = [
+		'name' => $name,
+		'symbol' => $symbol
+	];
+	$validation_error = validate_data($data);
+	if ($validation_error !== false){
+		header('Content-Type: application/json');
+		echo json_encode($validation_error);
+		return;
+	}
+
+	$currency = new Database\Operations\UserOperations('currencies');
+	$result = $currency->insert_data($data);
+	if ($result) {
+		$response['status'] = 1;
+		$response['message'] = "Currency added successfully!";
+		$response['action'] = 'add_currency';
+		$response['redirect_url'] = 'admin.php?page=settings';
+	} else {
+		$response['status'] = 0;
+		$response['message'] = "Failed to add currency.";
+	}
+
+	// Return JSON response
+	header('Content-Type: application/json');
+	echo json_encode($response);
+}
+
+/**
  * Validate user registration data
  *
  * @param array $data
  * @return array|bool
  */
 function validate_data( $data ){
+	//Validate user data for registration
 	if(isset ($data['email'] ) && !filter_var($data['email'], FILTER_VALIDATE_EMAIL)){
 		$response['status'] = 0;
 		$response['message'] = "Invalid email address.";
@@ -199,6 +239,18 @@ function validate_data( $data ){
 	if(isset($data['profile_pic']) && empty($data['profile_pic'])){
 		$response['status'] = 0;
 		$response['message'] = "Profile picture is required.";
+		return $response;
+	}
+	// Validate currency data
+	if (isset($data['name']) && empty($data['name'])){
+		$response['status'] = 0;
+		$response['message'] = "Currency name cannot be empty";
+		return $response;
+	}
+
+	if (isset($data['symbol']) && empty($data['symbol'])){
+		$response['status'] = 0;
+		$response['message'] = "Currency symbol cannot be empty";
 		return $response;
 	}
 	return false;

@@ -44,20 +44,62 @@ $(document).ready(function () {
 
 	});
 
+	// Handel login form.
+	$('#login_form').on('submit', function (e) {
+		e.preventDefault();
+		var data = new FormData(this);
+		data.append('action', 'login');
+		var validation_error = validate_form_data(data);
+		if (validation_error ) {
+			return false;
+		}
+		handel_form_data(data,'POST');
+	});
+
+	//Handel Popup form for currency settings.
+	$('#add_currency').on('click', function (e) {
+		e.preventDefault();
+		Swal.fire({
+			title: 'Add Currency',
+			html: `
+				<form id="currency_form">
+					<div class="form-group">
+						<label for="currency_name">Currency Name</label>
+						<input type="text" id="currency_name" name="currency_name" class="form-control">
+					</div>
+					<div class="form-group">
+						<label for="currency_symbol">Currency Symbol</label>
+						<input type="text" id="currency_symbol" name="currency_symbol" class="form-control">
+					</div>
+				</form>
+			`,
+			showCancelButton: true,
+			showCloseButton: true,
+			confirmButtonText: 'Add',
+			preConfirm: () => {
+				const currencyName = Swal.getPopup().querySelector('#currency_name').value;
+				const currencySymbol = Swal.getPopup().querySelector('#currency_symbol').value;
+				if (!currencyName  || !currencySymbol) {
+					Swal.showValidationMessage(`Please enter all fields`);
+				}
+				return { currencyName: currencyName,currencySymbol: currencySymbol };
+			}
+		}).then((result) => {
+			if (result.isConfirmed) {
+				console.log('hello');
+				const data = new FormData();
+				data.append('name', result.value.currencyName);
+				data.append('symbol', result.value.currencySymbol);
+				data.append('action', 'add_currency');
+				handel_form_data(data, 'POST');
+			}
+		});
+	});
+
+
 });
 
-// Handel login form.
 
-$('#login_form').on('submit', function (e) {
-	e.preventDefault();
-	var data = new FormData(this);
-	data.append('action', 'login');
-	var validation_error = validate_form_data(data);
-	if (validation_error ) {
-		return false;
-	}
-	handel_form_data(data,'POST');
-});
 
 // Validate form data
 validate_form_data = (data) => {
@@ -119,14 +161,19 @@ handel_form_data = (data,method) => {
 		processData: false,
 		complete: function (response) {
 			var res = JSON.parse(response.responseText);
-
+			console.log(res);
 			if( res.status == 1){
 				switch (res.action) {
 					case 'register':
-						registration_success(res);
+						$('#registration_form').trigger('reset');
+						$('#registration_form').find('.form-control').removeClass('is-invalid');
+						alert_success(res);
 						break;
 					case 'login':
-						window.location.href = res.redirect_url;
+						alert_success(res);
+						break;
+					case 'add_currency':
+						alert_success(res);
 						break;
 					default:
 						break;
@@ -142,9 +189,7 @@ handel_form_data = (data,method) => {
 }
 
 registration_success = (res ) => {
-	$('#registration_form').trigger('reset');
-	$('#registration_form').find('.form-control').removeClass('is-invalid');
-	alert_success(res);
+
 
 }
 
@@ -156,7 +201,10 @@ alert_success = (res  ) => {
 	}).then((result) => {
 		if (result.isConfirmed) {
 			if(res.redirect_url){
+				console.log('refirectiong')
 			window.location.href = res.redirect_url;
+			}else{
+				console.log('not refirectiong')
 			}
 	}
 	});

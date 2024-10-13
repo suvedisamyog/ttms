@@ -6,8 +6,6 @@ use PDO;
 
 class UserOperations extends BaseOperation {
 
-	private $table = 'users';
-
 	/**
 	 * Get all data from the users table.
 	 *
