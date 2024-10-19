@@ -86,7 +86,7 @@ $(document).ready(function () {
 			}
 		}).then((result) => {
 			if (result.isConfirmed) {
-				console.log('hello');
+
 				const data = new FormData();
 				data.append('name', result.value.currencyName);
 				data.append('symbol', result.value.currencySymbol);
@@ -97,8 +97,114 @@ $(document).ready(function () {
 	});
 
 
+	//Handel Popup from for category settings
+	$('#add_category').on('click', function (e) {
+		e.preventDefault();
+		Swal.fire({
+			title: 'Add Category',
+			html: `
+				<form id="category_form">
+					<div class="form-group
+					">
+						<label for="category_name">Category Name</label>
+						<input type="text" id="category_name" name="category_name" class="form-control">
+					</div>
+				</form>
+			`,
+			showCancelButton: true,
+			showCloseButton: true,
+			confirmButtonText: 'Add',
+			preConfirm: () => {
+				const categoryName = Swal.getPopup().querySelector('#category_name').value;
+				if (!categoryName) {
+					Swal.showValidationMessage(`Please enter all fields`);
+				}
+				return { categoryName: categoryName };
+			}
+		}).then((result) => {
+			if (result.isConfirmed) {
+				const data = new FormData();
+				data.append('name', result.value.categoryName);
+				data.append('action', 'add_category');
+				handel_form_data(data, 'POST');
+			}
+		});
+
+
 });
 
+});
+
+//Handel edit in setting pages.
+$(document).on('click', '.setting_edit_btn', function() {
+	var id = $(this).data('id');
+	var action_for = $(this).closest('tr').data('action');
+	var name = $(this).closest('tr').find('td:nth-child(2)').text(); // get the name of the category or currency
+	var title = action_for == 'currencies' ? 'Currency' : 'Category';
+	if ( action_for === 'currencies') {
+		var symbol = $(this).closest('tr').find('td:nth-child(3)').text();
+
+	}
+	Swal.fire({
+		title: 'Edit ' + title,
+		html: `
+			<form id="edit_setting_form">
+				<div class="form-group ">
+					<label for="name">${title} Name</label>
+					<input type="text" id="name" name="name" class="form-control" value="${name}">
+				</div>
+				${action_for === 'currencies' ? `
+				<div class="form-group">
+					<label for="symbol">${title} Symbol</label>
+					<input type="text" id="symbol" name="symbol" class="form-control" value="${symbol}">
+				</div>
+				` : ''}
+			</form>
+		`,
+		showCancelButton: true,
+		showCloseButton: true,
+		confirmButtonText: 'Update',
+		preConfirm: () => {
+			const name = Swal.getPopup().querySelector('#name').value;
+			const symbol = action_for === 'currencies' ? Swal.getPopup().querySelector('#symbol').value : '';
+			if (!name ||  (action_for === 'currencies' && !symbol ) ) {
+				Swal.showValidationMessage(`Please enter all fields`);
+			}
+			return { name: name, symbol: symbol };
+		}
+	}).then((result) => {
+		if (result.isConfirmed) {
+			var data = {
+				id: id,
+				name: result.value.name,
+				action: action_for
+			};
+
+			if (action_for === 'currencies') {
+				data.symbol = result.value.symbol;
+			}
+			data = JSON.stringify(data);
+			handel_form_data(data, 'PUT');
+		}
+	}
+	);
+
+
+
+});
+// Handel delete operations
+$(document).on('click', '.delete_btn', function() {
+	alert_confirmation({
+		title: 'Are you sure?',
+		text: 'You won\'t be able to revert this!',
+		index: $(this).closest('tr').data('index'),
+		action: $(this).closest('tr').data('action'),
+		id : $(this).data('id')
+
+	});
+
+
+});
 
 
 // Validate form data
@@ -152,6 +258,7 @@ validate_form_data = (data) => {
 
 
 handel_form_data = (data,method) => {
+	// var contentType = (method === 'PUT') ? 'application/json' : false;
 	$.ajax({
 		url: '../../src/Ajax.php',
 		type: method,
@@ -160,7 +267,9 @@ handel_form_data = (data,method) => {
 		contentType: false,
 		processData: false,
 		complete: function (response) {
-			var res = JSON.parse(response.responseText);
+			console.log(response.responseText);
+			// var res = typeof response.responseText === 'string' ? JSON.parse(response.responseText) : response.responseText;
+			var res =JSON.parse(response.responseText);
 			console.log(res);
 			if( res.status == 1){
 				switch (res.action) {
@@ -173,7 +282,17 @@ handel_form_data = (data,method) => {
 						alert_success(res);
 						break;
 					case 'add_currency':
+					case 'add_category':
+					case 'update':
 						alert_success(res);
+						break;
+					case 'delete':
+						console.log(
+							res.index
+						);
+
+						$('tr[data-index="' + res.index + '"]').remove();
+                        alert_success(res);
 						break;
 					default:
 						break;
@@ -182,16 +301,15 @@ handel_form_data = (data,method) => {
 				alert_error(res.message);
 			}
 		},
-		error: function (error) {
+		error: function (xhr, status, error) {
+			// console.log(xhr);
+			// console.log(status);
+			// console.log(error);
 			alert_error(error.message);
 		}
 	});
 }
 
-registration_success = (res ) => {
-
-
-}
 
 alert_success = (res  ) => {
 	Swal.fire({
@@ -200,13 +318,12 @@ alert_success = (res  ) => {
 		confirmButtonText: 'OK'
 	}).then((result) => {
 		if (result.isConfirmed) {
+			console.log(res);
+
 			if(res.redirect_url){
-				console.log('refirectiong')
 			window.location.href = res.redirect_url;
-			}else{
-				console.log('not refirectiong')
 			}
-	}
+		}
 	});
 }
 
@@ -216,5 +333,27 @@ alert_error = (message) => {
 		icon: 'error',
 		confirmButtonText: 'OK'
 
+	});
+}
+
+alert_confirmation = (data) => {
+	Swal.fire({
+		title: data.title,
+		text: data.text,
+		icon: 'warning',
+		showCancelButton: true,
+		showCloseButton: true,
+		confirmButtonText: 'Yes',
+		cancelButtonText: 'No'
+	}).then((result) => {
+		if (result.isConfirmed) {
+			var newData = {
+				id : data.id,
+				action : data.action,
+				index : data.index
+			}
+			handel_form_data($.param(newData),'DELETE');
+
+		}
 	});
 }

@@ -137,11 +137,11 @@ if ( ! function_exists ('sidebar_menu') ){
 			'Users' => ADMIN_URL .'?page=users',
 			'Settings' => ADMIN_URL . '?page=settings',
 			'About' => ADMIN_URL . '?page=about',
-			'Pages' => [
-				'id' => 'pageSubmenu',
+			'Packages' => [
+				'id' => 'packages',
 				'submenu' => [
-					'Page 1' => '#',
-					'Page 2' => '#',
+					'Create Package' => '?page=create-package',
+					'Manage Package' => '?page=manage-package',
 					'Page 3' => '#'
 				]
 			]

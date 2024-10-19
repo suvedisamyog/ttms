@@ -19,9 +19,123 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST'){
 			break;
 		case 'add_currency':
 			handel_currency();
+		case 'add_category':
+			handel_category();
+
 			break;
 	}
+}elseif( ($_SERVER['REQUEST_METHOD'] == 'DELETE') ) {
+	parse_str(file_get_contents('php://input'), $_DELETE);
+    $table = isset($_DELETE['action']) ? $_DELETE['action'] : '';
+    $id = isset($_DELETE['id']) ? $_DELETE['id'] : '';
+	$index = isset($_DELETE['index']) ? $_DELETE['index'] : '';
+
+		$response = array();
+		//return error if id or action is empty
+		if( empty($id) || empty($table) || $index == ''){
+			handel_error();
+		}
+
+		$delete = new UserOperations($table);
+		$result = $delete->delete_data($id);
+		if ($result) {
+			$response['status'] = 1;
+			$response['message'] = "Deleted successfully!";
+			$response['action'] = 'delete';
+			$response['index'] = $index;
+		} else {
+			handel_error("Error while deleting ! Please try again.");
+		}
+		header('Content-Type: application/json');
+		echo json_encode($response);
+		return;
+
+}elseif ($_SERVER['REQUEST_METHOD'] == 'PUT') {
+	// Get the PUT parameters
+	// Get the JSON data
+	$input = file_get_contents('php://input');
+	$data = json_decode($input, true);
+
+	$action = isset($data['action']) ? $data['action'] : '';
+	$id = isset($data['id']) ? $data['id'] : '';
+	$name = isset($data['name']) ? $data['name'] : '';
+	$table = '';
+	$response = array();
+
+	if ( $action === '' || $id === '' ) {
+		handel_error();
+	}
+	$data = [
+		'name' => $name
+	];
+	if( $action === 'currencies'){
+		$symbol = isset($data['symbol']) ? $data['symbol'] : '';
+		$data['symbol'] = $symbol;
+		$table = 'currencies';
+	}elseif( $action === 'categories'){
+		$table = 'categories';
+	}
+	if ( $table === '' ) {
+		handel_error();
+	}
+
+	$validation_error = validate_data($data);
+	if ($validation_error !== false){
+		handel_error($validation_error);
+	}
+	$currency = new Database\Operations\UserOperations($table);
+	$result = $currency->update_data($id, $data);
+	if ($result) {
+		handel_success(
+			"Updated successfully!",
+			"update",
+			"admin.php?page=settings"
+
+		);
+
+	} else {
+		handel_error("Error while updating ! Please try again.");
+	}
+
 }
+
+
+/**
+ * Handel error response
+ *
+ * @param string $message
+ * @return void
+ */
+function handel_error( $message = 'Invalid request.'){
+	$response = array();
+	$response['status'] = 0;
+	$response['message'] = $message;
+	header('Content-Type: application/json');
+	echo json_encode($response);
+	exit();
+}
+
+/**
+ * Handel success response
+ *
+ * @param string $message
+ * @return void
+ */
+function handel_success( $message = 'Success' ,$action = '', $redirect_url = ''){
+	$response = array_filter([
+		'status' => 1,
+		'message' => $message,
+		'action' => $action !== '' ? $action : null,
+		'redirect_url' => $redirect_url !== '' ? $redirect_url : null,
+	]);
+
+	header('Content-Type: application/json');
+	echo json_encode($response);
+	exit();
+}
+
+
+
 
 
 /**
@@ -61,22 +175,13 @@ function handel_registration(){
             if (move_uploaded_file($fileTmpPath, $dest_path)) {
                 $profile_pic = $dest_path;
             } else {
-                $response['status'] = 0;
-                $response['message'] = "Error moving the uploaded file.";
-                header('Content-Type: application/json');
-                echo json_encode($response);
-                return; // Stop execution if upload fails
+               handel_error('Error moving the uploaded file.');
             }
         } else {
-            $response['status'] = 0;
-            $response['message'] = "Invalid file type or size.";
-            header('Content-Type: application/json');
-            echo json_encode($response);
-            return;
+            handel_error('File type not allowed.');
         }
     }else{
-		$response['status'] = 0;
-		$response['message'] = "Profile picture is required.";
+		handel_error('Profile picture is required.');
 	}
 
 	$data = [
@@ -91,9 +196,7 @@ function handel_registration(){
 	];
 	$validation_error = validate_data($data);
 	if ($validation_error !== false){
-		header('Content-Type: application/json');
-		echo json_encode($validation_error);
-		return;
+		handel_error($validation_error);
 
 	}
 
@@ -101,17 +204,16 @@ function handel_registration(){
 	$result = $registration->insert_data($data);
     if ($result) {
 		if(is_array($result)){
-			header('Content-Type: application/json');
-			echo json_encode($result);
-			return;
+			handel_error(($result));
 		}
-        $response['status'] = 1;
-        $response['message'] = "User registered successfully!";
-		$response['action'] = 'register';
-		$response['redirect_url'] = 'login.php';
+		handel_success(
+			"User registered successfully!",
+			"register",
+			"login.php"
+		);
+
     } else {
-        $response['status'] = 0;
-        $response['message'] = "Failed to register user.";
+       handel_error("Failed to register user.");
     }
 
     // Return JSON response
@@ -136,27 +238,23 @@ function handel_login(){
 	$result = $login->get_individual_data_from_email($email);
 	if ($result && is_array($result) ) {
 		if (!password_verify($password, $result['password'])){
-			$response['status'] = 0;
-			$response['message'] = "Invalid email or password.";
-			header('Content-Type: application/json');
-			echo json_encode($response);
-			return;
+			handel_error('Invalid email or password.');
 		}else{
 			session_start();
 			$_SESSION['user_id'] = $result['id'];
 			$_SESSION['username'] = $result['username'];
 			$_SESSION['email'] = $result['email'];
 			$_SESSION['role'] = $result['role'];
-			$response['status'] = 1;
-			$response['message'] = "Login successful!";
-			$response['action'] = 'login';
-			$response['redirect_url'] = $result['role'] == 'admin' ? 'admin.php' : 'index.php';
+			handel_success(
+				"Login successful!",
+				"login",
+				$result['role'] == 'admin' ? 'admin.php' : 'index.php'
+			);
 
 		}
 
 	} else {
-		$response['status'] = 0;
-		$response['message'] = "Invalid email or password.";
+		handel_error('Invalid email or password.');
 	}
 
 	header('Content-Type: application/json');
@@ -167,7 +265,8 @@ function handel_login(){
 /**
  * Handle currency addition
  */
-function handel_currency(){
+
+ function handel_currency(){
 	$name = isset($_POST['name']) ? $_POST['name'] : '';
 	$symbol = isset($_POST['symbol']) ? $_POST['symbol'] : '';
 	$response = array();
@@ -186,18 +285,51 @@ function handel_currency(){
 	$currency = new Database\Operations\UserOperations('currencies');
 	$result = $currency->insert_data($data);
 	if ($result) {
-		$response['status'] = 1;
-		$response['message'] = "Currency added successfully!";
-		$response['action'] = 'add_currency';
-		$response['redirect_url'] = 'admin.php?page=settings';
+		handel_success(
+			"Currency added successfully!",
+			"add_currency",
+			"admin.php?page=settings"
+		);
+
 	} else {
-		$response['status'] = 0;
-		$response['message'] = "Failed to add currency.";
+		handel_error("Failed to add currency.");
 	}
 
 	// Return JSON response
 	header('Content-Type: application/json');
 	echo json_encode($response);
+	exit();
+}
+
+/**
+ * Handle category addition
+ */
+function handel_category(){
+	$name = isset($_POST['name']) ? $_POST['name'] : '';
+	$response = array();
+
+	$data = [
+		'name' => $name
+	];
+	$validation_error = validate_data($data);
+	if ($validation_error !== false){
+		handel_error($validation_error);
+	}
+
+	$category = new Database\Operations\UserOperations('categories');
+	$result = $category->insert_data($data);
+	if ($result) {
+		handel_success(
+			"Category added successfully!",
+			"add_category",
+			"admin.php?page=settings"
+		);
+
+	} else {
+		handel_error("Failed to add category.");
+	}
+
+
 }
 
 /**
@@ -209,49 +341,33 @@ function handel_currency(){
 function validate_data( $data ){
 	//Validate user data for registration
 	if(isset ($data['email'] ) && !filter_var($data['email'], FILTER_VALIDATE_EMAIL)){
-		$response['status'] = 0;
-		$response['message'] = "Invalid email address.";
-		return $response;
+		handel_error('Invalid email address.');
 	}
 	if (isset($data['password']) && strlen($data['password']) < 6){
-		$response['status'] = 0;
-		$response['message'] = "Password must be at least 6 characters long.";
-		return $response;
+		handel_error('Password must be at least 6 characters long.');
 	}
 
 	if (isset($data['password']) && $data['password'] != $data['confirm_password']){
-		$response['status'] = 0;
-		$response['message'] = "Passwords do not match.";
-		return $response;
+		handel_error('Passwords do not match.');
 	}
 	if (isset($data['role']) && !in_array($data['role'], ['admin', 'user'])){
-		$response['status'] = 0;
-		$response['message'] = "Invalid user type.";
-		return $response;
+		handel_error('Invalid user role.');
 	}
 
 	if (isset($data['username']) && strlen($data['username']) < 3){
-		$response['status'] = 0;
-		$response['message'] = "Username must be at least 3 characters long.";
-		return $response;
+		handel_error('Username must be at least 3 characters long.');
 	}
 
 	if(isset($data['profile_pic']) && empty($data['profile_pic'])){
-		$response['status'] = 0;
-		$response['message'] = "Profile picture is required.";
-		return $response;
+		handel_error('Profile picture is required field jj.');
 	}
-	// Validate currency data
+	// Validate name data
 	if (isset($data['name']) && empty($data['name'])){
-		$response['status'] = 0;
-		$response['message'] = "Currency name cannot be empty";
-		return $response;
+		handel_error('Name cannot be empty.');
 	}
 
 	if (isset($data['symbol']) && empty($data['symbol'])){
-		$response['status'] = 0;
-		$response['message'] = "Currency symbol cannot be empty";
-		return $response;
+		handel_error('Symbol cannot be empty.');
 	}
 	return false;
 }

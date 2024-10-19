@@ -12,7 +12,7 @@ class UserOperations extends BaseOperation {
 	 * @return array
 	 */
     public function get_all_data(): array {
-        $stmt = $this->conn->prepare("SELECT * FROM $this->table");
+        $stmt = $this->conn->prepare("SELECT * FROM $this->table ORDER BY id DESC");
         $stmt->execute();
         return $stmt->fetchAll(PDO::FETCH_ASSOC);
     }
@@ -57,6 +57,10 @@ class UserOperations extends BaseOperation {
 			if ( isset($data['password'] ) ){
 				$data['password'] = $this->hash_password($data['password']);
 			}
+			if( isset($data['name']) && $this->check_name_exists($data['name'])){
+				return ['status' => 0, 'message' => 'Name already exists'];
+
+			}
 			if( isset($data['confirm_password'])){
 				unset($data['confirm_password']);
 			}
@@ -85,9 +89,14 @@ class UserOperations extends BaseOperation {
 	 * @return bool
 	 */
     public function update_data(int $id, array $data): bool {
-        $stmt = $this->conn->prepare("UPDATE $this->table SET username = :username, email = :email, password = :password, role = :role WHERE id = :id");
-        $data['id'] = $id;
-        return $stmt->execute($data);
+		//Key values to update.
+		$setClause = implode(", ", array_map(function($key) {
+			return "$key = :$key";
+		}, array_keys($data)));
+
+        $stmt = $this->conn->prepare("UPDATE $this->table SET $setClause WHERE id = :id");
+		$data['id'] = $id;
+        return $stmt->execute($data );
     }
 
 
@@ -98,6 +107,7 @@ class UserOperations extends BaseOperation {
 	 * @return bool
 	 */
     public function delete_data(int $id): bool {
+
         $stmt = $this->conn->prepare("DELETE FROM $this->table WHERE id = :id");
         $stmt->bindParam(':id', $id);
         return $stmt->execute();
@@ -112,6 +122,18 @@ class UserOperations extends BaseOperation {
 	public function check_email_exists(string $email): bool {
 		$stmt = $this->conn->prepare("SELECT * FROM $this->table WHERE email = :email");
 		$stmt->bindParam(':email', $email);
+		$stmt->execute();
+		return $stmt->rowCount() > 0 ? true : false;
+	}
+	/**
+	 * Check if an email exists in the users table.
+	 *
+	 * @param string $email
+	 * @return bool
+	 */
+	public function check_name_exists(string $name): bool {
+		$stmt = $this->conn->prepare("SELECT * FROM $this->table WHERE name = :name");
+		$stmt->bindParam(':name', $name);
 		$stmt->execute();
 		return $stmt->rowCount() > 0 ? true : false;
 	}

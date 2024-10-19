@@ -7,6 +7,7 @@ if ( file_exists( __DIR__ . '/vendor/autoload.php' ) ) {
 	}
 use App\TTMS\Admin\Dashboard;
 use App\TTMS\Admin\Settings;
+use App\TTMS\Admin\Packages;
 session_start();
 if ( ! is_logged_in()  && get_current_user_attr('role') !== 'admin' ) {
 	header('Location: login.php');
@@ -30,7 +31,14 @@ switch ( $page ) {
 	case 'settings':
 		new Settings();
 		break;
+	case 'create-package':
+		Packages::create_package();
+		break;
+	case 'manage-package':
+		Packages::manage_package();
+		break;
 	default:
+
 		include '404.php';
 		break;
 }
