@@ -26,6 +26,28 @@ $(document).ready(function () {
 		$('input[name="address"]').closest('.col-md-6.mb-4').removeClass('d-none');
 		$('input[name="site_url"]').closest('.col-md-6.mb-4').removeClass('d-none');
 	});
+	//Initialize multiselect
+	$('.multiselect').select2({
+		placeholder: 'Select an option',
+		allowClear: true,
+		minimumResultsForSearch: 0
+
+	});
+	//Inisilize text editor
+	tinymce.init({
+        selector: '#editor',
+		plugins: 'anchor autolink charmap codesample emoticons  link lists media searchreplace table visualblocks wordcount',
+		toolbar: 'undo redo | blocks fontfamily fontsize | bold italic underline strikethrough | link  table | align lineheight | numlist bullist indent outdent | emoticons charmap | removeformat',
+        height: 300,
+    });
+	//Make active class on the current page.
+	$('#sidebar ul li.active > a.dropdown-toggle').each(function() {
+        var target = $(this).data('bs-target');
+        $(target).collapse('show');
+        $(this).attr('aria-expanded', 'true');
+		$(this).removeClass('collapsed');
+		$(this).siblings('ul').addClass('show');
+    });
 
 	// Handel registration form.
 	$('#registration_form').on('submit', function (e) {
@@ -316,15 +338,19 @@ alert_success = (res  ) => {
 		title: res.message,
 		icon: 'success',
 		confirmButtonText: 'OK'
+
 	}).then((result) => {
 		if (result.isConfirmed) {
-			console.log(res);
-
 			if(res.redirect_url){
 			window.location.href = res.redirect_url;
 			}
 		}
 	});
+	if (res.redirect_url) {
+        setTimeout(() => {
+            window.location.href = res.redirect_url;
+        }, 3000);
+    }
 }
 
 alert_error = (message) => {
@@ -356,4 +382,5 @@ alert_confirmation = (data) => {
 
 		}
 	});
+
 }

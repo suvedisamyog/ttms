@@ -134,10 +134,6 @@ function handel_success( $message = 'Success' ,$action = '', $redirect_url = '')
 	exit();
 }
 
-
-
-
-
 /**
  * Handle user registration
  */
@@ -151,7 +147,6 @@ function handel_registration(){
 	$username = isset($_POST['username']) ? $_POST['username'] : '';
 	$response = array();
 
-	// Validate input
 
 
 	//Handel file upload

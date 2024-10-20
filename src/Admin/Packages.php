@@ -2,6 +2,9 @@
 
 namespace App\TTMS\Admin;
 
+use App\TTMS\Database\Operations\UserOperations;
+
+
 class Packages{
 
 	public static function create_package(){
@@ -78,9 +81,9 @@ class Packages{
 
 					<div class="col-md-6 mb-4">
 						<div data-mdb-input-init class="form-outline">
-							<label class="form-label" for="package_discount">Discount (%)</label>
-							<input type="number" min="0" max="90" name="package_discount" class="form-control form-control-lg" value="<?php echo $discount?>" />
-							<span class="text-danger m-2" id="package_discount-error"></span>
+							<label class="form-label" for="package_deadline">Registration Deadline <spam class="text-danger" >*</spam></label>
+							<input type="date" name="package_deadline" class="form-control form-control-lg" value="<?php echo $price ?>" required/>
+							<span class="text-danger m-2" id="package_deadline-error"></span>
 						</div>
 					</div>
 
@@ -92,11 +95,46 @@ class Packages{
 						</div>
 					</div>
 
+
+						<div class="col-md-6 mb-4">
+							<div data-mdb-input-init class="form-outline">
+								<label class="form-label" for="package_discount">Discount (%)</label>
+								<input type="number" min="0" max="90" name="package_discount" class="form-control form-control-lg" value="<?php echo $discount?>" />
+								<span class="text-danger m-2" id="package_discount-error"></span>
+							</div>
+						</div>
+
+
 					<div class="col-md-6 mb-4">
 						<div data-mdb-input-init class="form-outline">
 							<label class="form-label" for="other_images">Other Images</label>
 							<input type="file" name="other_images[]" class="form-control form-control-lg" multiple/>
 							<span class="text-danger m-2" id="other_images-error"></span>
+						</div>
+					</div>
+
+					<div class="col-md-6 mb-4">
+						<div data-mdb-input-init class="form-outline">
+							<label class="form-label" for="other_images">Categories</label>
+							<select id="package_form_categories" name="categories[]" multiple="multiple" class="form-control form-control-lg multiselect">
+               					<?php
+									$get_categories = new UserOperations('categories');
+									$categories = $get_categories->get_all_data();
+									foreach ($categories as $key => $value) {
+										?>
+										<option value="<?php echo $value['id'] ?>"><?php echo $value['name'] ?></option>
+										<?php
+									}
+								?>
+            				</select>
+							<span class="text-danger m-2" id="other_images-error"></span>
+						</div>
+					</div>
+
+					<div class="col-md-12 mb-4">
+						<div data-mdb-input-init class="form-outline">
+							<label class="form-label" for="other_images">Description</label>
+							<textarea id="editor" name="editor" rows="10" class="form-control"></textarea>
 						</div>
 					</div>
 

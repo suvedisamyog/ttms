@@ -14,9 +14,10 @@ if ( ! is_logged_in()  && get_current_user_attr('role') !== 'admin' ) {
 	exit;
 }
 $page = isset( $_GET['page'] ) ? $_GET['page'] : 'dashboard';
+$tab = isset( $_GET['tab'] ) ? $_GET['tab'] : '';
 
 template_header( ucfirst( $page ));
-admin_sidebar();
+admin_sidebar($_GET);
 admin_header_nav();
 switch ( $page ) {
 	case 'dashboard':
@@ -31,17 +32,30 @@ switch ( $page ) {
 	case 'settings':
 		new Settings();
 		break;
-	case 'create-package':
-		Packages::create_package();
-		break;
-	case 'manage-package':
-		Packages::manage_package();
+	case 'packages':
+		get_tabs( $tab );
 		break;
 	default:
-
 		include '404.php';
 		break;
 }
+
+function get_tabs( $tabs ){
+	switch ( $tabs ) {
+		case 'create-package':
+			Packages::create_package();
+			break;
+		case 'manage-package':
+			Packages::manage_package();
+			break;
+		default:
+			include '404.php';
+			break;
+	}
+
+}
+
+
 template_footer();
 
 

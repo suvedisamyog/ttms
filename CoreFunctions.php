@@ -96,6 +96,11 @@ if ( ! function_exists ('get_stylesheet') ){
 			echo "\n";
 			echo "<script src='" . ASSETS_URL . "/js/bootstrap-table.min.js'></script>";
 			echo "\n";
+			echo "<script src='" . ASSETS_URL . "/js/bootstrap-multiselect.min.js'></script>";
+			echo "\n";
+
+			echo '<script src="https://cdn.tiny.cloud/1/vl1vhdbrftqx9zheijliyzpht1x6g6egh68ubihrle1p7lk5/tinymce/7/tinymce.min.js" referrerpolicy="origin"></script>';
+
 
 
 		}
@@ -110,7 +115,7 @@ if ( ! function_exists ('template_header') ){
 
 if ( ! function_exists ('admin_sidebar') ){
 	//Admin panel sidebar
-	function admin_sidebar(  ){
+	function admin_sidebar( $page_slug = array() ){
 		include_once TEMPLATE_PATH . 'admin/sidebar.php';
 	}
 }
@@ -140,8 +145,8 @@ if ( ! function_exists ('sidebar_menu') ){
 			'Packages' => [
 				'id' => 'packages',
 				'submenu' => [
-					'Create Package' => '?page=create-package',
-					'Manage Package' => '?page=manage-package',
+					'Create Package' => '?page=packages&tab=create-package',
+					'Manage Package' => '?page=packages&tab=manage-package',
 					'Page 3' => '#'
 				]
 			]
