@@ -21,6 +21,8 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST'){
 			handel_currency();
 		case 'add_category':
 			handel_category();
+		case 'add_package':
+			handel_package();
 
 			break;
 	}
@@ -150,34 +152,7 @@ function handel_registration(){
 
 
 	//Handel file upload
-	$profile_pic = null;
-	if (isset($_FILES['profile_pic']) && $_FILES['profile_pic']['error'] == UPLOAD_ERR_OK) {
-        $fileTmpPath = $_FILES['profile_pic']['tmp_name'];
-        $fileName = $_FILES['profile_pic']['name'];
-        $fileSize = $_FILES['profile_pic']['size'];
-        $fileType = $_FILES['profile_pic']['type'];
-        $fileNameComponents = explode(".", $fileName);
-        $fileExtension = strtolower(end($fileNameComponents));
-
-		$allowedfileExtensions = ['jpg', 'gif', 'png', 'jpeg'];
-
-        if (in_array($fileExtension, $allowedfileExtensions) ) {
-            // Set a new filename or keep it
-            $newFileName = uniqid() . '.' . $fileExtension;
-            $uploadFileDir = '../assets/images/uploads/';
-            $dest_path = $uploadFileDir . $newFileName;
-
-            if (move_uploaded_file($fileTmpPath, $dest_path)) {
-                $profile_pic = $dest_path;
-            } else {
-               handel_error('Error moving the uploaded file.');
-            }
-        } else {
-            handel_error('File type not allowed.');
-        }
-    }else{
-		handel_error('Profile picture is required.');
-	}
+	$profile_pic = handel_file_upload('profile_pic');
 
 	$data = [
 		'email' => $email,
@@ -214,6 +189,62 @@ function handel_registration(){
     // Return JSON response
     header('Content-Type: application/json');
     echo json_encode($response);
+}
+
+/**
+ * Handle package addition
+ */
+function handel_package(){
+	// session_start();
+
+	$name = isset($_POST['package_name']) ? $_POST['package_name'] : '';
+	$total_travelers = isset($_POST['package_total_travelers']) ? $_POST['package_total_travelers'] : '';
+	$no_of_days = isset($_POST['package_days']) ? $_POST['package_days'] : '';
+	$no_of_nights = isset($_POST['package_nights']) ? $_POST['package_nights'] : '';
+	$price = isset($_POST['package_price']) ? $_POST['package_price'] : '';
+	$discount = isset($_POST['package_discount']) ? $_POST['package_discount'] : '';
+	$deadline = isset($_POST['package_deadline']) ? $_POST['package_deadline'] : '';
+	$description = isset($_POST['package_description']) ? $_POST['package_description'] : '';
+	$category = isset($_POST['package_categories']) ? $_POST['package_categories'] : array();
+	$required_fields = ['package_name', 'package_total_travelers', 'package_days', 'package_nights', 'package_price',  'package_deadline'];
+	$thumbnail = handel_file_upload('package_thumbnail_image');
+	$other_images = handel_file_upload('package_other_images');
+	$author_id = get_current_user_attr('user_id');
+
+	$data = [
+		'name' => $name,
+		'total_travelers' => $total_travelers,
+		'days' => $no_of_days,
+		'nights' => $no_of_nights,
+		'price' => $price,
+		'deadline' => $deadline,
+		'thumbnail' => $thumbnail,
+		'discount' => $discount,
+		'category' => $category,
+		'other_images' => $other_images,
+		'description' => $description,
+		'author' => $author_id,
+		'rating' => 0
+
+	];
+	$response = array();
+	$validation_error = validate_data($data);
+	if ($validation_error !== false){
+		handel_error($validation_error);
+	}
+	$insert_query = new Database\Operations\UserOperations('packages');
+	$result = $insert_query->insert_data($data);
+	if ($result) {
+		handel_success(
+			"Package added successfully!",
+			"add_package",
+			"admin.php?page=packages&tab=manage-package"
+		);
+
+	} else {
+		handel_error("Failed to add package.");
+	}
+
 }
 
 /**
@@ -280,10 +311,13 @@ function handel_login(){
 	$currency = new Database\Operations\UserOperations('currencies');
 	$result = $currency->insert_data($data);
 	if ($result) {
+		if(is_array($result)){
+			handel_error(($result));
+		}
 		handel_success(
-			"Currency added successfully!",
-			"add_currency",
-			"admin.php?page=settings"
+			"Package added successfully!",
+			"add_package",
+			"admin.php?page=packages&tab=manage-packages"
 		);
 
 	} else {
@@ -364,6 +398,112 @@ function validate_data( $data ){
 	if (isset($data['symbol']) && empty($data['symbol'])){
 		handel_error('Symbol cannot be empty.');
 	}
+	//Handel package data validation
+	if (isset($data['total_travelers']) && empty($data['total_travelers'])){
+		handel_error('Total travelers cannot be empty.');
+	}
+	if (isset($data['no_of_days']) && empty($data['no_of_days'])){
+		handel_error('Number of days cannot be empty.');
+	}
+	if (isset($data['no_of_nights']) && empty($data['no_of_nights'])){
+		handel_error('Number of nights cannot be empty.');
+	}
+	if (isset($data['price']) && empty($data['price'])){
+		handel_error('Price cannot be empty.');
+	}
+	if (isset($data['deadline'])){
+		$deadline = strtotime($data['deadline']);
+		if ($deadline === false){
+			handel_error('Invalid deadline date.');
+		}
+		if($deadline < time()){
+			handel_error('Deadline date must be in the future.');
+		}
+	}
+	if( isset($data['discount']) && !empty($data['discount']) ){
+		if( !is_numeric($data['discount']) ){
+			handel_error('Invalid discount percentage.');
+		}
+	}
+
+
 	return false;
 }
+
+/**
+ * Handel file upload
+ */
+
+ function handel_file_upload($image_for){
+	$pic = null;
+	//Handel single file upload
+	if (isset($_FILES[$image_for]) ) {
+		$allowedfileExtensions = ['jpg', 'gif', 'png', 'jpeg'];
+		if ( is_array($_FILES[$image_for]['name'])) {
+			//Handel multiple file upload
+			foreach($_FILES[$image_for]['name'] as $key => $fileName){
+				$fileTmpPath = $_FILES[$image_for]['tmp_name'][$key];
+                $fileSize = $_FILES[$image_for]['size'][$key];
+                $fileType = $_FILES[$image_for]['type'][$key];
+                $fileError = $_FILES[$image_for]['error'][$key];
+				if ($fileError == UPLOAD_ERR_OK) {
+					$fileNameComponents = explode(".", $fileName);
+                    $fileExtension = strtolower(end($fileNameComponents));
+					if (in_array($fileExtension, $allowedfileExtensions)) {
+						$newFileName = uniqid() . '.' . $fileExtension;
+                        $uploadFileDir = '../assets/images/uploads/';
+                        $dest_path = $uploadFileDir . $newFileName;
+						if (move_uploaded_file($fileTmpPath, $dest_path)) {
+                            $uploadedFiles[] = $dest_path;
+                        } else {
+                            handel_error('Error moving the uploaded file: ' . $fileName);
+                        }
+					}else{
+						handel_error('File type not allowed for .' . $fileName);
+					}
+				}else{
+					handel_error('Error uploading file: ' . $fileName);
+				}
+			}
+			return $uploadedFiles;
+		}
+		else{
+			//Handel single file upload
+			if($_FILES[$image_for]['error'] !== UPLOAD_ERR_OK){
+				handel_error('Error uploading file: ' . $_FILES[$image_for]['name']);
+			}
+			$fileTmpPath = $_FILES[$image_for]['tmp_name'];
+			$fileName = $_FILES[$image_for]['name'];
+			$fileSize = $_FILES[$image_for]['size'];
+			$fileType = $_FILES[$image_for]['type'];
+			$fileNameComponents = explode(".", $fileName);
+			$fileExtension = strtolower(end($fileNameComponents));
+
+
+
+			if (in_array($fileExtension, $allowedfileExtensions) ) {
+				// Set a new filename or keep it
+				$newFileName = uniqid() . '.' . $fileExtension;
+				$uploadFileDir = '../assets/images/uploads/';
+				$dest_path = $uploadFileDir . $newFileName;
+
+				if (move_uploaded_file($fileTmpPath, $dest_path)) {
+					return  $dest_path;
+				} else {
+				   handel_error('Error moving the uploaded file.');
+				}
+			} else {
+				handel_error('File type not allowed.');
+		 	}
+		}
+	}else{
+		handel_error('File upload is required.');
+	}
+
+}
+
+
+
+
+
 ?>

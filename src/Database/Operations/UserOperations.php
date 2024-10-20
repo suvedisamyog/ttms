@@ -11,8 +11,16 @@ class UserOperations extends BaseOperation {
 	 *
 	 * @return array
 	 */
-    public function get_all_data(): array {
-        $stmt = $this->conn->prepare("SELECT * FROM $this->table ORDER BY id DESC");
+    public function get_all_data($data = array()): array {
+		if(! empty($data)){
+			$where_clause = $data['where_clause'];
+			$where_clause_value = $data['where_clause_value'];
+			$stmt = $this->conn->prepare("SELECT * FROM $this->table WHERE $where_clause = $where_clause_value ORDER BY id DESC");
+
+
+		}else{
+			$stmt = $this->conn->prepare("SELECT * FROM $this->table ORDER BY id DESC");
+		}
         $stmt->execute();
         return $stmt->fetchAll(PDO::FETCH_ASSOC);
     }
@@ -71,6 +79,9 @@ class UserOperations extends BaseOperation {
 
 			$stmt = $this->conn->prepare("INSERT INTO $this->table ($columns) VALUES ($values)");
 			foreach ($data as $key => &$value) {
+				if (is_array($value)) {
+					$value = json_encode($value);
+				}
 				$stmt->bindParam(":$key", $value);
 			}
 			return $stmt->execute();

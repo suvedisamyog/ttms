@@ -9,7 +9,7 @@ class Packages{
 
 	public static function create_package(){
 		$form_title = 'Create Package';
-		$btn_name = 'Create';
+		$btn_name = 'Create New Package';
 		$btn_class = 'btn_update';
 		$name = '';
 		$price = '';
@@ -22,7 +22,7 @@ class Packages{
 			// $get_package = new UserOperations('packages');
 			// $package = $get_package->get_individual_data_from_id($id);
 			$form_title = 'Edit Package';
-			$btn_name = 'Update';
+			$btn_name = 'Update Package';
 			$btn_class = 'btn_create';
 			$name = $package['name'] ?? '';
 			$price = $package['price'] ?? '';
@@ -48,9 +48,9 @@ class Packages{
 
 					<div class="col-md-6 mb-4">
 						<div data-mdb-input-init class="form-outline">
-							<label class="form-label" for="total_travelers">Total Travelers<span class="text-danger">*</span></label>
-							<input type="number" min="1" name="total_travelers" class="form-control form-control-lg" value="<?php echo $total_travelers ?>" required/>
-							<span class="text-danger m-2" id="total_travelers-error"></span>
+							<label class="form-label" for="package_total_travelers">Total Travelers<span class="text-danger">*</span></label>
+							<input type="number" min="1" name="package_total_travelers" class="form-control form-control-lg" value="<?php echo $total_travelers ?>" required/>
+							<span class="text-danger m-2" id="package_total_travelers-error"></span>
 						</div>
 					</div>
 
@@ -89,9 +89,9 @@ class Packages{
 
 					<div class="col-md-6 mb-4">
 						<div data-mdb-input-init class="form-outline">
-							<label class="form-label" for="thumbnail_image">Thumbnail Image <span class="text-danger">*</span></label>
-							<input type="file" name="thumbnail_image" class="form-control form-control-lg" required/>
-							<span class="text-danger m-2" id="thumbnail_image-error"></span>
+							<label class="form-label" for="package_thumbnail_image">Thumbnail Image <span class="text-danger">*</span></label>
+							<input type="file" name="package_thumbnail_image" class="form-control form-control-lg" required/>
+							<span class="text-danger m-2" id="package_thumbnail_image-error"></span>
 						</div>
 					</div>
 
@@ -99,7 +99,7 @@ class Packages{
 						<div class="col-md-6 mb-4">
 							<div data-mdb-input-init class="form-outline">
 								<label class="form-label" for="package_discount">Discount (%)</label>
-								<input type="number" min="0" max="90" name="package_discount" class="form-control form-control-lg" value="<?php echo $discount?>" />
+								<input type="number" min="0" max="100" name="package_discount" class="form-control form-control-lg" value="<?php echo $discount?>" />
 								<span class="text-danger m-2" id="package_discount-error"></span>
 							</div>
 						</div>
@@ -107,16 +107,16 @@ class Packages{
 
 					<div class="col-md-6 mb-4">
 						<div data-mdb-input-init class="form-outline">
-							<label class="form-label" for="other_images">Other Images</label>
-							<input type="file" name="other_images[]" class="form-control form-control-lg" multiple/>
-							<span class="text-danger m-2" id="other_images-error"></span>
+							<label class="form-label" for="package_other_images">Other Images</label>
+							<input type="file" name="package_other_images[]" class="form-control form-control-lg" multiple/>
+							<span class="text-danger m-2" id="package_other_images-error"></span>
 						</div>
 					</div>
 
 					<div class="col-md-6 mb-4">
 						<div data-mdb-input-init class="form-outline">
-							<label class="form-label" for="other_images">Categories</label>
-							<select id="package_form_categories" name="categories[]" multiple="multiple" class="form-control form-control-lg multiselect">
+							<label class="form-label" for="package_categories">Categories</label>
+							<select id="package_form_categories" name="package_categories[]" multiple="multiple" class="form-control form-control-lg multiselect">
                					<?php
 									$get_categories = new UserOperations('categories');
 									$categories = $get_categories->get_all_data();
@@ -133,13 +133,14 @@ class Packages{
 
 					<div class="col-md-12 mb-4">
 						<div data-mdb-input-init class="form-outline">
-							<label class="form-label" for="other_images">Description</label>
-							<textarea id="editor" name="editor" rows="10" class="form-control"></textarea>
+							<label class="form-label" for="package_description">Description</label>
+							<textarea id="package_description" name="package_description" rows="10" class="form-control"></textarea>
 						</div>
 					</div>
 
 
 				</div>
+					<button type="submit" class="btn btn-primary col-md-12 p-3 <?php echo $btn_class ?>"><?php echo $btn_name ?></button>
 
 			</form>
 		</div>
@@ -148,7 +149,22 @@ class Packages{
 	}
 
 	public static function manage_package(){
+		?>
+		<div class="row row-cols-1 row-cols-md-3 g-4">
+		<?php
+			$get_all_packages = new UserOperations('packages');
+			$packages = $get_all_packages->get_all_data([
+				'where_clause' => 'author',
+				'where_clause_value' => get_current_user_attr('user_id'),
 
+			]);
+			foreach($packages as $package){
+				lg($package);
+				include TEMPLATE_PATH . '/package-card.php';
+			}
+		?>
+		</div>
+		<?php
 	}
 }
 

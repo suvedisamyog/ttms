@@ -1,5 +1,7 @@
 <?php
-
+if( ! defined ( 'SITE_URL') ){
+	define('SITE_URL', 'https://ttms.me'); //URL for the site.
+}
 if ( ! defined ( 'ASSETS_URL') ){
 
 	define('ASSETS_URL', '/assets'); //URL for assets.
@@ -35,7 +37,9 @@ if ( ! function_exists ( 'is_logged_in' ) ){
 if ( ! function_exists ( 'get_current_user_attr' ) ){
 	//Get the current user attribute.
 	function get_current_user_attr( $attr = 'user_id' ){
-
+		if (session_status() == PHP_SESSION_NONE) {
+			session_start();
+		}
 		switch ( $attr ){
 			case 'user_id':
 				return isset($_SESSION['user_id']) ? $_SESSION['user_id'] : false;

@@ -16,6 +16,7 @@ $(document).ready(function () {
 
 
 	});
+
 	// Handel admin registration form ui.
 	$('#admin-tab').on('click', function () {
 		$(this).toggleClass('active');
@@ -26,6 +27,7 @@ $(document).ready(function () {
 		$('input[name="address"]').closest('.col-md-6.mb-4').removeClass('d-none');
 		$('input[name="site_url"]').closest('.col-md-6.mb-4').removeClass('d-none');
 	});
+
 	//Initialize multiselect
 	$('.multiselect').select2({
 		placeholder: 'Select an option',
@@ -33,13 +35,15 @@ $(document).ready(function () {
 		minimumResultsForSearch: 0
 
 	});
-	//Inisilize text editor
+
+	//Initialize text editor
 	tinymce.init({
-        selector: '#editor',
+        selector: '#package_description',
 		plugins: 'anchor autolink charmap codesample emoticons  link lists media searchreplace table visualblocks wordcount',
 		toolbar: 'undo redo | blocks fontfamily fontsize | bold italic underline strikethrough | link  table | align lineheight | numlist bullist indent outdent | emoticons charmap | removeformat',
         height: 300,
     });
+
 	//Make active class on the current page.
 	$('#sidebar ul li.active > a.dropdown-toggle').each(function() {
         var target = $(this).data('bs-target');
@@ -52,7 +56,6 @@ $(document).ready(function () {
 	// Handel registration form.
 	$('#registration_form').on('submit', function (e) {
 		e.preventDefault();
-		console.log('Form submitted');
 		var data = new FormData(this);
 		var userType = $('#admin-tab').hasClass('active') ? 'admin' : 'user';
 		data.append('user_type', userType);
@@ -64,6 +67,22 @@ $(document).ready(function () {
 		}
 		handel_form_data(data,'POST');
 
+	});
+
+	//Handel package form.
+	$('#packages_form').on('submit', function (e) {
+		e.preventDefault();
+		var data = new FormData(this);
+		data.append('action', 'add_package');
+		for (const [key, value] of data.entries()) {
+			console.log(key + ' : ' + value);
+		}
+		var validation_error = validate_form_data(data);
+		if (validation_error ) {
+			return false;
+		}
+
+		handel_form_data(data,'POST');
 	});
 
 	// Handel login form.
@@ -233,49 +252,78 @@ $(document).on('click', '.delete_btn', function() {
 validate_form_data = (data) => {
 	var error = false;
 
-	$('.text-danger').text('').hide();
+	$('.text-danger[id]').text('').hide();
 	$('.form-control').removeClass('is-invalid');
-	var required_fields = ['username', 'email', 'password', 'confirm_password', 'profile_pic'];
+	if( data.get('action') === 'add_package'){
+		var required_fields = ['package_name', 'package_total_travelers', 'package_days', 'package_nights', 'package_price' , 'package_deadline' ,'package_thumbnail_image'] ;
+	}else{
+		var required_fields = ['username', 'email', 'password', 'confirm_password', 'profile_pic'];
+
+	}
 	for (const [key, value] of data.entries()) {
 		if (required_fields.includes(key) && String(value).trim() === '') {
-            $('input[name="' + key + '"]').addClass('is-invalid');
-            $("#" + key + "-error").text('This field is required').show();
-            error = true;
+          error = handel_client_side_validation_error(key , 'This field is required.');
+
         }
 		switch (key) {
 			case 'email':
 				if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(value)) {
-					$('input[name="' + key + '"]').addClass('is-invalid');
-					$("#" + key + "-error").text('Please enter a valid email address.').show();
-					error = true;
+
+					error = handel_client_side_validation_error(key , 'Please enter a valid email address.');
 				}
 				break;
 			case 'password':
 				if (value.length < 6) {
-					$('input[name="' + key + '"]').addClass('is-invalid');
-					$("#" + key + "-error").text('Password must be at least 6 characters long.').show();
-					error = true;
+					error = handel_client_side_validation_error(key , 'Password must be at least 6 characters long.');
 				}
 				break;
 			case 'confirm_password':
 				if (value !== data.get('password')) {
-					$('input[name="' + key + '"]').addClass('is-invalid');
-					$("#" + key + "-error").text('Password does not match.').show();
-					error = true;
+					error = handel_client_side_validation_error(key , 'Password does not match.');
 				}
 				break;
 			case 'username':
+			case 'package_name':
 				if (value.length < 3) {
-					$('input[name="' + key + '"]').addClass('is-invalid');
-					$("#" + key + "-error").text('Username must be at least 3 characters long.').show();
-					error = true;
+					error = handel_client_side_validation_error(key , 'Name must be at least 3 characters long.');
+				}
+				break;
+			case 'package_total_travelers':
+			case 'package_days':
+			case 'package_price':
+				if( value < 1 || isNaN(value)){
+					error = handel_client_side_validation_error(key , 'Please enter a valid number.');
+				}
+				break;
+			case 'package_nights':
+				if( value < 0 || isNaN(value)){
+					error = handel_client_side_validation_error(key , 'Please enter a valid number.');
+				}
+				break;
+			case 'package_discount':
+				if (isNaN(value) || value < 0 || value > 100) {
+					error = handel_client_side_validation_error(key , 'Please enter a valid discount percentage.');
 				}
 				break;
 
+			case 'package_deadline':
+				var date = new Date(value);
+				if (date <= new Date()) {
+					error = handel_client_side_validation_error(key , 'Please enter a valid date.');
+				}
+				break;
 
 		};
 	}
 	return error;
+}
+
+
+//handel client side validation error
+function handel_client_side_validation_error(key , message) {
+	$('input[name="' + key + '"]').addClass('is-invalid');
+	$("#" + key + "-error").text(message).show();
+	return true;
 }
 
 
@@ -300,6 +348,10 @@ handel_form_data = (data,method) => {
 						$('#registration_form').find('.form-control').removeClass('is-invalid');
 						alert_success(res);
 						break;
+					case 'add_package':
+						$('#packages_form').trigger('reset');
+						$('#packages_form').find('.form-control').removeClass('is-invalid');
+						alert_success(res);
 					case 'login':
 						alert_success(res);
 						break;
@@ -309,10 +361,6 @@ handel_form_data = (data,method) => {
 						alert_success(res);
 						break;
 					case 'delete':
-						console.log(
-							res.index
-						);
-
 						$('tr[data-index="' + res.index + '"]').remove();
                         alert_success(res);
 						break;

@@ -20,3 +20,33 @@ a[aria-expanded="true"] {
 .caret{
 	margin :10px !important
 }
+.truncate {
+	display: -webkit-box;
+	-webkit-box-orient: vertical;
+	-webkit-line-clamp: 2;
+	overflow: hidden;
+	text-overflow: ellipsis;
+}
+.card-body , .card-img-top{
+	cursor: pointer;
+}
+
+.card-img-top{
+	height: 200px;
+	object-fit: cover;
+}
+.card {
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    cursor: pointer;
+}
+
+.card:hover {
+    transform: scale(1.05);
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+}
+
+.card-body:hover,
+.card-img-top:hover {
+    background-color: #D3D3D3;
+    transition: background-color 0.3s ease;
+}
