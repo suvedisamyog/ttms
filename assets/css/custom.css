@@ -47,6 +47,8 @@ a[aria-expanded="true"] {
 
 .card-body:hover,
 .card-img-top:hover {
-    background-color: #D3D3D3;
     transition: background-color 0.3s ease;
+}
+.cursor-pointer{
+	cursor: pointer;
 }

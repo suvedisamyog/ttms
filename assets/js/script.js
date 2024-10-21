@@ -69,7 +69,7 @@ $(document).ready(function () {
 
 	});
 
-	//Handel package form.
+	//Handel package form addition.
 	$('#packages_form').on('submit', function (e) {
 		e.preventDefault();
 		var data = new FormData(this);
@@ -83,6 +83,27 @@ $(document).ready(function () {
 		}
 
 		handel_form_data(data,'POST');
+	});
+
+	//Remove images while editing
+	$(document).on('click', '.remove_image', function() {
+		$(this).closest('.image-remove-container').remove();
+	});
+
+	//Handel Edit package form.
+	$('#edit_package_form').on('submit', function (e) {
+		e.preventDefault();
+		var data = new FormData(this);
+		data.append('action', 'update_package');
+
+		$('.existing_images .other_images_edit').each(function() {
+			data.append('existing_images[]', $(this).data('image'));
+		});
+		var validation_error = validate_form_data(data);
+		if (validation_error ) {
+			return false;
+		}
+		handel_form_data(data,'PUT');
 	});
 
 	// Handel login form.

@@ -17,10 +17,12 @@ class Packages{
 		$no_of_nights = '';
 		$discount = '';
 		$total_travelers = '';
+		$form_id = 'packages_form';
+		$description = '';
 		if(isset($_GET['id']) && !empty($_GET['id'])){
 			$id = $_GET['id'];
-			// $get_package = new UserOperations('packages');
-			// $package = $get_package->get_individual_data_from_id($id);
+			$get_package = new UserOperations('packages');
+			$package = $get_package->get_individual_data_from_id($id);
 			$form_title = 'Edit Package';
 			$btn_name = 'Update Package';
 			$btn_class = 'btn_create';
@@ -30,17 +32,22 @@ class Packages{
     		$no_of_nights = $package['nights'] ?? '';
     		$discount = $package['discount'] ?? '';
     		$total_travelers = $package['total_travelers'] ?? '';
+			$description = $package['description'] ?? '';
+			$categories = $package['category'] ?? array();
+			$thumbnail = $package['thumbnail'] ?? '';
+			$other_images = isset($package['other_images'] )? json_decode($package['other_images'] , true) :array();
+			$form_id = 'edit_package_form';
 		}
 		?>
 		<div class="container mt-5">
 			<div class="d-flex">
 				<h4><?php $form_title ?></h4>
 			</div>
-			<form id="packages_form">
+			<form id="<?php echo $form_id ?>">
 				<div class="row">
 					<div class="col-md-6 mb-4">
 						<div data-mdb-input-init class="form-outline">
-							<label class="form-label" for="package_name">Package Name <spam class="text-danger" >*</spam></label>
+							<label class="form-label" for="package_name">Package Name <span class="text-danger" >*</span></label>
 							<input type="text" name="package_name" class="form-control form-control-lg" value="<?php echo $name ?>" required/>
 							<span class="text-danger m-2" id="package_name-error"></span>
 						</div>
@@ -73,7 +80,7 @@ class Packages{
 
 					<div class="col-md-6 mb-4">
 						<div data-mdb-input-init class="form-outline">
-							<label class="form-label" for="package_price">Package Price <spam class="text-danger" >*</spam></label>
+							<label class="form-label" for="package_price">Package Price <span class="text-danger" >*</span></label>
 							<input type="text" name="package_price" class="form-control form-control-lg" value="<?php echo $price ?>" required/>
 							<span class="text-danger m-2" id="package_price-error"></span>
 						</div>
@@ -81,7 +88,7 @@ class Packages{
 
 					<div class="col-md-6 mb-4">
 						<div data-mdb-input-init class="form-outline">
-							<label class="form-label" for="package_deadline">Registration Deadline <spam class="text-danger" >*</spam></label>
+							<label class="form-label" for="package_deadline">Registration Deadline <span class="text-danger" >*</span></label>
 							<input type="date" name="package_deadline" class="form-control form-control-lg" value="<?php echo $price ?>" required/>
 							<span class="text-danger m-2" id="package_deadline-error"></span>
 						</div>
@@ -90,8 +97,15 @@ class Packages{
 					<div class="col-md-6 mb-4">
 						<div data-mdb-input-init class="form-outline">
 							<label class="form-label" for="package_thumbnail_image">Thumbnail Image <span class="text-danger">*</span></label>
-							<input type="file" name="package_thumbnail_image" class="form-control form-control-lg" required/>
+							<input type="file" name="package_thumbnail_image" class="form-control form-control-lg"  <?php echo (isset($thumbnail) && !empty($thumbnail) ) ? '' : 'required'   ?>/>
 							<span class="text-danger m-2" id="package_thumbnail_image-error"></span>
+							<?php
+							if(isset($thumbnail) && !empty($thumbnail)){
+								?>
+								<span class="text-warning ">Adding new will replace current. <a class="text-primary"  target="_blank" href="<?php echo $thumbnail ?>">View Current</a> </span>
+								<?php
+							}
+							?>
 						</div>
 					</div>
 
@@ -111,6 +125,29 @@ class Packages{
 							<input type="file" name="package_other_images[]" class="form-control form-control-lg" multiple/>
 							<span class="text-danger m-2" id="package_other_images-error"></span>
 						</div>
+						<?php
+							if(isset($other_images) && !empty($other_images)){
+								?>
+									<span class="text-warning">Adding new will not remove existing</span>
+									<br/>
+									<div class="existing_images">
+									<?php
+									foreach ($other_images as $image) {
+										$name = basename($image);
+
+										?>
+											<span class="image-remove-container ">
+											<a class="text-primary other_images_edit"  data-image="<?php echo $image  ?>" href="<?php echo $image ?>" target="_blank"><?php echo $name ?></a>
+											<span class="text-danger cursor-pointer ml-2 remove_image" >&times;</span>
+											</span>
+											<?php
+									}
+									?>
+									</div>
+								<?php
+
+							}
+						?>
 					</div>
 
 					<div class="col-md-6 mb-4">
@@ -119,12 +156,15 @@ class Packages{
 							<select id="package_form_categories" name="package_categories[]" multiple="multiple" class="form-control form-control-lg multiselect">
                					<?php
 									$get_categories = new UserOperations('categories');
-									$categories = $get_categories->get_all_data();
-									foreach ($categories as $key => $value) {
+									$all_categories = $get_categories->get_all_data();
+									$selected_categories = isset($categories) ? json_decode($categories , true) : array();
+									foreach ($all_categories as $category) {
+										$selected = in_array($category['id'], $selected_categories) ? 'selected' : '';
 										?>
-										<option value="<?php echo $value['id'] ?>"><?php echo $value['name'] ?></option>
+											<option value="<?php echo $category['id']; ?>" <?php echo $selected; ?>><?php echo $category['name']; ?></option>
 										<?php
 									}
+
 								?>
             				</select>
 							<span class="text-danger m-2" id="other_images-error"></span>
@@ -134,7 +174,7 @@ class Packages{
 					<div class="col-md-12 mb-4">
 						<div data-mdb-input-init class="form-outline">
 							<label class="form-label" for="package_description">Description</label>
-							<textarea id="package_description" name="package_description" rows="10" class="form-control"></textarea>
+							<textarea id="package_description" name="package_description" rows="10" class="form-control"><?php echo $description ?></textarea>
 						</div>
 					</div>
 
@@ -144,6 +184,7 @@ class Packages{
 
 			</form>
 		</div>
+
 		<?php
 
 	}
@@ -152,6 +193,7 @@ class Packages{
 		?>
 		<div class="row row-cols-1 row-cols-md-3 g-4">
 		<?php
+
 			$get_all_packages = new UserOperations('packages');
 			$packages = $get_all_packages->get_all_data([
 				'where_clause' => 'author',
@@ -159,7 +201,6 @@ class Packages{
 
 			]);
 			foreach($packages as $package){
-				lg($package);
 				include TEMPLATE_PATH . '/package-card.php';
 			}
 		?>
