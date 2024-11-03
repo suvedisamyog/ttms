@@ -22,7 +22,9 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST'){
 		case 'add_category':
 			handel_category();
 		case 'add_package':
-			handel_package();
+			handel_package('add');
+		case 'update_package':
+			handel_package('update');
 
 			break;
 	}
@@ -34,7 +36,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST'){
 
 		$response = array();
 		//return error if id or action is empty
-		if( empty($id) || empty($table) || $index == ''){
+		if( empty($id) || empty($table) ){
 			handel_error();
 		}
 
@@ -55,9 +57,9 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST'){
 }elseif ($_SERVER['REQUEST_METHOD'] == 'PUT') {
 	// Get the PUT parameters
 	// Get the JSON data
+
 	$input = file_get_contents('php://input');
 	$data = json_decode($input, true);
-
 	$action = isset($data['action']) ? $data['action'] : '';
 	$id = isset($data['id']) ? $data['id'] : '';
 	$name = isset($data['name']) ? $data['name'] : '';
@@ -67,26 +69,27 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST'){
 	if ( $action === '' || $id === '' ) {
 		handel_error();
 	}
-	$data = [
+	$new_data = [
 		'name' => $name
 	];
 	if( $action === 'currencies'){
 		$symbol = isset($data['symbol']) ? $data['symbol'] : '';
-		$data['symbol'] = $symbol;
+		$new_data['symbol'] = $symbol;
 		$table = 'currencies';
 	}elseif( $action === 'categories'){
 		$table = 'categories';
+
 	}
 	if ( $table === '' ) {
 		handel_error();
 	}
 
-	$validation_error = validate_data($data);
+	$validation_error = validate_data($new_data);
 	if ($validation_error !== false){
 		handel_error($validation_error);
 	}
 	$currency = new Database\Operations\UserOperations($table);
-	$result = $currency->update_data($id, $data);
+	$result = $currency->update_data($id, $new_data);
 	if ($result) {
 		handel_success(
 			"Updated successfully!",
@@ -194,7 +197,7 @@ function handel_registration(){
 /**
  * Handle package addition
  */
-function handel_package(){
+function handel_package($action = 'add'){
 	// session_start();
 
 	$name = isset($_POST['package_name']) ? $_POST['package_name'] : '';
@@ -207,8 +210,7 @@ function handel_package(){
 	$description = isset($_POST['package_description']) ? $_POST['package_description'] : '';
 	$category = isset($_POST['package_categories']) ? $_POST['package_categories'] : array();
 	$required_fields = ['package_name', 'package_total_travelers', 'package_days', 'package_nights', 'package_price',  'package_deadline'];
-	$thumbnail = handel_file_upload('package_thumbnail_image');
-	$other_images = handel_file_upload('package_other_images');
+
 	$author_id = get_current_user_attr('user_id');
 
 	$data = [
@@ -218,34 +220,91 @@ function handel_package(){
 		'nights' => $no_of_nights,
 		'price' => $price,
 		'deadline' => $deadline,
-		'thumbnail' => $thumbnail,
 		'discount' => $discount,
 		'category' => $category,
-		'other_images' => $other_images,
 		'description' => $description,
 		'author' => $author_id,
 		'rating' => 0
 
 	];
-	$response = array();
-	$validation_error = validate_data($data);
-	if ($validation_error !== false){
-		handel_error($validation_error);
+	switch ($action){
+		case 'add':
+			$thumbnail = handel_file_upload('package_thumbnail_image');
+			$other_images = handel_file_upload('package_other_images');
+			$data['thumbnail'] = $thumbnail;
+			$data['other_images'] = $other_images;
+			$response = array();
+			$validation_error = validate_data($data);
+			if ($validation_error !== false){
+				handel_error($validation_error);
+			}
+
+			break;
+		case 'update':
+			$id = isset($_POST['id']) ? $_POST['id'] : 0;
+			if (isset($_FILES['package_thumbnail_image']) && $_FILES['package_thumbnail_image']['error'] !== UPLOAD_ERR_NO_FILE) {
+				$thumbnail = handel_file_upload('package_thumbnail_image');
+			}
+			if (isset($_FILES['package_other_images']) && $_FILES['package_other_images']['error'] !== UPLOAD_ERR_NO_FILE) {
+				$total_files = count($_FILES['package_other_images']['name']);
+				if( empty ($_FILES['package_other_images']['name'][0])){
+					if( ! empty($_POST['existing_other_images'])){
+						$other_images = json_decode($_POST['existing_other_images']);
+					}
+				}else{
+					$existing_files = isset($_POST['existing_other_images']) ? json_decode($_POST['existing_other_images'], true) : [];
+					$existing_files_count = count($existing_files);
+
+					if ($total_files + $existing_files_count > 5) {
+						handel_error('Maximum 5 images are allowed.');
+					} else {
+						$other_images = handel_file_upload('package_other_images');
+						$other_images = array_merge($existing_files, $other_images);
+					}
+				}
+
+			}
+			if( isset($thumbnail) ){
+				$data['thumbnail'] = $thumbnail;
+			}
+			if( isset($other_images) ){
+				$data['other_images'] = $other_images;
+			}
+			foreach ($data as $key => $value) {
+				if (is_array($value)) {
+					$data[$key] = json_encode($value);
+				}
+			}
+			$response = array();
+			$validation_error = validate_data($data);
+			if ($validation_error !== false){
+				handel_error($validation_error);
+			}
+
+			break;
 	}
-	$insert_query = new Database\Operations\UserOperations('packages');
-	$result = $insert_query->insert_data($data);
+	$query = new Database\Operations\UserOperations('packages');
+	$result = ($action === 'add') ? $query->insert_data($data) : (($action === 'update') ? $query->update_data($id, $data) : false);
 	if ($result) {
 		handel_success(
-			"Package added successfully!",
-			"add_package",
-			"admin.php?page=packages&tab=manage-package"
+			($action === 'add') ? "Package added successfully!" : "Updated successfully!",
+			($action === 'add') ? "add_package" : "update",
+			($action === 'add') ? "admin.php?page=packages&tab=manage-packages" : "admin.php?page=packages&tab=create-package&id=" . $id
+
 		);
 
 	} else {
-		handel_error("Failed to add package.");
+		handel_error(($action === 'add') ? "Failed to add package." : "Error while updating ! Please try again.");
 	}
 
+
+
+
+
+
 }
+
+
 
 /**
  * Handle user login
@@ -394,7 +453,6 @@ function validate_data( $data ){
 	if (isset($data['name']) && empty($data['name'])){
 		handel_error('Name cannot be empty.');
 	}
-
 	if (isset($data['symbol']) && empty($data['symbol'])){
 		handel_error('Symbol cannot be empty.');
 	}
@@ -438,6 +496,7 @@ function validate_data( $data ){
 	$pic = null;
 	//Handel single file upload
 	if (isset($_FILES[$image_for]) ) {
+		$uploadedFiles = [];
 		$allowedfileExtensions = ['jpg', 'gif', 'png', 'jpeg'];
 		if ( is_array($_FILES[$image_for]['name'])) {
 			//Handel multiple file upload
@@ -461,11 +520,15 @@ function validate_data( $data ){
 					}else{
 						handel_error('File type not allowed for .' . $fileName);
 					}
-				}else{
+				}elseif ($fileError !== UPLOAD_ERR_NO_FILE){
 					handel_error('Error uploading file: ' . $fileName);
 				}
 			}
-			return $uploadedFiles;
+			if(count($uploadedFiles) > 0){
+				return $uploadedFiles;
+			}else{
+				return ;
+			}
 		}
 		else{
 			//Handel single file upload

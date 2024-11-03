@@ -8,11 +8,38 @@ if ( file_exists( __DIR__ . '/vendor/autoload.php' ) ) {
 	die( 'Vendor directory not found. Please run composer install.' );
 	}
 use App\TTMS\Database\Config as DBConfig;
+use App\TTMS\Database\Operations\UserOperations;
 
-print_r (DBConfig::getConnection() );
+?>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>Home</title>
+	<?php
+		get_stylesheet();
+		// get_script();
+	?>
+</head>
+<body>
+<?php
+include_once TEMPLATE_PATH . 'users/carousel.php';
+
+$get_all_packages = new UserOperations('packages');
+$packages = $get_all_packages->get_all_data();
+$get_categories = new UserOperations('categories');
+$all_categories = $get_categories->get_all_data();
+
+include_once TEMPLATE_PATH . 'users/packages.php';
+?>
+
+
+<?php
+include_once TEMPLATE_PATH . 'footer.php';
 // switch ( $page ) {
 // 	case 'home':
-// 		include 'home.php';
+// 		include 'home.php	';
 // 		break;
 // 	case 'about':
 // 		include 'about.php';

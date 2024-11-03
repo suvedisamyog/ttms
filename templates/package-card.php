@@ -22,7 +22,7 @@
 				<button class="btn btn-warning btn-sm ">
 					<a href="<?php echo ADMIN_URL . '?page=packages&tab=create-package&id=' .$id  ?>">Edit</a>
 				</button>
-				<button class="btn btn-danger btn-sm delete_btn" data-id="<?php echo $id ?>">Delete</button>
+				<button class="btn btn-danger btn-sm delete_btn" data-action="packages" data-id="<?php echo $id ?>">Delete</button>
 				<button class="btn btn-success btn-sm view_btn" data-id="<?php echo $id ?>">View</button>
 			</div>
 		</div>

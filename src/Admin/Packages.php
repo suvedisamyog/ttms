@@ -19,6 +19,8 @@ class Packages{
 		$total_travelers = '';
 		$form_id = 'packages_form';
 		$description = '';
+		$deadline = date('Y-m-d', strtotime('+1 day'));
+
 		if(isset($_GET['id']) && !empty($_GET['id'])){
 			$id = $_GET['id'];
 			$get_package = new UserOperations('packages');
@@ -35,6 +37,7 @@ class Packages{
 			$description = $package['description'] ?? '';
 			$categories = $package['category'] ?? array();
 			$thumbnail = $package['thumbnail'] ?? '';
+			$deadline =  isset($package['deadline']) ? date('Y-m-d', strtotime($package['deadline'])) : date('Y-m-d', strtotime('+1 day'));
 			$other_images = isset($package['other_images'] )? json_decode($package['other_images'] , true) :array();
 			$form_id = 'edit_package_form';
 		}
@@ -43,7 +46,8 @@ class Packages{
 			<div class="d-flex">
 				<h4><?php $form_title ?></h4>
 			</div>
-			<form id="<?php echo $form_id ?>">
+			<input type="hidden" id="package_id" value="<?php echo $id ?? '' ?>" />
+			<form id="<?php echo $form_id ?>" >
 				<div class="row">
 					<div class="col-md-6 mb-4">
 						<div data-mdb-input-init class="form-outline">
@@ -89,7 +93,7 @@ class Packages{
 					<div class="col-md-6 mb-4">
 						<div data-mdb-input-init class="form-outline">
 							<label class="form-label" for="package_deadline">Registration Deadline <span class="text-danger" >*</span></label>
-							<input type="date" name="package_deadline" class="form-control form-control-lg" value="<?php echo $price ?>" required/>
+							<input type="date" name="package_deadline" class="form-control form-control-lg" value="<?php echo $deadline ?>" required/>
 							<span class="text-danger m-2" id="package_deadline-error"></span>
 						</div>
 					</div>

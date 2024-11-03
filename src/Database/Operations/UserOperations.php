@@ -12,6 +12,7 @@ class UserOperations extends BaseOperation {
 	 * @return array
 	 */
     public function get_all_data($data = array()): array {
+
 		if(! empty($data)){
 			$where_clause = $data['where_clause'];
 			$where_clause_value = $data['where_clause_value'];

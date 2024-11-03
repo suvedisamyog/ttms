@@ -74,9 +74,7 @@ $(document).ready(function () {
 		e.preventDefault();
 		var data = new FormData(this);
 		data.append('action', 'add_package');
-		for (const [key, value] of data.entries()) {
-			console.log(key + ' : ' + value);
-		}
+
 		var validation_error = validate_form_data(data);
 		if (validation_error ) {
 			return false;
@@ -94,16 +92,23 @@ $(document).ready(function () {
 	$('#edit_package_form').on('submit', function (e) {
 		e.preventDefault();
 		var data = new FormData(this);
+		var existing_other_images = [];
+		$('.existing_images').find('.image-remove-container').each(function() {
+			var imageLink = $(this).find('a').data('image');
+			existing_other_images.push(imageLink);
+		});
+
+
+		data.append('existing_other_images' ,JSON.stringify(existing_other_images));
+		data.append('id' ,$('#package_id').val());
 		data.append('action', 'update_package');
 
-		$('.existing_images .other_images_edit').each(function() {
-			data.append('existing_images[]', $(this).data('image'));
-		});
 		var validation_error = validate_form_data(data);
 		if (validation_error ) {
 			return false;
 		}
-		handel_form_data(data,'PUT');
+
+		handel_form_data(data,'POST');
 	});
 
 	// Handel login form.
@@ -115,6 +120,7 @@ $(document).ready(function () {
 		if (validation_error ) {
 			return false;
 		}
+
 		handel_form_data(data,'POST');
 	});
 
@@ -241,10 +247,10 @@ $(document).on('click', '.setting_edit_btn', function() {
 				name: result.value.name,
 				action: action_for
 			};
-
 			if (action_for === 'currencies') {
 				data.symbol = result.value.symbol;
 			}
+
 			data = JSON.stringify(data);
 			handel_form_data(data, 'PUT');
 		}
@@ -256,11 +262,15 @@ $(document).on('click', '.setting_edit_btn', function() {
 });
 // Handel delete operations
 $(document).on('click', '.delete_btn', function() {
+	action = $(this).closest('tr').data('action');
+	if(action === undefined){
+		action = $(this).data('action');
+	}
 	alert_confirmation({
 		title: 'Are you sure?',
 		text: 'You won\'t be able to revert this!',
 		index: $(this).closest('tr').data('index'),
-		action: $(this).closest('tr').data('action'),
+		action: action,
 		id : $(this).data('id')
 
 	});
@@ -361,9 +371,11 @@ handel_form_data = (data,method) => {
 			console.log(response.responseText);
 			// var res = typeof response.responseText === 'string' ? JSON.parse(response.responseText) : response.responseText;
 			var res =JSON.parse(response.responseText);
-			console.log(res);
 			if( res.status == 1){
+				console.log(res);
+
 				switch (res.action) {
+
 					case 'register':
 						$('#registration_form').trigger('reset');
 						$('#registration_form').find('.form-control').removeClass('is-invalid');
@@ -382,7 +394,11 @@ handel_form_data = (data,method) => {
 						alert_success(res);
 						break;
 					case 'delete':
-						$('tr[data-index="' + res.index + '"]').remove();
+						if(res.index !== undefined && res.index !== '' ){
+							$('tr[data-index="' + res.index + '"]').remove();
+						}else{
+							window.location.reload();
+						}
                         alert_success(res);
 						break;
 					default:
@@ -432,6 +448,7 @@ alert_error = (message) => {
 }
 
 alert_confirmation = (data) => {
+
 	Swal.fire({
 		title: data.title,
 		text: data.text,
