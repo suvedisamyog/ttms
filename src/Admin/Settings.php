@@ -63,7 +63,7 @@ class Settings {
 	}
 
 	public static function category_settings() {
-		$get_all_categories =  new UserOperations('categories');;
+		$get_all_categories =  new UserOperations('categories');
 		$categories = $get_all_categories->get_all_data();
 		?>
 			<div class="container mt-5 ">

@@ -6,6 +6,7 @@ if ( file_exists( __DIR__ . '/vendor/autoload.php' ) ) {
 	}
 
 template_header('Login');
+lg($_GET);
 ?>
 
 <div class="container mt-5">
@@ -13,7 +14,7 @@ template_header('Login');
             <div class="col-md-6">
 
                 <!-- Login Form Card -->
-                <div class="card mt-5 p-3">
+                <div class="card card-pop mt-5 p-3">
                     <div class="card-body">
                         <h3 class="card-title text-center mb-4">Login</h3>
 
@@ -36,7 +37,13 @@ template_header('Login');
                             <div class="mb-4 text-end">
                                 <a href="#" class="link-secondary">Forgot Password?</a>
                             </div>
-
+							<?php
+							 if(isset($_GET['redirect']) && isset($_GET['id'] )){
+								 $redirect = $_GET['redirect'];
+								 $id = $_GET['id'];
+								 echo "<input type='hidden' name='redirect_url' value='$redirect&id={$id}' />";
+							 }
+							?>
                             <!-- Login Button -->
                             <div class="d-grid">
                                 <button type="submit" class="btn btn-primary">Login</button>

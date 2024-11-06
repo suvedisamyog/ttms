@@ -8,7 +8,7 @@ use App\TTMS\Database\Operations\UserOperations;
 template_header('Registration');
 ?>
 <div class="container">
-    <div class="card">
+    <div class="card card-pop">
         <div class="card-header">
             <ul class="nav nav-tabs card-header-tabs" id="formTabs" role="tablist">
                 <li class="nav-item">

@@ -1,4 +1,4 @@
-[2024-11-03 10:18:17] Array
+[2024-11-06 17:01:12] Array
 (
     [0] => Array
         (
@@ -19,489 +19,83 @@
             [rating] => 0.0
         )
 
-)
-
-[2024-11-03 10:18:53] Array
-(
-    [0] => Array
+    [1] => Array
         (
-            [id] => 9
-            [name] => George Scott
-            [total_travelers] => 36
-            [days] => 7
-            [nights] => 63
-            [price] => 302.00
-            [deadline] => 2024-11-30 00:00:00
-            [thumbnail] => ../assets/images/uploads/6727433f8b8e9.png
-            [discount] => 34
-            [category] => ["14", "12", "8", "6", "5"]
-            [other_images] => ["../assets/images/uploads/6727433f8bb0c.jpg"]
-            [description] => <p>dfg</p>
-            [created_at] => 2024-11-03 15:17:47
+            [id] => 67
+            [name] => The Wonders of Patagonia
+            [total_travelers] => 6
+            [days] => 9
+            [nights] => 8
+            [price] => 2750.75
+            [deadline] => 2025-01-30 00:00:00
+            [thumbnail] => ../assets/images/uploads/672b8983d356c.jpg
+            [discount] => 25
+            [category] => [7, 8, 11]
+            [other_images] => ["../assets/images/uploads/672b8983d3796.jpg", "../assets/images/uploads/672b8983d3c9a.jpg"]
+            [description] => Adventure through the rugged landscapes of Patagonia
+            [created_at] => 2024-11-06 22:24:50
             [author] => 2
-            [rating] => 0.0
+            [rating] => 4.4
+        )
+
+    [2] => Array
+        (
+            [id] => 63
+            [name] => Northern Lights Adventure
+            [total_travelers] => 5
+            [days] => 6
+            [nights] => 5
+            [price] => 2000.99
+            [deadline] => 2025-01-30 00:00:00
+            [thumbnail] => ../assets/images/uploads/672b8983d356c.jpg
+            [discount] => 32
+            [category] => [2, 7, 11]
+            [other_images] => ["../assets/images/uploads/672b8983d3796.jpg", "../assets/images/uploads/672b8983d3c9a.jpg"]
+            [description] => Experience the magic of aurora borealis
+            [created_at] => 2024-11-06 22:24:50
+            [author] => 2
+            [rating] => 4.5
+        )
+
+    [3] => Array
+        (
+            [id] => 47
+            [name] => The Wonders of Patagonia
+            [total_travelers] => 6
+            [days] => 9
+            [nights] => 8
+            [price] => 2750.75
+            [deadline] => 2025-01-30 00:00:00
+            [thumbnail] => ../assets/images/uploads/672b8983d356c.jpg
+            [discount] => 25
+            [category] => [7, 8, 11]
+            [other_images] => ["../assets/images/uploads/672b8983d3796.jpg", "../assets/images/uploads/672b8983d3c9a.jpg"]
+            [description] => Adventure through the rugged landscapes of Patagonia
+            [created_at] => 2024-11-06 22:24:37
+            [author] => 2
+            [rating] => 4.4
+        )
+
+    [4] => Array
+        (
+            [id] => 43
+            [name] => Northern Lights Adventure
+            [total_travelers] => 5
+            [days] => 6
+            [nights] => 5
+            [price] => 2000.99
+            [deadline] => 2025-01-30 00:00:00
+            [thumbnail] => ../assets/images/uploads/672b8983d356c.jpg
+            [discount] => 32
+            [category] => [2, 7, 11]
+            [other_images] => ["../assets/images/uploads/672b8983d3796.jpg", "../assets/images/uploads/672b8983d3c9a.jpg"]
+            [description] => Experience the magic of aurora borealis
+            [created_at] => 2024-11-06 22:24:37
+            [author] => 2
+            [rating] => 4.5
         )
 
 )
 
-[2024-11-03 10:19:42] Array
-(
-    [0] => Array
-        (
-            [id] => 9
-            [name] => George Scott
-            [total_travelers] => 36
-            [days] => 7
-            [nights] => 63
-            [price] => 302.00
-            [deadline] => 2024-11-30 00:00:00
-            [thumbnail] => ../assets/images/uploads/6727433f8b8e9.png
-            [discount] => 34
-            [category] => ["14", "12", "8", "6", "5"]
-            [other_images] => ["../assets/images/uploads/6727433f8bb0c.jpg"]
-            [description] => <p>dfg</p>
-            [created_at] => 2024-11-03 15:17:47
-            [author] => 2
-            [rating] => 0.0
-        )
-
-)
-
-[2024-11-03 10:20:24] Array
-(
-    [0] => Array
-        (
-            [id] => 9
-            [name] => George Scott
-            [total_travelers] => 36
-            [days] => 7
-            [nights] => 63
-            [price] => 302.00
-            [deadline] => 2024-11-30 00:00:00
-            [thumbnail] => ../assets/images/uploads/6727433f8b8e9.png
-            [discount] => 34
-            [category] => ["14", "12", "8", "6", "5"]
-            [other_images] => ["../assets/images/uploads/6727433f8bb0c.jpg"]
-            [description] => <p>dfg</p>
-            [created_at] => 2024-11-03 15:17:47
-            [author] => 2
-            [rating] => 0.0
-        )
-
-)
-
-[03-Nov-2024 10:20:24 UTC] PHP Parse error:  Unclosed '{' on line 5 in C:\laragon\www\ttms\templates\users\packages.php on line 52
-[2024-11-03 10:20:33] Array
-(
-    [0] => Array
-        (
-            [id] => 9
-            [name] => George Scott
-            [total_travelers] => 36
-            [days] => 7
-            [nights] => 63
-            [price] => 302.00
-            [deadline] => 2024-11-30 00:00:00
-            [thumbnail] => ../assets/images/uploads/6727433f8b8e9.png
-            [discount] => 34
-            [category] => ["14", "12", "8", "6", "5"]
-            [other_images] => ["../assets/images/uploads/6727433f8bb0c.jpg"]
-            [description] => <p>dfg</p>
-            [created_at] => 2024-11-03 15:17:47
-            [author] => 2
-            [rating] => 0.0
-        )
-
-)
-
-[2024-11-03 10:20:43] Array
-(
-    [0] => Array
-        (
-            [id] => 9
-            [name] => George Scott
-            [total_travelers] => 36
-            [days] => 7
-            [nights] => 63
-            [price] => 302.00
-            [deadline] => 2024-11-30 00:00:00
-            [thumbnail] => ../assets/images/uploads/6727433f8b8e9.png
-            [discount] => 34
-            [category] => ["14", "12", "8", "6", "5"]
-            [other_images] => ["../assets/images/uploads/6727433f8bb0c.jpg"]
-            [description] => <p>dfg</p>
-            [created_at] => 2024-11-03 15:17:47
-            [author] => 2
-            [rating] => 0.0
-        )
-
-)
-
-[2024-11-03 10:20:47] Array
-(
-    [0] => Array
-        (
-            [id] => 9
-            [name] => George Scott
-            [total_travelers] => 36
-            [days] => 7
-            [nights] => 63
-            [price] => 302.00
-            [deadline] => 2024-11-30 00:00:00
-            [thumbnail] => ../assets/images/uploads/6727433f8b8e9.png
-            [discount] => 34
-            [category] => ["14", "12", "8", "6", "5"]
-            [other_images] => ["../assets/images/uploads/6727433f8bb0c.jpg"]
-            [description] => <p>dfg</p>
-            [created_at] => 2024-11-03 15:17:47
-            [author] => 2
-            [rating] => 0.0
-        )
-
-)
-
-[2024-11-03 10:20:53] Array
-(
-    [0] => Array
-        (
-            [id] => 9
-            [name] => George Scott
-            [total_travelers] => 36
-            [days] => 7
-            [nights] => 63
-            [price] => 302.00
-            [deadline] => 2024-11-30 00:00:00
-            [thumbnail] => ../assets/images/uploads/6727433f8b8e9.png
-            [discount] => 34
-            [category] => ["14", "12", "8", "6", "5"]
-            [other_images] => ["../assets/images/uploads/6727433f8bb0c.jpg"]
-            [description] => <p>dfg</p>
-            [created_at] => 2024-11-03 15:17:47
-            [author] => 2
-            [rating] => 0.0
-        )
-
-)
-
-[2024-11-03 10:21:22] Array
-(
-    [0] => Array
-        (
-            [id] => 9
-            [name] => George Scott
-            [total_travelers] => 36
-            [days] => 7
-            [nights] => 63
-            [price] => 302.00
-            [deadline] => 2024-11-30 00:00:00
-            [thumbnail] => ../assets/images/uploads/6727433f8b8e9.png
-            [discount] => 34
-            [category] => ["14", "12", "8", "6", "5"]
-            [other_images] => ["../assets/images/uploads/6727433f8bb0c.jpg"]
-            [description] => <p>dfg</p>
-            [created_at] => 2024-11-03 15:17:47
-            [author] => 2
-            [rating] => 0.0
-        )
-
-)
-
-[2024-11-03 10:21:44] Array
-(
-    [0] => Array
-        (
-            [id] => 9
-            [name] => George Scott
-            [total_travelers] => 36
-            [days] => 7
-            [nights] => 63
-            [price] => 302.00
-            [deadline] => 2024-11-30 00:00:00
-            [thumbnail] => ../assets/images/uploads/6727433f8b8e9.png
-            [discount] => 34
-            [category] => ["14", "12", "8", "6", "5"]
-            [other_images] => ["../assets/images/uploads/6727433f8bb0c.jpg"]
-            [description] => <p>dfg</p>
-            [created_at] => 2024-11-03 15:17:47
-            [author] => 2
-            [rating] => 0.0
-        )
-
-)
-
-[2024-11-03 10:24:27] Array
-(
-    [0] => Array
-        (
-            [id] => 9
-            [name] => George Scott
-            [total_travelers] => 36
-            [days] => 7
-            [nights] => 63
-            [price] => 302.00
-            [deadline] => 2024-11-30 00:00:00
-            [thumbnail] => ../assets/images/uploads/6727433f8b8e9.png
-            [discount] => 34
-            [category] => ["14", "12", "8", "6", "5"]
-            [other_images] => ["../assets/images/uploads/6727433f8bb0c.jpg"]
-            [description] => <p>dfg</p>
-            [created_at] => 2024-11-03 15:17:47
-            [author] => 2
-            [rating] => 0.0
-        )
-
-)
-
-[2024-11-03 10:26:18] Array
-(
-    [0] => Array
-        (
-            [id] => 9
-            [name] => George Scott
-            [total_travelers] => 36
-            [days] => 7
-            [nights] => 63
-            [price] => 302.00
-            [deadline] => 2024-11-30 00:00:00
-            [thumbnail] => ../assets/images/uploads/6727433f8b8e9.png
-            [discount] => 34
-            [category] => ["14", "12", "8", "6", "5"]
-            [other_images] => ["../assets/images/uploads/6727433f8bb0c.jpg"]
-            [description] => <p>dfg</p>
-            [created_at] => 2024-11-03 15:17:47
-            [author] => 2
-            [rating] => 0.0
-        )
-
-)
-
-[2024-11-03 10:26:31] Array
-(
-    [0] => Array
-        (
-            [id] => 9
-            [name] => George Scott
-            [total_travelers] => 36
-            [days] => 7
-            [nights] => 63
-            [price] => 302.00
-            [deadline] => 2024-11-30 00:00:00
-            [thumbnail] => ../assets/images/uploads/6727433f8b8e9.png
-            [discount] => 34
-            [category] => ["14", "12", "8", "6", "5"]
-            [other_images] => ["../assets/images/uploads/6727433f8bb0c.jpg"]
-            [description] => <p>dfg</p>
-            [created_at] => 2024-11-03 15:17:47
-            [author] => 2
-            [rating] => 0.0
-        )
-
-)
-
-[2024-11-03 10:26:48] Array
-(
-    [0] => Array
-        (
-            [id] => 9
-            [name] => George Scott
-            [total_travelers] => 36
-            [days] => 7
-            [nights] => 63
-            [price] => 302.00
-            [deadline] => 2024-11-30 00:00:00
-            [thumbnail] => ../assets/images/uploads/6727433f8b8e9.png
-            [discount] => 34
-            [category] => ["14", "12", "8", "6", "5"]
-            [other_images] => ["../assets/images/uploads/6727433f8bb0c.jpg"]
-            [description] => <p>dfg</p>
-            [created_at] => 2024-11-03 15:17:47
-            [author] => 2
-            [rating] => 0.0
-        )
-
-)
-
-[2024-11-03 10:27:19] Array
-(
-    [0] => Array
-        (
-            [id] => 9
-            [name] => George Scott
-            [total_travelers] => 36
-            [days] => 7
-            [nights] => 63
-            [price] => 302.00
-            [deadline] => 2024-11-30 00:00:00
-            [thumbnail] => ../assets/images/uploads/6727433f8b8e9.png
-            [discount] => 34
-            [category] => ["14", "12", "8", "6", "5"]
-            [other_images] => ["../assets/images/uploads/6727433f8bb0c.jpg"]
-            [description] => <p>dfg</p>
-            [created_at] => 2024-11-03 15:17:47
-            [author] => 2
-            [rating] => 0.0
-        )
-
-)
-
-[2024-11-03 10:27:24] Array
-(
-    [0] => Array
-        (
-            [id] => 9
-            [name] => George Scott
-            [total_travelers] => 36
-            [days] => 7
-            [nights] => 63
-            [price] => 302.00
-            [deadline] => 2024-11-30 00:00:00
-            [thumbnail] => ../assets/images/uploads/6727433f8b8e9.png
-            [discount] => 34
-            [category] => ["14", "12", "8", "6", "5"]
-            [other_images] => ["../assets/images/uploads/6727433f8bb0c.jpg"]
-            [description] => <p>dfg</p>
-            [created_at] => 2024-11-03 15:17:47
-            [author] => 2
-            [rating] => 0.0
-        )
-
-)
-
-[2024-11-03 10:28:10] Array
-(
-    [0] => Array
-        (
-            [id] => 9
-            [name] => George Scott
-            [total_travelers] => 36
-            [days] => 7
-            [nights] => 63
-            [price] => 302.00
-            [deadline] => 2024-11-30 00:00:00
-            [thumbnail] => ../assets/images/uploads/6727433f8b8e9.png
-            [discount] => 34
-            [category] => ["14", "12", "8", "6", "5"]
-            [other_images] => ["../assets/images/uploads/6727433f8bb0c.jpg"]
-            [description] => <p>dfg</p>
-            [created_at] => 2024-11-03 15:17:47
-            [author] => 2
-            [rating] => 0.0
-        )
-
-)
-
-[2024-11-03 10:28:33] Array
-(
-    [0] => Array
-        (
-            [id] => 9
-            [name] => George Scott
-            [total_travelers] => 36
-            [days] => 7
-            [nights] => 63
-            [price] => 302.00
-            [deadline] => 2024-11-30 00:00:00
-            [thumbnail] => ../assets/images/uploads/6727433f8b8e9.png
-            [discount] => 34
-            [category] => ["14", "12", "8", "6", "5"]
-            [other_images] => ["../assets/images/uploads/6727433f8bb0c.jpg"]
-            [description] => <p>dfg</p>
-            [created_at] => 2024-11-03 15:17:47
-            [author] => 2
-            [rating] => 0.0
-        )
-
-)
-
-[2024-11-03 10:28:37] Array
-(
-    [0] => Array
-        (
-            [id] => 9
-            [name] => George Scott
-            [total_travelers] => 36
-            [days] => 7
-            [nights] => 63
-            [price] => 302.00
-            [deadline] => 2024-11-30 00:00:00
-            [thumbnail] => ../assets/images/uploads/6727433f8b8e9.png
-            [discount] => 34
-            [category] => ["14", "12", "8", "6", "5"]
-            [other_images] => ["../assets/images/uploads/6727433f8bb0c.jpg"]
-            [description] => <p>dfg</p>
-            [created_at] => 2024-11-03 15:17:47
-            [author] => 2
-            [rating] => 0.0
-        )
-
-)
-
-[2024-11-03 10:28:41] Array
-(
-    [0] => Array
-        (
-            [id] => 9
-            [name] => George Scott
-            [total_travelers] => 36
-            [days] => 7
-            [nights] => 63
-            [price] => 302.00
-            [deadline] => 2024-11-30 00:00:00
-            [thumbnail] => ../assets/images/uploads/6727433f8b8e9.png
-            [discount] => 34
-            [category] => ["14", "12", "8", "6", "5"]
-            [other_images] => ["../assets/images/uploads/6727433f8bb0c.jpg"]
-            [description] => <p>dfg</p>
-            [created_at] => 2024-11-03 15:17:47
-            [author] => 2
-            [rating] => 0.0
-        )
-
-)
-
-[2024-11-03 10:29:43] Array
-(
-    [0] => Array
-        (
-            [id] => 9
-            [name] => George Scott
-            [total_travelers] => 36
-            [days] => 7
-            [nights] => 63
-            [price] => 302.00
-            [deadline] => 2024-11-30 00:00:00
-            [thumbnail] => ../assets/images/uploads/6727433f8b8e9.png
-            [discount] => 34
-            [category] => ["14", "12", "8", "6", "5"]
-            [other_images] => ["../assets/images/uploads/6727433f8bb0c.jpg"]
-            [description] => <p>dfg</p>
-            [created_at] => 2024-11-03 15:17:47
-            [author] => 2
-            [rating] => 0.0
-        )
-
-)
-
-[2024-11-03 10:30:19] Array
-(
-    [0] => Array
-        (
-            [id] => 9
-            [name] => George Scott
-            [total_travelers] => 36
-            [days] => 7
-            [nights] => 63
-            [price] => 302.00
-            [deadline] => 2024-11-30 00:00:00
-            [thumbnail] => ../assets/images/uploads/6727433f8b8e9.png
-            [discount] => 34
-            [category] => ["14", "12", "8", "6", "5"]
-            [other_images] => ["../assets/images/uploads/6727433f8bb0c.jpg"]
-            [description] => <p>dfg</p>
-            [created_at] => 2024-11-03 15:17:47
-            [author] => 2
-            [rating] => 0.0
-        )
-
-)
-
+[06-Nov-2024 17:04:29 UTC] PHP Parse error:  syntax error, unexpected token "foreach", expecting "," or ";" in C:\laragon\www\ttms\templates\users\similar-packages.php on line 45
+[06-Nov-2024 17:12:13 UTC] PHP Parse error:  syntax error, unexpected identifier "badge", expecting "," or ";" in C:\laragon\www\ttms\templates\users\individual-card.php on line 116

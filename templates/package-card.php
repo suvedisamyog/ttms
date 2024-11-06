@@ -1,5 +1,5 @@
 <div class="col">
-    <div class="card">
+    <div class="card card-pop">
 		<img src="<?php echo isset($package['thumbnail']) ?	 $package['thumbnail'] : ''; ?>" class="card-img-top" alt="...">
 		<div class="card-body ">
             <h5 class="card-title"><?php echo isset($package['name']) ? $package['name']  : '' ?></h5>

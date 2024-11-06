@@ -312,6 +312,9 @@ function handel_package($action = 'add'){
 function handel_login(){
 	$email = isset($_POST['email']) ? $_POST['email'] : '';
 	$password = isset($_POST['password']) ? $_POST['password'] : '';
+	$redirect_url = isset($_POST['redirect_url']) ? $_POST['redirect_url'] : '';
+
+
 	$data = [
 		'email' => $email,
 		'password' => $password
@@ -321,6 +324,7 @@ function handel_login(){
 
 	$login = new Database\Operations\UserOperations('users');
 	$result = $login->get_individual_data_from_email($email);
+
 	if ($result && is_array($result) ) {
 		if (!password_verify($password, $result['password'])){
 			handel_error('Invalid email or password.');
@@ -333,7 +337,7 @@ function handel_login(){
 			handel_success(
 				"Login successful!",
 				"login",
-				$result['role'] == 'admin' ? 'admin.php' : 'index.php'
+				$redirect_url !== '' ? $redirect_url : ($result['role'] == 'admin' ? 'admin.php' : 'index.php')
 			);
 
 		}

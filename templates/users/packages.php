@@ -5,7 +5,7 @@
 		foreach($packages as $package){
 			?>
  			<div class="col-md-4 mb-4">
-            <div class="card">
+            <div class="card card-pop">
                 <img src="<?php echo $package['thumbnail'] ?>" class="card-img-top" alt="Singapore And Bali">
                 <div class="card-body">
 				<p class="card-text">
@@ -44,8 +44,7 @@
 						<?php
 					} ?>
 					<p class="card-text description" title="Click to view detail"><?php echo $package['description'] ?></p>
-
-                    <button class="btn btn-warning w-100" data-id="<?php echo $package['id'] ?>">Book Now</button>
+                    <a href="?page=individual&id=<?php echo (int)$package['id'] ?>" class="btn btn-warning w-100">View Details</a>
                 </div>
             </div>
         </div>

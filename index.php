@@ -24,32 +24,29 @@ use App\TTMS\Database\Operations\UserOperations;
 </head>
 <body>
 <?php
-include_once TEMPLATE_PATH . 'users/carousel.php';
+session_start();
 
-$get_all_packages = new UserOperations('packages');
-$packages = $get_all_packages->get_all_data();
-$get_categories = new UserOperations('categories');
-$all_categories = $get_categories->get_all_data();
-
-include_once TEMPLATE_PATH . 'users/packages.php';
-?>
+if(isset($_GET['page']) && 'individual' === $_GET['page'] && isset($_GET['id'])){
+	$id = (int)$_GET['id'];
+	$get_package = new UserOperations('packages');
+	$package = $get_package->get_individual_data_from_id($id);
 
 
-<?php
+	include_once TEMPLATE_PATH . 'users/individual-card.php';
+	include_once TEMPLATE_PATH . 'footer.php';
+	return ;
+
+
+}else{
+	$get_all_packages = new UserOperations('packages');
+	$packages = $get_all_packages->get_all_data();
+	$get_categories = new UserOperations('categories');
+	$all_categories = $get_categories->get_all_data();
+	include_once TEMPLATE_PATH . 'users/carousel.php';
+	include_once TEMPLATE_PATH . 'users/packages.php';
+
+}
 include_once TEMPLATE_PATH . 'footer.php';
-// switch ( $page ) {
-// 	case 'home':
-// 		include 'home.php	';
-// 		break;
-// 	case 'about':
-// 		include 'about.php';
-// 		break;
-// 	case 'contact':
-// 		include 'contact.php';
-// 		break;
-// 	default:
-// 		include '404.php';
-// 		break;
-// }
+
 
 ?>

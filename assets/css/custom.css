@@ -35,12 +35,12 @@ a[aria-expanded="true"] {
 	height: 200px;
 	object-fit: cover;
 }
-.card {
+.card-pop {
     transition: transform 0.3s ease, box-shadow 0.3s ease;
     cursor: pointer;
 }
 
-.card:hover {
+.card-pop:hover {
     transform: scale(1.05);
     box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
 }
@@ -86,5 +86,5 @@ a[aria-expanded="true"] {
     white-space: nowrap;
     text-overflow: ellipsis;
     max-width: 100%;
-    display: block;           
+    display: block;
 }
