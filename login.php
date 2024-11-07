@@ -6,7 +6,6 @@ if ( file_exists( __DIR__ . '/vendor/autoload.php' ) ) {
 	}
 
 template_header('Login');
-lg($_GET);
 ?>
 
 <div class="container mt-5">

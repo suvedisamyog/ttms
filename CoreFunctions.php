@@ -73,6 +73,8 @@ if ( ! function_exists ('get_stylesheet') ){
             echo "<link rel='stylesheet' href='" . ASSETS_URL . "/css/$style'>";
 			echo  "\n";
 		}
+		echo '<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css">
+';
 	}
 }
 

@@ -88,3 +88,9 @@ a[aria-expanded="true"] {
     max-width: 100%;
     display: block;
 }
+#rating{
+	.bi{
+		cursor: pointer;
+		margin-right:2px;
+	}
+}

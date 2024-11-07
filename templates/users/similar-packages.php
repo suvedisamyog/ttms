@@ -42,6 +42,7 @@ $top_similar_packages = array_map(function($item) {
 $top_similar_packages = (empty($top_similar_packages)) ? array() : $top_similar_packages;
 echo '	<h4>Similar Packages</h4>';
 foreach($top_similar_packages as $package){
+	lg($package);
 	?>
 	<div class="card mt-3">
 		<div class="card shadow-sm">
@@ -50,10 +51,27 @@ foreach($top_similar_packages as $package){
 				<h5 class="card-title"><?php  echo $package['name'] ?? '' ?></h5>
 				<div class="d-flex justify-content-between align-items-center">
 					<div>
-						<h6 class="text-decoration-line-through text-muted">$300.00</h6>
-						<h5 class="text-success">$250.00</h5>
+						<?php
+							$discount = $package['discount'] ?? 0;
+							if(0 !== $discount){
+								echo '<h5 class="text-decoration-line-through text-muted">Rs.'.ceil($package['price']).'</h5>';
+								$discounted_price = $package['price'] - ($package['price'] * ($discount / 100));
+								echo '<h5 class="text-success">Rs.' . ceil($discounted_price) . '</h5>';
+							}else{
+								echo '<h5 class="text-success">Rs.'.$package['price'].'</h5>';
+							}
+						?>
+
 					</div>
-					<a href="#" class="btn btn-primary">Details</a>
+					<?php
+						$current_url = $_SERVER['REQUEST_URI'];
+						$url_parts = parse_url($current_url);
+						parse_str($url_parts['query'] ?? '', $query_params);
+						$query_params['id'] = $package['id'];
+						$new_query = http_build_query($query_params);
+						$new_url = $url_parts['path'] . '?' . $new_query;
+					?>
+					<a href="<?php echo $new_url ?>" class="btn btn-primary">Details</a>
 				</div>
 			</div>
 		</div>

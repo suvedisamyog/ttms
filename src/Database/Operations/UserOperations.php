@@ -119,7 +119,6 @@ class UserOperations extends BaseOperation {
 	 * @return bool
 	 */
     public function delete_data(int $id): bool {
-
         $stmt = $this->conn->prepare("DELETE FROM $this->table WHERE id = :id");
         $stmt->bindParam(':id', $id);
         return $stmt->execute();

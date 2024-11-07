@@ -25,6 +25,10 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST'){
 			handel_package('add');
 		case 'update_package':
 			handel_package('update');
+		case 'add_comment':
+			handel_comment('add');
+		case 'update_comment':
+			handel_comment('update');
 
 			break;
 	}
@@ -425,6 +429,46 @@ function handel_category(){
 }
 
 /**
+ * Handle comment and rating addition
+ */
+function handel_comment($action = 'add'){
+	$package = $_POST['package_id'] ?? '';
+	$rating = $_POST['rating'] ?? 0;
+	$comment = $_POST['comment'] ?? '';
+	$author_id = get_current_user_attr('user_id');
+	$comment_id = $_POST['comment_id'] ?? 0;
+	$data = [
+		'package_id' => $package,
+		'rating' => $rating,
+		'comment' => $comment,
+		'user_id' => $author_id
+	];
+	$response = array();
+	$validation_error = validate_data($data);
+	if ($validation_error !== false){
+		handel_error($validation_error);
+	}
+	$comment = new Database\Operations\UserOperations('comments_and_ratings');
+	if($action === 'add'){
+		$result = $comment->insert_data($data);
+	}elseif ($action= 'update') {
+		$data['id'] = $comment_id;
+		$result = $comment->update_data( $comment_id,$data);
+	}
+	if ($result) {
+		handel_success(
+			"Comment added successfully!",
+			"add_comment",
+		);
+
+	} else {
+		handel_error("Failed to add comment.");
+	}
+
+}
+
+
+/**
  * Validate user registration data
  *
  * @param array $data
@@ -486,6 +530,12 @@ function validate_data( $data ){
 		if( !is_numeric($data['discount']) ){
 			handel_error('Invalid discount percentage.');
 		}
+	}
+	if( isset($data['comment']) && ( empty($data['comment']) || strlen($data['comment']) < 3 ) ){
+		handel_error('Comment cannot be empty or less than 3 characters.');
+	}
+	if( isset($data['rating']) && (  !is_numeric($data['rating']) || $data['rating'] < 0 || $data['rating'] > 5 ) ){
+		handel_error('Invalid rating.');
 	}
 
 

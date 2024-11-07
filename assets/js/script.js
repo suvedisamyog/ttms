@@ -199,7 +199,55 @@ $(document).ready(function () {
 		});
 
 
-});
+
+	});
+
+	//Handle rating clicks
+	$('#rating .bi').on('click', function() {
+		rating = $(this).data('rating');
+		$('#rating .bi').removeClass('bi-star-fill').addClass('bi-star');
+		$('#rating .bi').slice(0, rating).removeClass('bi-star').addClass('bi-star-fill');
+	  });
+
+	  $(document).on('click', '#submit_comment, #update_comment', function(e) {
+		e.preventDefault();
+		$("#comment-error").text('');
+
+		// Identify the action based on the clicked button
+		var action = (this.id === 'submit_comment') ? 'add_comment' : 'update_comment';
+
+		var form_data = new FormData();
+		form_data.append('comment', $('#comment').val());
+		form_data.append('rating', $('#rating .bi-star-fill').length);
+		form_data.append('package_id', $('#package_id').val());
+		form_data.append('action', action);
+		form_data.append('comment_id' ,$("#comment_id").val());
+
+		var validation_error = validate_form_data(form_data);
+
+		if (validation_error) {
+			return false;
+		}
+
+		handel_form_data(form_data, 'POST');
+	});
+
+	$(document).on('click',"#delete_comment",function(e){
+		e.preventDefault();
+		var form_data = new FormData();
+		form_data.append('comment_id' , $("#comment_id").val() );
+		alert_confirmation({
+			title: 'Are you sure?',
+			text: 'You won\'t be able to revert this!',
+			index: $(this).closest('tr').data('index'),
+			action: action,
+			id : $(this).data('id')
+
+		});
+
+	})
+
+
 
 });
 
@@ -343,6 +391,11 @@ validate_form_data = (data) => {
 					error = handel_client_side_validation_error(key , 'Please enter a valid date.');
 				}
 				break;
+			case 'comment':
+				if (value.length < 3 || value==='') {
+					error = handel_client_side_validation_error(key , 'Comment must be at least 3 characters long.');
+				}
+				break;
 
 		};
 	}
@@ -393,6 +446,10 @@ handel_form_data = (data,method) => {
 					case 'update':
 						alert_success(res);
 						break;
+					case 'add_comment':
+						$('#submit_comment').text('Update Comment');
+						$('#submit_comment').attr('id', 'update_comment');
+						$('#delete_comment').removeClass('d-none');
 					case 'delete':
 						if(res.index !== undefined && res.index !== '' ){
 							$('tr[data-index="' + res.index + '"]').remove();

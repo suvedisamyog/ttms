@@ -1,101 +1,808 @@
-[2024-11-06 17:01:12] Array
+[2024-11-07 17:56:36] Array
 (
-    [0] => Array
-        (
-            [id] => 9
-            [name] => George Scott
-            [total_travelers] => 36
-            [days] => 7
-            [nights] => 63
-            [price] => 302.00
-            [deadline] => 2024-11-30 00:00:00
-            [thumbnail] => ../assets/images/uploads/6727433f8b8e9.png
-            [discount] => 34
-            [category] => ["14", "12", "8", "6", "5"]
-            [other_images] => ["../assets/images/uploads/6727433f8bb0c.jpg"]
-            [description] => <p>dfg</p>
-            [created_at] => 2024-11-03 15:17:47
-            [author] => 2
-            [rating] => 0.0
-        )
-
-    [1] => Array
-        (
-            [id] => 67
-            [name] => The Wonders of Patagonia
-            [total_travelers] => 6
-            [days] => 9
-            [nights] => 8
-            [price] => 2750.75
-            [deadline] => 2025-01-30 00:00:00
-            [thumbnail] => ../assets/images/uploads/672b8983d356c.jpg
-            [discount] => 25
-            [category] => [7, 8, 11]
-            [other_images] => ["../assets/images/uploads/672b8983d3796.jpg", "../assets/images/uploads/672b8983d3c9a.jpg"]
-            [description] => Adventure through the rugged landscapes of Patagonia
-            [created_at] => 2024-11-06 22:24:50
-            [author] => 2
-            [rating] => 4.4
-        )
-
-    [2] => Array
-        (
-            [id] => 63
-            [name] => Northern Lights Adventure
-            [total_travelers] => 5
-            [days] => 6
-            [nights] => 5
-            [price] => 2000.99
-            [deadline] => 2025-01-30 00:00:00
-            [thumbnail] => ../assets/images/uploads/672b8983d356c.jpg
-            [discount] => 32
-            [category] => [2, 7, 11]
-            [other_images] => ["../assets/images/uploads/672b8983d3796.jpg", "../assets/images/uploads/672b8983d3c9a.jpg"]
-            [description] => Experience the magic of aurora borealis
-            [created_at] => 2024-11-06 22:24:50
-            [author] => 2
-            [rating] => 4.5
-        )
-
-    [3] => Array
-        (
-            [id] => 47
-            [name] => The Wonders of Patagonia
-            [total_travelers] => 6
-            [days] => 9
-            [nights] => 8
-            [price] => 2750.75
-            [deadline] => 2025-01-30 00:00:00
-            [thumbnail] => ../assets/images/uploads/672b8983d356c.jpg
-            [discount] => 25
-            [category] => [7, 8, 11]
-            [other_images] => ["../assets/images/uploads/672b8983d3796.jpg", "../assets/images/uploads/672b8983d3c9a.jpg"]
-            [description] => Adventure through the rugged landscapes of Patagonia
-            [created_at] => 2024-11-06 22:24:37
-            [author] => 2
-            [rating] => 4.4
-        )
-
-    [4] => Array
-        (
-            [id] => 43
-            [name] => Northern Lights Adventure
-            [total_travelers] => 5
-            [days] => 6
-            [nights] => 5
-            [price] => 2000.99
-            [deadline] => 2025-01-30 00:00:00
-            [thumbnail] => ../assets/images/uploads/672b8983d356c.jpg
-            [discount] => 32
-            [category] => [2, 7, 11]
-            [other_images] => ["../assets/images/uploads/672b8983d3796.jpg", "../assets/images/uploads/672b8983d3c9a.jpg"]
-            [description] => Experience the magic of aurora borealis
-            [created_at] => 2024-11-06 22:24:37
-            [author] => 2
-            [rating] => 4.5
-        )
-
+    [id] => 9
+    [name] => George Scott
+    [total_travelers] => 36
+    [days] => 7
+    [nights] => 63
+    [price] => 302.00
+    [deadline] => 2024-11-30 00:00:00
+    [thumbnail] => ../assets/images/uploads/6727433f8b8e9.png
+    [discount] => 34
+    [category] => ["14", "12", "8", "6", "5"]
+    [other_images] => ["../assets/images/uploads/6727433f8bb0c.jpg"]
+    [description] => <p>dfg</p>
+    [created_at] => 2024-11-03 15:17:47
+    [author] => 2
+    [rating] => 0.0
 )
 
-[06-Nov-2024 17:04:29 UTC] PHP Parse error:  syntax error, unexpected token "foreach", expecting "," or ";" in C:\laragon\www\ttms\templates\users\similar-packages.php on line 45
-[06-Nov-2024 17:12:13 UTC] PHP Parse error:  syntax error, unexpected identifier "badge", expecting "," or ";" in C:\laragon\www\ttms\templates\users\individual-card.php on line 116
+[2024-11-07 17:56:36] Array
+(
+    [id] => 67
+    [name] => The Wonders of Patagonia
+    [total_travelers] => 6
+    [days] => 9
+    [nights] => 8
+    [price] => 2750.75
+    [deadline] => 2025-01-30 00:00:00
+    [thumbnail] => ../assets/images/uploads/672b8983d356c.jpg
+    [discount] => 25
+    [category] => [7, 8, 11]
+    [other_images] => ["../assets/images/uploads/672b8983d3796.jpg", "../assets/images/uploads/672b8983d3c9a.jpg"]
+    [description] => Adventure through the rugged landscapes of Patagonia
+    [created_at] => 2024-11-06 22:24:50
+    [author] => 2
+    [rating] => 4.4
+)
+
+[2024-11-07 17:56:36] Array
+(
+    [id] => 63
+    [name] => Northern Lights Adventure
+    [total_travelers] => 5
+    [days] => 6
+    [nights] => 5
+    [price] => 2000.99
+    [deadline] => 2025-01-30 00:00:00
+    [thumbnail] => ../assets/images/uploads/672b8983d356c.jpg
+    [discount] => 32
+    [category] => [2, 7, 11]
+    [other_images] => ["../assets/images/uploads/672b8983d3796.jpg", "../assets/images/uploads/672b8983d3c9a.jpg"]
+    [description] => Experience the magic of aurora borealis
+    [created_at] => 2024-11-06 22:24:50
+    [author] => 2
+    [rating] => 4.5
+)
+
+[2024-11-07 17:56:36] Array
+(
+    [id] => 47
+    [name] => The Wonders of Patagonia
+    [total_travelers] => 6
+    [days] => 9
+    [nights] => 8
+    [price] => 2750.75
+    [deadline] => 2025-01-30 00:00:00
+    [thumbnail] => ../assets/images/uploads/672b8983d356c.jpg
+    [discount] => 25
+    [category] => [7, 8, 11]
+    [other_images] => ["../assets/images/uploads/672b8983d3796.jpg", "../assets/images/uploads/672b8983d3c9a.jpg"]
+    [description] => Adventure through the rugged landscapes of Patagonia
+    [created_at] => 2024-11-06 22:24:37
+    [author] => 2
+    [rating] => 4.4
+)
+
+[2024-11-07 17:56:36] Array
+(
+    [id] => 43
+    [name] => Northern Lights Adventure
+    [total_travelers] => 5
+    [days] => 6
+    [nights] => 5
+    [price] => 2000.99
+    [deadline] => 2025-01-30 00:00:00
+    [thumbnail] => ../assets/images/uploads/672b8983d356c.jpg
+    [discount] => 32
+    [category] => [2, 7, 11]
+    [other_images] => ["../assets/images/uploads/672b8983d3796.jpg", "../assets/images/uploads/672b8983d3c9a.jpg"]
+    [description] => Experience the magic of aurora borealis
+    [created_at] => 2024-11-06 22:24:37
+    [author] => 2
+    [rating] => 4.5
+)
+
+[07-Nov-2024 17:56:43 UTC] PHP Warning:  Trying to access array offset on value of type bool in C:\laragon\www\ttms\templates\users\individual-card.php on line 6
+[07-Nov-2024 17:56:43 UTC] PHP Deprecated:  htmlspecialchars(): Passing null to parameter #1 ($string) of type string is deprecated in C:\laragon\www\ttms\templates\users\individual-card.php on line 14
+[07-Nov-2024 17:56:43 UTC] PHP Warning:  Trying to access array offset on value of type bool in C:\laragon\www\ttms\templates\users\individual-card.php on line 35
+[07-Nov-2024 17:56:43 UTC] PHP Deprecated:  htmlspecialchars(): Passing null to parameter #1 ($string) of type string is deprecated in C:\laragon\www\ttms\templates\users\individual-card.php on line 35
+[07-Nov-2024 17:56:43 UTC] PHP Warning:  Trying to access array offset on value of type bool in C:\laragon\www\ttms\templates\users\individual-card.php on line 37
+[07-Nov-2024 17:56:43 UTC] PHP Warning:  Trying to access array offset on value of type bool in C:\laragon\www\ttms\templates\users\individual-card.php on line 42
+[07-Nov-2024 17:56:43 UTC] PHP Fatal error:  Uncaught ArgumentCountError: ceil() expects exactly 1 argument, 2 given in C:\laragon\www\ttms\templates\users\individual-card.php:42
+Stack trace:
+#0 C:\laragon\www\ttms\templates\users\individual-card.php(42): ceil(NULL, 2)
+#1 C:\laragon\www\ttms\index.php(35): include_once('C:\\laragon\\www\\...')
+#2 {main}
+  thrown in C:\laragon\www\ttms\templates\users\individual-card.php on line 42
+[2024-11-07 17:56:44] Array
+(
+    [id] => 70
+    [name] => Road to Morocco
+    [total_travelers] => 16
+    [days] => 7
+    [nights] => 6
+    [price] => 1900.25
+    [deadline] => 2025-01-30 00:00:00
+    [thumbnail] => ../assets/images/uploads/672b8983d356c.jpg
+    [discount] => 15
+    [category] => [5, 13, 16]
+    [other_images] => ["../assets/images/uploads/672b8983d3796.jpg", "../assets/images/uploads/672b8983d3c9a.jpg"]
+    [description] => Embark on a colorful Moroccan journey
+    [created_at] => 2024-11-06 22:24:50
+    [author] => 2
+    [rating] => 4.7
+)
+
+[2024-11-07 17:56:44] Array
+(
+    [id] => 30
+    [name] => Road to Morocco
+    [total_travelers] => 16
+    [days] => 7
+    [nights] => 6
+    [price] => 1900.25
+    [deadline] => 2025-01-30 00:00:00
+    [thumbnail] => ../assets/images/uploads/672b8983d356c.jpg
+    [discount] => 15
+    [category] => [5, 13, 16]
+    [other_images] => ["../assets/images/uploads/672b8983d3796.jpg", "../assets/images/uploads/672b8983d3c9a.jpg"]
+    [description] => Embark on a colorful Moroccan journey
+    [created_at] => 2024-11-06 22:23:27
+    [author] => 2
+    [rating] => 4.7
+)
+
+[2024-11-07 17:56:44] Array
+(
+    [id] => 58
+    [name] => Amazon Rainforest Expedition
+    [total_travelers] => 9
+    [days] => 6
+    [nights] => 5
+    [price] => 2500.99
+    [deadline] => 2025-01-30 00:00:00
+    [thumbnail] => ../assets/images/uploads/672b8983d356c.jpg
+    [discount] => 28
+    [category] => [3, 5, 8]
+    [other_images] => ["../assets/images/uploads/672b8983d3796.jpg", "../assets/images/uploads/672b8983d3974.jpg"]
+    [description] => Explore diverse ecosystems in the Amazon
+    [created_at] => 2024-11-06 22:24:50
+    [author] => 2
+    [rating] => 4.4
+)
+
+[2024-11-07 17:56:44] Array
+(
+    [id] => 57
+    [name] => Historic European Tour
+    [total_travelers] => 7
+    [days] => 10
+    [nights] => 9
+    [price] => 3200.00
+    [deadline] => 2025-01-30 00:00:00
+    [thumbnail] => ../assets/images/uploads/672b8983d356c.jpg
+    [discount] => 12
+    [category] => [12, 16]
+    [other_images] => ["../assets/images/uploads/672b8983d3796.jpg", "../assets/images/uploads/672b8983d3c9a.jpg"]
+    [description] => Travel through Europe’s historic sites
+    [created_at] => 2024-11-06 22:24:50
+    [author] => 2
+    [rating] => 4.6
+)
+
+[2024-11-07 17:56:44] Array
+(
+    [id] => 38
+    [name] => Amazon Rainforest Expedition
+    [total_travelers] => 9
+    [days] => 6
+    [nights] => 5
+    [price] => 2500.99
+    [deadline] => 2025-01-30 00:00:00
+    [thumbnail] => ../assets/images/uploads/672b8983d356c.jpg
+    [discount] => 28
+    [category] => [3, 5, 8]
+    [other_images] => ["../assets/images/uploads/672b8983d3796.jpg", "../assets/images/uploads/672b8983d3974.jpg"]
+    [description] => Explore diverse ecosystems in the Amazon
+    [created_at] => 2024-11-06 22:24:37
+    [author] => 2
+    [rating] => 4.4
+)
+
+[2024-11-07 17:56:46] Array
+(
+    [id] => 39
+    [name] => Romantic Italian Escape
+    [total_travelers] => 3
+    [days] => 8
+    [nights] => 7
+    [price] => 2700.25
+    [deadline] => 2025-01-30 00:00:00
+    [thumbnail] => ../assets/images/uploads/672b8983d356c.jpg
+    [discount] => 18
+    [category] => [10, 16]
+    [other_images] => ["../assets/images/uploads/672b8983d3b19.jpg", "../assets/images/uploads/672b8983d3c9a.jpg"]
+    [description] => Discover the charm of Italy’s towns
+    [created_at] => 2024-11-06 22:24:37
+    [author] => 2
+    [rating] => 4.1
+)
+
+[2024-11-07 17:56:46] Array
+(
+    [id] => 19
+    [name] => Romantic Italian Escape
+    [total_travelers] => 3
+    [days] => 8
+    [nights] => 7
+    [price] => 2700.25
+    [deadline] => 2025-01-30 00:00:00
+    [thumbnail] => ../assets/images/uploads/672b8983d356c.jpg
+    [discount] => 18
+    [category] => [10, 16]
+    [other_images] => ["../assets/images/uploads/672b8983d3b19.jpg", "../assets/images/uploads/672b8983d3c9a.jpg"]
+    [description] => Discover the charm of Italy’s towns
+    [created_at] => 2024-11-06 22:23:27
+    [author] => 2
+    [rating] => 4.1
+)
+
+[2024-11-07 17:56:46] Array
+(
+    [id] => 56
+    [name] => Luxury Desert Escape
+    [total_travelers] => 15
+    [days] => 6
+    [nights] => 5
+    [price] => 1899.99
+    [deadline] => 2025-01-30 00:00:00
+    [thumbnail] => ../assets/images/uploads/672b8983d356c.jpg
+    [discount] => 35
+    [category] => [9, 10]
+    [other_images] => ["../assets/images/uploads/672b8983d3b19.jpg", "../assets/images/uploads/672b8983d3c9a.jpg"]
+    [description] => Discover the mystique of the desert
+    [created_at] => 2024-11-06 22:24:50
+    [author] => 2
+    [rating] => 3.9
+)
+
+[2024-11-07 17:56:46] Array
+(
+    [id] => 54
+    [name] => Tropical Island Getaway
+    [total_travelers] => 6
+    [days] => 4
+    [nights] => 3
+    [price] => 1200.00
+    [deadline] => 2025-01-30 00:00:00
+    [thumbnail] => ../assets/images/uploads/672b8983d356c.jpg
+    [discount] => 10
+    [category] => [10, 11, 12]
+    [other_images] => ["../assets/images/uploads/672b8983d3974.jpg", "../assets/images/uploads/672b8983d3c9a.jpg"]
+    [description] => Experience serene beaches and luxury
+    [created_at] => 2024-11-06 22:24:50
+    [author] => 2
+    [rating] => 4.2
+)
+
+[2024-11-07 17:56:46] Array
+(
+    [id] => 36
+    [name] => Luxury Desert Escape
+    [total_travelers] => 15
+    [days] => 6
+    [nights] => 5
+    [price] => 1899.99
+    [deadline] => 2025-01-30 00:00:00
+    [thumbnail] => ../assets/images/uploads/672b8983d356c.jpg
+    [discount] => 35
+    [category] => [9, 10]
+    [other_images] => ["../assets/images/uploads/672b8983d3b19.jpg", "../assets/images/uploads/672b8983d3c9a.jpg"]
+    [description] => Discover the mystique of the desert
+    [created_at] => 2024-11-06 22:24:37
+    [author] => 2
+    [rating] => 3.9
+)
+
+[2024-11-07 17:56:48] Array
+(
+    [id] => 40
+    [name] => Wildlife Safari in Africa
+    [total_travelers] => 13
+    [days] => 7
+    [nights] => 6
+    [price] => 3000.50
+    [deadline] => 2025-01-30 00:00:00
+    [thumbnail] => ../assets/images/uploads/672b8983d356c.jpg
+    [discount] => 23
+    [category] => [6, 8, 14]
+    [other_images] => ["../assets/images/uploads/672b8983d3c9a.jpg", "../assets/images/uploads/672b8983d3796.jpg"]
+    [description] => Get close to nature’s wild animals
+    [created_at] => 2024-11-06 22:24:37
+    [author] => 2
+    [rating] => 4.9
+)
+
+[2024-11-07 17:56:48] Array
+(
+    [id] => 20
+    [name] => Wildlife Safari in Africa
+    [total_travelers] => 13
+    [days] => 7
+    [nights] => 6
+    [price] => 3000.50
+    [deadline] => 2025-01-30 00:00:00
+    [thumbnail] => ../assets/images/uploads/672b8983d356c.jpg
+    [discount] => 23
+    [category] => [6, 8, 14]
+    [other_images] => ["../assets/images/uploads/672b8983d3c9a.jpg", "../assets/images/uploads/672b8983d3796.jpg"]
+    [description] => Get close to nature’s wild animals
+    [created_at] => 2024-11-06 22:23:27
+    [author] => 2
+    [rating] => 4.9
+)
+
+[2024-11-07 17:56:48] Array
+(
+    [id] => 9
+    [name] => George Scott
+    [total_travelers] => 36
+    [days] => 7
+    [nights] => 63
+    [price] => 302.00
+    [deadline] => 2024-11-30 00:00:00
+    [thumbnail] => ../assets/images/uploads/6727433f8b8e9.png
+    [discount] => 34
+    [category] => ["14", "12", "8", "6", "5"]
+    [other_images] => ["../assets/images/uploads/6727433f8bb0c.jpg"]
+    [description] => <p>dfg</p>
+    [created_at] => 2024-11-03 15:17:47
+    [author] => 2
+    [rating] => 0.0
+)
+
+[2024-11-07 17:56:48] Array
+(
+    [id] => 10
+    [name] => Everest Base Camp Trek, Nepal
+    [total_travelers] => 29
+    [days] => 5
+    [nights] => 4
+    [price] => 5565.00
+    [deadline] => 2025-10-06 00:00:00
+    [thumbnail] => ../assets/images/uploads/672b8983d356c.jpg
+    [discount] => 50
+    [category] => [11, 10, 8, 7, 6, 5, 2]
+    [other_images] => ["../assets/images/uploads/672b8983d3796.jpg", "../assets/images/uploads/672b8983d3974.jpg", "../assets/images/uploads/672b8983d3b19.jpg", "../assets/images/uploads/672b8983d3c9a.jpg"]
+    [description] => <p>Welcome to the mountain camp</p>
+    [created_at] => 2024-11-06 21:06:39
+    [author] => 2
+    [rating] => 0.0
+)
+
+[2024-11-07 17:56:48] Array
+(
+    [id] => 68
+    [name] => Australian Outback Journey
+    [total_travelers] => 18
+    [days] => 10
+    [nights] => 9
+    [price] => 3000.00
+    [deadline] => 2025-01-30 00:00:00
+    [thumbnail] => ../assets/images/uploads/672b8983d356c.jpg
+    [discount] => 30
+    [category] => [2, 3, 6]
+    [other_images] => ["../assets/images/uploads/672b8983d3b19.jpg", "../assets/images/uploads/672b8983d3796.jpg"]
+    [description] => Experience the beauty of the Outback
+    [created_at] => 2024-11-06 22:24:50
+    [author] => 2
+    [rating] => 4.2
+)
+
+[07-Nov-2024 17:56:49 UTC] PHP Warning:  Trying to access array offset on value of type bool in C:\laragon\www\ttms\templates\users\individual-card.php on line 6
+[07-Nov-2024 17:56:49 UTC] PHP Deprecated:  htmlspecialchars(): Passing null to parameter #1 ($string) of type string is deprecated in C:\laragon\www\ttms\templates\users\individual-card.php on line 14
+[07-Nov-2024 17:56:49 UTC] PHP Warning:  Trying to access array offset on value of type bool in C:\laragon\www\ttms\templates\users\individual-card.php on line 35
+[07-Nov-2024 17:56:49 UTC] PHP Deprecated:  htmlspecialchars(): Passing null to parameter #1 ($string) of type string is deprecated in C:\laragon\www\ttms\templates\users\individual-card.php on line 35
+[07-Nov-2024 17:56:49 UTC] PHP Warning:  Trying to access array offset on value of type bool in C:\laragon\www\ttms\templates\users\individual-card.php on line 37
+[07-Nov-2024 17:56:49 UTC] PHP Warning:  Trying to access array offset on value of type bool in C:\laragon\www\ttms\templates\users\individual-card.php on line 42
+[07-Nov-2024 17:56:49 UTC] PHP Fatal error:  Uncaught ArgumentCountError: ceil() expects exactly 1 argument, 2 given in C:\laragon\www\ttms\templates\users\individual-card.php:42
+Stack trace:
+#0 C:\laragon\www\ttms\templates\users\individual-card.php(42): ceil(NULL, 2)
+#1 C:\laragon\www\ttms\index.php(35): include_once('C:\\laragon\\www\\...')
+#2 {main}
+  thrown in C:\laragon\www\ttms\templates\users\individual-card.php on line 42
+[07-Nov-2024 17:56:50 UTC] PHP Warning:  Trying to access array offset on value of type bool in C:\laragon\www\ttms\templates\users\individual-card.php on line 6
+[07-Nov-2024 17:56:50 UTC] PHP Deprecated:  htmlspecialchars(): Passing null to parameter #1 ($string) of type string is deprecated in C:\laragon\www\ttms\templates\users\individual-card.php on line 14
+[07-Nov-2024 17:56:50 UTC] PHP Warning:  Trying to access array offset on value of type bool in C:\laragon\www\ttms\templates\users\individual-card.php on line 35
+[07-Nov-2024 17:56:50 UTC] PHP Deprecated:  htmlspecialchars(): Passing null to parameter #1 ($string) of type string is deprecated in C:\laragon\www\ttms\templates\users\individual-card.php on line 35
+[07-Nov-2024 17:56:50 UTC] PHP Warning:  Trying to access array offset on value of type bool in C:\laragon\www\ttms\templates\users\individual-card.php on line 37
+[07-Nov-2024 17:56:50 UTC] PHP Warning:  Trying to access array offset on value of type bool in C:\laragon\www\ttms\templates\users\individual-card.php on line 42
+[07-Nov-2024 17:56:50 UTC] PHP Fatal error:  Uncaught ArgumentCountError: ceil() expects exactly 1 argument, 2 given in C:\laragon\www\ttms\templates\users\individual-card.php:42
+Stack trace:
+#0 C:\laragon\www\ttms\templates\users\individual-card.php(42): ceil(NULL, 2)
+#1 C:\laragon\www\ttms\index.php(35): include_once('C:\\laragon\\www\\...')
+#2 {main}
+  thrown in C:\laragon\www\ttms\templates\users\individual-card.php on line 42
+[07-Nov-2024 17:56:51 UTC] PHP Warning:  Trying to access array offset on value of type bool in C:\laragon\www\ttms\templates\users\individual-card.php on line 6
+[07-Nov-2024 17:56:51 UTC] PHP Deprecated:  htmlspecialchars(): Passing null to parameter #1 ($string) of type string is deprecated in C:\laragon\www\ttms\templates\users\individual-card.php on line 14
+[07-Nov-2024 17:56:51 UTC] PHP Warning:  Trying to access array offset on value of type bool in C:\laragon\www\ttms\templates\users\individual-card.php on line 35
+[07-Nov-2024 17:56:51 UTC] PHP Deprecated:  htmlspecialchars(): Passing null to parameter #1 ($string) of type string is deprecated in C:\laragon\www\ttms\templates\users\individual-card.php on line 35
+[07-Nov-2024 17:56:51 UTC] PHP Warning:  Trying to access array offset on value of type bool in C:\laragon\www\ttms\templates\users\individual-card.php on line 37
+[07-Nov-2024 17:56:51 UTC] PHP Warning:  Trying to access array offset on value of type bool in C:\laragon\www\ttms\templates\users\individual-card.php on line 42
+[07-Nov-2024 17:56:51 UTC] PHP Fatal error:  Uncaught ArgumentCountError: ceil() expects exactly 1 argument, 2 given in C:\laragon\www\ttms\templates\users\individual-card.php:42
+Stack trace:
+#0 C:\laragon\www\ttms\templates\users\individual-card.php(42): ceil(NULL, 2)
+#1 C:\laragon\www\ttms\index.php(35): include_once('C:\\laragon\\www\\...')
+#2 {main}
+  thrown in C:\laragon\www\ttms\templates\users\individual-card.php on line 42
+[2024-11-07 17:56:52] Array
+(
+    [id] => 50
+    [name] => Road to Morocco
+    [total_travelers] => 16
+    [days] => 7
+    [nights] => 6
+    [price] => 1900.25
+    [deadline] => 2025-01-30 00:00:00
+    [thumbnail] => ../assets/images/uploads/672b8983d356c.jpg
+    [discount] => 15
+    [category] => [5, 13, 16]
+    [other_images] => ["../assets/images/uploads/672b8983d3796.jpg", "../assets/images/uploads/672b8983d3c9a.jpg"]
+    [description] => Embark on a colorful Moroccan journey
+    [created_at] => 2024-11-06 22:24:37
+    [author] => 2
+    [rating] => 4.7
+)
+
+[2024-11-07 17:56:52] Array
+(
+    [id] => 30
+    [name] => Road to Morocco
+    [total_travelers] => 16
+    [days] => 7
+    [nights] => 6
+    [price] => 1900.25
+    [deadline] => 2025-01-30 00:00:00
+    [thumbnail] => ../assets/images/uploads/672b8983d356c.jpg
+    [discount] => 15
+    [category] => [5, 13, 16]
+    [other_images] => ["../assets/images/uploads/672b8983d3796.jpg", "../assets/images/uploads/672b8983d3c9a.jpg"]
+    [description] => Embark on a colorful Moroccan journey
+    [created_at] => 2024-11-06 22:23:27
+    [author] => 2
+    [rating] => 4.7
+)
+
+[2024-11-07 17:56:52] Array
+(
+    [id] => 58
+    [name] => Amazon Rainforest Expedition
+    [total_travelers] => 9
+    [days] => 6
+    [nights] => 5
+    [price] => 2500.99
+    [deadline] => 2025-01-30 00:00:00
+    [thumbnail] => ../assets/images/uploads/672b8983d356c.jpg
+    [discount] => 28
+    [category] => [3, 5, 8]
+    [other_images] => ["../assets/images/uploads/672b8983d3796.jpg", "../assets/images/uploads/672b8983d3974.jpg"]
+    [description] => Explore diverse ecosystems in the Amazon
+    [created_at] => 2024-11-06 22:24:50
+    [author] => 2
+    [rating] => 4.4
+)
+
+[2024-11-07 17:56:52] Array
+(
+    [id] => 57
+    [name] => Historic European Tour
+    [total_travelers] => 7
+    [days] => 10
+    [nights] => 9
+    [price] => 3200.00
+    [deadline] => 2025-01-30 00:00:00
+    [thumbnail] => ../assets/images/uploads/672b8983d356c.jpg
+    [discount] => 12
+    [category] => [12, 16]
+    [other_images] => ["../assets/images/uploads/672b8983d3796.jpg", "../assets/images/uploads/672b8983d3c9a.jpg"]
+    [description] => Travel through Europe’s historic sites
+    [created_at] => 2024-11-06 22:24:50
+    [author] => 2
+    [rating] => 4.6
+)
+
+[2024-11-07 17:56:52] Array
+(
+    [id] => 37
+    [name] => Historic European Tour
+    [total_travelers] => 7
+    [days] => 10
+    [nights] => 9
+    [price] => 3200.00
+    [deadline] => 2025-01-30 00:00:00
+    [thumbnail] => ../assets/images/uploads/672b8983d356c.jpg
+    [discount] => 12
+    [category] => [12, 16]
+    [other_images] => ["../assets/images/uploads/672b8983d3796.jpg", "../assets/images/uploads/672b8983d3c9a.jpg"]
+    [description] => Travel through Europe’s historic sites
+    [created_at] => 2024-11-06 22:24:37
+    [author] => 2
+    [rating] => 4.6
+)
+
+[2024-11-07 17:56:54] Array
+(
+    [id] => 50
+    [name] => Road to Morocco
+    [total_travelers] => 16
+    [days] => 7
+    [nights] => 6
+    [price] => 1900.25
+    [deadline] => 2025-01-30 00:00:00
+    [thumbnail] => ../assets/images/uploads/672b8983d356c.jpg
+    [discount] => 15
+    [category] => [5, 13, 16]
+    [other_images] => ["../assets/images/uploads/672b8983d3796.jpg", "../assets/images/uploads/672b8983d3c9a.jpg"]
+    [description] => Embark on a colorful Moroccan journey
+    [created_at] => 2024-11-06 22:24:37
+    [author] => 2
+    [rating] => 4.7
+)
+
+[2024-11-07 17:56:54] Array
+(
+    [id] => 30
+    [name] => Road to Morocco
+    [total_travelers] => 16
+    [days] => 7
+    [nights] => 6
+    [price] => 1900.25
+    [deadline] => 2025-01-30 00:00:00
+    [thumbnail] => ../assets/images/uploads/672b8983d356c.jpg
+    [discount] => 15
+    [category] => [5, 13, 16]
+    [other_images] => ["../assets/images/uploads/672b8983d3796.jpg", "../assets/images/uploads/672b8983d3c9a.jpg"]
+    [description] => Embark on a colorful Moroccan journey
+    [created_at] => 2024-11-06 22:23:27
+    [author] => 2
+    [rating] => 4.7
+)
+
+[2024-11-07 17:56:54] Array
+(
+    [id] => 58
+    [name] => Amazon Rainforest Expedition
+    [total_travelers] => 9
+    [days] => 6
+    [nights] => 5
+    [price] => 2500.99
+    [deadline] => 2025-01-30 00:00:00
+    [thumbnail] => ../assets/images/uploads/672b8983d356c.jpg
+    [discount] => 28
+    [category] => [3, 5, 8]
+    [other_images] => ["../assets/images/uploads/672b8983d3796.jpg", "../assets/images/uploads/672b8983d3974.jpg"]
+    [description] => Explore diverse ecosystems in the Amazon
+    [created_at] => 2024-11-06 22:24:50
+    [author] => 2
+    [rating] => 4.4
+)
+
+[2024-11-07 17:56:54] Array
+(
+    [id] => 57
+    [name] => Historic European Tour
+    [total_travelers] => 7
+    [days] => 10
+    [nights] => 9
+    [price] => 3200.00
+    [deadline] => 2025-01-30 00:00:00
+    [thumbnail] => ../assets/images/uploads/672b8983d356c.jpg
+    [discount] => 12
+    [category] => [12, 16]
+    [other_images] => ["../assets/images/uploads/672b8983d3796.jpg", "../assets/images/uploads/672b8983d3c9a.jpg"]
+    [description] => Travel through Europe’s historic sites
+    [created_at] => 2024-11-06 22:24:50
+    [author] => 2
+    [rating] => 4.6
+)
+
+[2024-11-07 17:56:54] Array
+(
+    [id] => 37
+    [name] => Historic European Tour
+    [total_travelers] => 7
+    [days] => 10
+    [nights] => 9
+    [price] => 3200.00
+    [deadline] => 2025-01-30 00:00:00
+    [thumbnail] => ../assets/images/uploads/672b8983d356c.jpg
+    [discount] => 12
+    [category] => [12, 16]
+    [other_images] => ["../assets/images/uploads/672b8983d3796.jpg", "../assets/images/uploads/672b8983d3c9a.jpg"]
+    [description] => Travel through Europe’s historic sites
+    [created_at] => 2024-11-06 22:24:37
+    [author] => 2
+    [rating] => 4.6
+)
+
+[2024-11-07 17:56:57] Array
+(
+    [id] => 50
+    [name] => Road to Morocco
+    [total_travelers] => 16
+    [days] => 7
+    [nights] => 6
+    [price] => 1900.25
+    [deadline] => 2025-01-30 00:00:00
+    [thumbnail] => ../assets/images/uploads/672b8983d356c.jpg
+    [discount] => 15
+    [category] => [5, 13, 16]
+    [other_images] => ["../assets/images/uploads/672b8983d3796.jpg", "../assets/images/uploads/672b8983d3c9a.jpg"]
+    [description] => Embark on a colorful Moroccan journey
+    [created_at] => 2024-11-06 22:24:37
+    [author] => 2
+    [rating] => 4.7
+)
+
+[2024-11-07 17:56:57] Array
+(
+    [id] => 30
+    [name] => Road to Morocco
+    [total_travelers] => 16
+    [days] => 7
+    [nights] => 6
+    [price] => 1900.25
+    [deadline] => 2025-01-30 00:00:00
+    [thumbnail] => ../assets/images/uploads/672b8983d356c.jpg
+    [discount] => 15
+    [category] => [5, 13, 16]
+    [other_images] => ["../assets/images/uploads/672b8983d3796.jpg", "../assets/images/uploads/672b8983d3c9a.jpg"]
+    [description] => Embark on a colorful Moroccan journey
+    [created_at] => 2024-11-06 22:23:27
+    [author] => 2
+    [rating] => 4.7
+)
+
+[2024-11-07 17:56:57] Array
+(
+    [id] => 58
+    [name] => Amazon Rainforest Expedition
+    [total_travelers] => 9
+    [days] => 6
+    [nights] => 5
+    [price] => 2500.99
+    [deadline] => 2025-01-30 00:00:00
+    [thumbnail] => ../assets/images/uploads/672b8983d356c.jpg
+    [discount] => 28
+    [category] => [3, 5, 8]
+    [other_images] => ["../assets/images/uploads/672b8983d3796.jpg", "../assets/images/uploads/672b8983d3974.jpg"]
+    [description] => Explore diverse ecosystems in the Amazon
+    [created_at] => 2024-11-06 22:24:50
+    [author] => 2
+    [rating] => 4.4
+)
+
+[2024-11-07 17:56:57] Array
+(
+    [id] => 57
+    [name] => Historic European Tour
+    [total_travelers] => 7
+    [days] => 10
+    [nights] => 9
+    [price] => 3200.00
+    [deadline] => 2025-01-30 00:00:00
+    [thumbnail] => ../assets/images/uploads/672b8983d356c.jpg
+    [discount] => 12
+    [category] => [12, 16]
+    [other_images] => ["../assets/images/uploads/672b8983d3796.jpg", "../assets/images/uploads/672b8983d3c9a.jpg"]
+    [description] => Travel through Europe’s historic sites
+    [created_at] => 2024-11-06 22:24:50
+    [author] => 2
+    [rating] => 4.6
+)
+
+[2024-11-07 17:56:57] Array
+(
+    [id] => 37
+    [name] => Historic European Tour
+    [total_travelers] => 7
+    [days] => 10
+    [nights] => 9
+    [price] => 3200.00
+    [deadline] => 2025-01-30 00:00:00
+    [thumbnail] => ../assets/images/uploads/672b8983d356c.jpg
+    [discount] => 12
+    [category] => [12, 16]
+    [other_images] => ["../assets/images/uploads/672b8983d3796.jpg", "../assets/images/uploads/672b8983d3c9a.jpg"]
+    [description] => Travel through Europe’s historic sites
+    [created_at] => 2024-11-06 22:24:37
+    [author] => 2
+    [rating] => 4.6
+)
+
+[2024-11-07 17:56:59] Array
+(
+    [id] => 9
+    [name] => George Scott
+    [total_travelers] => 36
+    [days] => 7
+    [nights] => 63
+    [price] => 302.00
+    [deadline] => 2024-11-30 00:00:00
+    [thumbnail] => ../assets/images/uploads/6727433f8b8e9.png
+    [discount] => 34
+    [category] => ["14", "12", "8", "6", "5"]
+    [other_images] => ["../assets/images/uploads/6727433f8bb0c.jpg"]
+    [description] => <p>dfg</p>
+    [created_at] => 2024-11-03 15:17:47
+    [author] => 2
+    [rating] => 0.0
+)
+
+[2024-11-07 17:56:59] Array
+(
+    [id] => 67
+    [name] => The Wonders of Patagonia
+    [total_travelers] => 6
+    [days] => 9
+    [nights] => 8
+    [price] => 2750.75
+    [deadline] => 2025-01-30 00:00:00
+    [thumbnail] => ../assets/images/uploads/672b8983d356c.jpg
+    [discount] => 25
+    [category] => [7, 8, 11]
+    [other_images] => ["../assets/images/uploads/672b8983d3796.jpg", "../assets/images/uploads/672b8983d3c9a.jpg"]
+    [description] => Adventure through the rugged landscapes of Patagonia
+    [created_at] => 2024-11-06 22:24:50
+    [author] => 2
+    [rating] => 4.4
+)
+
+[2024-11-07 17:56:59] Array
+(
+    [id] => 63
+    [name] => Northern Lights Adventure
+    [total_travelers] => 5
+    [days] => 6
+    [nights] => 5
+    [price] => 2000.99
+    [deadline] => 2025-01-30 00:00:00
+    [thumbnail] => ../assets/images/uploads/672b8983d356c.jpg
+    [discount] => 32
+    [category] => [2, 7, 11]
+    [other_images] => ["../assets/images/uploads/672b8983d3796.jpg", "../assets/images/uploads/672b8983d3c9a.jpg"]
+    [description] => Experience the magic of aurora borealis
+    [created_at] => 2024-11-06 22:24:50
+    [author] => 2
+    [rating] => 4.5
+)
+
+[2024-11-07 17:56:59] Array
+(
+    [id] => 47
+    [name] => The Wonders of Patagonia
+    [total_travelers] => 6
+    [days] => 9
+    [nights] => 8
+    [price] => 2750.75
+    [deadline] => 2025-01-30 00:00:00
+    [thumbnail] => ../assets/images/uploads/672b8983d356c.jpg
+    [discount] => 25
+    [category] => [7, 8, 11]
+    [other_images] => ["../assets/images/uploads/672b8983d3796.jpg", "../assets/images/uploads/672b8983d3c9a.jpg"]
+    [description] => Adventure through the rugged landscapes of Patagonia
+    [created_at] => 2024-11-06 22:24:37
+    [author] => 2
+    [rating] => 4.4
+)
+
+[2024-11-07 17:56:59] Array
+(
+    [id] => 43
+    [name] => Northern Lights Adventure
+    [total_travelers] => 5
+    [days] => 6
+    [nights] => 5
+    [price] => 2000.99
+    [deadline] => 2025-01-30 00:00:00
+    [thumbnail] => ../assets/images/uploads/672b8983d356c.jpg
+    [discount] => 32
+    [category] => [2, 7, 11]
+    [other_images] => ["../assets/images/uploads/672b8983d3796.jpg", "../assets/images/uploads/672b8983d3c9a.jpg"]
+    [description] => Experience the magic of aurora borealis
+    [created_at] => 2024-11-06 22:24:37
+    [author] => 2
+    [rating] => 4.5
+)
+

@@ -35,11 +35,11 @@ if (empty($banner_img)) {
                 <h4 class="text-dark"><?php echo htmlspecialchars($package['name']); ?></h4>
                 <div class="text-end">
                     <?php if ($package['discount'] > 0): ?>
-                        <span class="text-muted text-decoration-line-through me-2">$<?php echo number_format($package['price'], 2); ?></span>
+                        <span class="text-muted text-decoration-line-through me-2">$<?php echo ceil($package['price']); ?></span>
                         <span class="badge bg-warning text-dark fs-6"><?php echo htmlspecialchars($package['discount']); ?>% OFF</span><br />
-                        <span class="badge bg-primary fs-5 p-2">Discounted Price: $<?php echo number_format($package['price'] * (1 - $package['discount'] / 100), 2); ?></span>
+                        <span class="badge bg-primary fs-5 p-2">Discounted Price: Rs <?php echo ceil($package['price'] * (1 - $package['discount'] / 100)); ?></span>
                     <?php else: ?>
-                        <span class="badge bg-primary fs-5 p-2">Price: $<?php echo number_format($package['price'], 2); ?></span>
+                        <span class="badge bg-primary fs-5 p-2">Price: $<?php echo ceil($package['price'], 2); ?></span>
                     <?php endif; ?>
                 </div>
             </div>
@@ -121,6 +121,17 @@ if (empty($banner_img)) {
         </div>
 
 		<!-- Rating and comment section -->
+		 <?php
+		 if(is_logged_in()){
+			include_once TEMPLATE_PATH . 'users/rating-comment-section.php';
+		 }else{
+			echo "<p class='mt-3'>To rate,view or add comment you must
+			 <a class='text-primary' href='login.php?redirect=" . SITE_URL . "?page=individual&id=" . $_GET['id'] . "'>Login</a> first.
+			</p>";
+		 }
+
+		 ?>
+
     </aside>
 
     <!-- Right Aside Panel -->
