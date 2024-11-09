@@ -1,6 +1,6 @@
 <nav class="navbar navbar-expand-lg" style="<?php echo $nav_style ?>">
     <div class="container-fluid">
-      <a class="navbar-brand text-white" href="#">TTMS</a>
+      <a class="navbar-brand text-white" href="index.php">TTMS</a>
       <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
         <span class="navbar-toggler-icon"></span>
       </button>
@@ -23,13 +23,13 @@
             <a class="nav-link text-white" href="?page=trending">Trending</a>
           </li>
           <li class="nav-item">
-            <a class="nav-link text-white" href="#">Policy</a>
+            <a class="nav-link text-white" href="?page=policy">Policy</a>
           </li>
 		  <?php
 		 if($is_logged_in){
 			?>
 			<li class="nav-item">
-            	<a class="nav-link text-white" href="#">Bookings</a>
+            	<a class="nav-link text-white" href="?page=bookings">Bookings</a>
           	</li>
 			<?php
 		 }
@@ -39,7 +39,7 @@
 			if($is_logged_in){
 				?>
 				<li class="nav-item">
-            		<a class="nav-link text-white" href="#">Profile</a>
+            		<a class="nav-link text-white" href="?page=profile">Profile</a>
           		</li>
 				<?php
 			}else{

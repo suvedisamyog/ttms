@@ -5,6 +5,17 @@ $banner_img = isset($package['other_images']) ? json_decode($package['other_imag
 if (empty($banner_img)) {
     $banner_img = array($package['thumbnail']);
 }
+
+$bookings = new UserOperations('bookings');
+$all_bookings = $bookings->get_all_data([
+	'where_clause' => 'package_id',
+	'where_clause_value' => $package['id'],
+]);
+$total_users_booked = 0;
+foreach ($all_bookings as $booking) {
+	$total_users_booked += $booking['total_travelers'] ;
+}
+$remaining_booking = $package['total_travelers'] - $total_users_booked;
 ?>
 
 <div id="carouselExample" class="carousel slide" data-bs-ride="carousel">
@@ -37,8 +48,11 @@ if (empty($banner_img)) {
                     <?php if ($package['discount'] > 0): ?>
                         <span class="text-muted text-decoration-line-through me-2">$<?php echo ceil($package['price']); ?></span>
                         <span class="badge bg-warning text-dark fs-6"><?php echo htmlspecialchars($package['discount']); ?>% OFF</span><br />
-                        <span class="badge bg-primary fs-5 p-2">Discounted Price: Rs <?php echo ceil($package['price'] * (1 - $package['discount'] / 100)); ?></span>
-                    <?php else: ?>
+						<?php $price_per_person = ceil($package['price'] * (1 - $package['discount'] / 100))  ?>
+                        <span class="badge bg-primary fs-5 p-2">Discounted Price: Rs <?php echo $price_per_person; ?></span>
+                    <?php else:
+						$price_per_person = ceil($package['price'], 2);
+						?>
                         <span class="badge bg-primary fs-5 p-2">Price: $<?php echo ceil($package['price'], 2); ?></span>
                     <?php endif; ?>
                 </div>
@@ -54,7 +68,7 @@ if (empty($banner_img)) {
             <div class="mb-4">
                 <h5 class="text-secondary">Travel Information</h5>
                 <ul class="list-group">
-                    <li class="list-group-item"><strong>Total Travelers:</strong> <?php echo htmlspecialchars($package['total_travelers']); ?></li>
+                    <li class="list-group-item"><strong>Total Travelers:</strong> <?php echo htmlspecialchars($package['total_travelers']);  ?> <span class="ml-1 text-warning">(<?php echo $remaining_booking ?> - Remaining)</span></li>
                     <li class="list-group-item"><strong>Days:</strong> <?php echo htmlspecialchars($package['days']); ?></li>
                     <li class="list-group-item"><strong>Nights:</strong> <?php echo htmlspecialchars($package['nights']); ?></li>
                 </ul>
@@ -137,10 +151,59 @@ if (empty($banner_img)) {
             </div>
 
             <?php
-            $is_logged = is_logged_in() ? 'Book Now' : 'Login to Book';
-            $link = is_logged_in() ? 'booking.php?page=hello' : 'login.php?redirect=' . SITE_URL . '?page=individual&id=' . $_GET['id'];
+			if( ! is_logged_in()){
+				?>
+            	<a href="<?php 'login.php?redirect=' . SITE_URL . '?page=individual&id=' . $_GET['id'] ?>" class="btn btn-warning mt-4">Login To Book</a>
+
+				<?php
+			}else{
+				if($remaining_booking <= 0){
+					?>
+					<button type="button" class="btn btn-danger mt-4 disabled" >Sorry ! No slot left</button>
+				<?php
+				}
+				else{
+					?>
+
+				<button type="button" class="btn btn-warning mt-4" data-bs-toggle="modal" data-bs-target="#bookingModal">Proceed Booking</button>
+				 <!-- Booking Modal -->
+				 <div class="modal fade" id="bookingModal" tabindex="-1" aria-labelledby="bookingModalLabel" aria-hidden="true">
+                    <div class="modal-dialog">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h5 class="modal-title" id="bookingModalLabel">Book Your Package</h5>
+                                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                            </div>
+                                <div class="modal-body">
+                                    <input type="hidden" id ="hidden_package_id" name="package_id" value="<?php echo htmlspecialchars($package['id']); ?>">
+                                    <div class="mb-3">
+                                        <label for="adults" class="form-label">Number of Travelers</label>
+                                        <input type="number" name="t_travels" id="t_travels" class="form-control" min="1" max=<?php echo $remaining_booking ?> value="1" required>
+										<span class="text-danger m-2" id="t_travels-error"></span>
+                                    </div>
+									<div class="mb-3">
+									<label for="adults" class="form-label">Price / Person(RS)</label>
+                                        <input type="text" name="p_price" id="p_price" class="form-control" value="<?php echo $price_per_person ?>" required readonly disabled>
+                                    </div>
+                                    <div class="mb-3">
+                                        <label for="price" class="form-label">Total price(Rs)</label>
+										<input type="number" name="t_payment" id="t_payment" class="form-control" value="<?php echo $price_per_person ?>" required readonly disabled>
+										</div>
+
+                                </div>
+                                <div class="modal-footer">
+                                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                                    <button type="submit" class="btn btn-primary" id="start_payment">Confirm Booking</button>
+                                </div>
+                        </div>
+                    </div>
+                </div>
+
+				<?php
+				}
+			}
             ?>
-            <a href="<?php echo $link; ?>" class="btn btn-warning mt-4"><?php echo $is_logged; ?></a>
+
         </div>
 
 		<!-- Rating and comment section -->

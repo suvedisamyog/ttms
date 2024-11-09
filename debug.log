@@ -1,17 +1,38 @@
-[2024-11-09 07:49:01] Array
+[2024-11-09 17:29:57] Array
 (
+    [0] => Array
+        (
+            [id] => 9
+            [package_id] => 54
+            [user_id] => 13
+            [created_at] => 2024-11-09 23:02:12
+            [payment_id] => 00090AA
+            [total_price] => 1080
+            [total_travelers] => 1
+        )
+
 )
 
-[2024-11-09 07:49:07] Array
+[2024-11-09 17:29:57] Array
 (
+    [0] => Array
+        (
+            [id] => 9
+            [package_id] => 54
+            [user_id] => 13
+            [created_at] => 2024-11-09 23:02:12
+            [payment_id] => 00090AA
+            [total_price] => 1080
+            [total_travelers] => 1
+        )
+
 )
 
-[2024-11-09 07:49:10] Array
-(
-    [page] => trending
-)
-
-[2024-11-09 07:49:16] Array
-(
-)
-
+[09-Nov-2024 17:29:57 UTC] PHP Warning:  Undefined array key "total_users" in C:\laragon\www\ttms\templates\users\bookings.php on line 52
+[09-Nov-2024 17:39:34 UTC] PHP Fatal error:  Uncaught PDOException: SQLSTATE[42000]: Syntax error or access violation: 1064 You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'ORDER BY id DESC' at line 1 in C:\laragon\www\ttms\src\Database\Operations\UserOperations.php:25
+Stack trace:
+#0 C:\laragon\www\ttms\src\Database\Operations\UserOperations.php(25): PDOStatement->execute()
+#1 C:\laragon\www\ttms\templates\users\bookings.php(10): App\TTMS\Database\Operations\UserOperations->get_all_data(Array)
+#2 C:\laragon\www\ttms\index.php(59): include_once('C:\\laragon\\www\\...')
+#3 {main}
+  thrown in C:\laragon\www\ttms\src\Database\Operations\UserOperations.php on line 25

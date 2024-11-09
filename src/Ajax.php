@@ -8,6 +8,9 @@ if ( file_exists( dirname(__DIR__)  . '/vendor/autoload.php' ) ) {
 	}
 
 use App\TTMS\Database\Operations\UserOperations;
+use RemoteMerge\Esewa\Client;
+use RemoteMerge\Esewa\Config;
+
 
 if ($_SERVER['REQUEST_METHOD'] == 'POST'){
 	switch ($_POST['action']){
@@ -19,17 +22,33 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST'){
 			break;
 		case 'add_currency':
 			handel_currency();
+			break;
 		case 'add_category':
 			handel_category();
+			break;
 		case 'add_package':
 			handel_package('add');
+			break;
 		case 'update_package':
 			handel_package('update');
+			break;
 		case 'add_comment':
 			handel_comment('add');
+			break;
 		case 'update_comment':
 			handel_comment('update');
-
+			break;
+		case 'update_profile_pic':
+			update_handel_profile();
+			break;
+		case 'change_password':
+			handel_password_change();
+			break;
+		case 'logout':
+			handel_logout();
+			break;
+		case 'start_payment':
+			handel_payment();
 			break;
 	}
 }elseif( ($_SERVER['REQUEST_METHOD'] == 'DELETE') ) {
@@ -464,6 +483,152 @@ function handel_comment($action = 'add'){
 	} else {
 		handel_error("Failed to add comment.");
 	}
+
+}
+
+/**
+ * Handle profile update
+ */
+function update_handel_profile(){
+	$user_id = get_current_user_attr('user_id');
+	$profile_pic = handel_file_upload('profile_pic');
+	$data = [
+		'profile_pic' => $profile_pic
+	];
+	$response = array();
+
+	$update = new Database\Operations\UserOperations('users');
+	$result = $update->update_data($user_id, $data);
+	if($result){
+		handel_success(
+			"Profile picture updated successfully!",
+			"update_profile_pic",
+		);
+	}else{
+		handel_error("Failed to update profile picture.");
+	}
+}
+
+function handel_password_change(){
+
+	$old_password = isset($_POST['old_password']) ? $_POST['old_password'] : '';
+	$new_password = isset($_POST['new_password']) ? $_POST['new_password'] : '';
+	$confirm_password = isset($_POST['new_confirm_password']) ? $_POST['new_confirm_password'] : '';
+	$user_id = get_current_user_attr('user_id');
+	$response = array();
+
+	$login = new Database\Operations\UserOperations('users');
+	$result = $login->get_individual_data_from_id($user_id);
+
+	if ($result && is_array($result) ) {
+		if (!password_verify($old_password, $result['password'])){
+			handel_error('Invalid old password.');
+		}else{
+
+			$data = [
+				'password' => $new_password,
+				'confirm_password' => $confirm_password
+			];
+			$validation_error = validate_data($data);
+			if ($validation_error !== false){
+				handel_error($validation_error);
+			}
+			unset($data['confirm_password']);
+			$data['password'] = password_hash($new_password, PASSWORD_BCRYPT);
+
+
+			$update = new Database\Operations\UserOperations('users');
+			$result = $update->update_data($user_id, $data);
+			if($result){
+
+				$_SESSION = array();
+				session_destroy();
+				handel_success(
+					"Password changed successfully!",
+					"change_password",
+				);
+			}else{
+				handel_error("Failed to change password.");
+			}
+		}
+
+	} else {
+		handel_error('Invalid email or password.');
+	}
+
+	header('Content-Type: application/json');
+	echo json_encode($response);
+}
+
+/**
+ * Handle user logout
+ */
+function handel_logout(){
+	session_start();
+	$_SESSION = array();
+	session_destroy();
+	handel_success(
+		"Logout successful!",
+		"logout",
+	);
+}
+/**
+ * Handle payment
+ */
+function handel_payment(){
+	$travelers = isset($_POST['travelers']) ? $_POST['travelers'] : 1;
+	$package_id = isset($_POST['package_id']) ? $_POST['package_id'] : 0;
+
+	$package = new UserOperations('packages');
+	$package_data = $package->get_individual_data_from_id($package_id);
+	$total_travelers = $package_data['total_travelers'];
+	$price = $package_data['price'] ?? 0;
+	$discount= $package_data['discount'] ?? 0;
+
+	$bookings = new UserOperations('bookings');
+	$all_bookings = $bookings->get_all_data([
+		'where_clause' => 'package_id',
+		'where_clause_value' => $package_data['id'],
+	]);
+	$total_users_booked = 0;
+	foreach ($all_bookings as $booking) {
+		$total_users_booked += $booking['total_travelers'];
+	}
+	$remaining_booking = $total_travelers - $total_users_booked;
+
+	if($remaining_booking < $travelers){
+		handel_error('Only ' . $remaining_booking . ' travelers can be booked.');
+	}
+	if($discount > 0){
+		$price = ceil($price * (1 - $discount / 100));
+	}else{
+		$price = $price;
+	}
+	$amount = $price * $travelers;
+	$successUrl = SITE_URL .'?page=payment-success';
+	$failureUrl = SITE_URL .'?page=payment-failure';
+
+	$config = new Config(
+		$successUrl,
+		$failureUrl,
+    	'EPAYTEST'
+);
+
+$client = new Client($config);
+$html_form = $client->process($package_id, $amount, 0, 0, 0);
+session_start();
+$_SESSION['package_id'] = $package_id;
+$_SESSION['travelers'] = $travelers;
+$_SESSION['amount'] = $amount;
+$response = array(
+	'status' => 1,
+	'message' => 'Payment successful!',
+	'action' => 'start_payment',
+	'html_form' => $html_form
+);
+	header('Content-Type: application/json');
+	echo json_encode($response);
+
 
 }
 

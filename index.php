@@ -11,6 +11,7 @@ use App\TTMS\Database\Config as DBConfig;
 use App\TTMS\Database\Operations\UserOperations;
 use App\TTMS\Users\Algorithms;
 
+
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -35,6 +36,33 @@ if(isset($_GET['page']) && 'individual' === $_GET['page'] && isset($_GET['id']))
 	$package = $get_package->get_individual_data_from_id($id);
 
 	include_once TEMPLATE_PATH . 'users/individual-card.php';
+	include_once TEMPLATE_PATH . 'footer.php';
+	return ;
+}elseif(isset($_GET['page']) && 'payment-success' === $_GET['page']){
+	$nav_style = "background:gray;";
+	include_once TEMPLATE_PATH . 'users/payment-success.php';
+	include_once TEMPLATE_PATH . 'footer.php';
+	return ;
+}elseif(isset($_GET['page']) &&  strpos($_SERVER['REQUEST_URI'], 'payment-failure') ){
+	$nav_style = "background:gray;";
+	include_once TEMPLATE_PATH . 'users/payment-failure.php';
+	include_once TEMPLATE_PATH . 'footer.php';
+	return ;
+}elseif(isset($_GET['page']) && 'policy' === $_GET['page']){
+	$nav_style = "background:gray;";
+	include_once TEMPLATE_PATH . 'users/policy-page.php';
+	include_once TEMPLATE_PATH . 'footer.php';
+	return ;
+
+}elseif(isset($_GET['page']) && 'bookings' === $_GET['page']){
+	$nav_style = "background:gray;";
+	include_once TEMPLATE_PATH . 'users/bookings.php';
+	include_once TEMPLATE_PATH . 'footer.php';
+	return ;
+
+}elseif((isset($_GET['page']) && 'profile' === $_GET['page'])){
+	$nav_style = "background:gray;";
+	include_once TEMPLATE_PATH . 'users/profile.php';
 	include_once TEMPLATE_PATH . 'footer.php';
 	return ;
 }elseif(isset($_GET['page']) && 'trending' === $_GET['page'] ){

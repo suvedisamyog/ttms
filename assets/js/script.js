@@ -254,18 +254,20 @@ $(document).ready(function () {
 
 		if (value === "") {
 			if($(this).data('page') === 'home'){
-			$(".carousel-indicators").show();
-			$(".carousel-inner").show();
-			$(".carousel-caption").show();
-			$(".carousel-control-prev").show();
-			$(".carousel-control-next").show();
-			$(".carousel-caption").show();
-			$(".navbar").removeAttr("style");
-			$(".navbar").attr("style", "position: absolute; top: 0; width: 100%; z-index: 10; background: transparent;");
+				$(".carousel-indicators").show();
+				$(".carousel-inner").show();
+				$(".carousel-caption").show();
+				$(".carousel-control-prev").show();
+				$(".carousel-control-next").show();
+				$(".carousel-caption").show();
+				$(".navbar").removeAttr("style");
+				$(".navbar").attr("style", "position: absolute; top: 0; width: 100%; z-index: 10; background: transparent;");
 			}
 
 			// Show all cards when search is cleared
 			$('.col-md-4').show();
+			$('table tr').show();
+			$('.no-found').remove();
 		} else {
 			$(".carousel-indicators").hide();
 			$(".carousel-inner").hide();
@@ -277,15 +279,18 @@ $(document).ready(function () {
 			$(".navbar").attr("style", "background: gray;");
 
 
-			$('.card-body').each(function() {
+			$('.card-body , table tr').each(function() {
 				var cardTitle = $(this).find('.card-title').text().toLowerCase();
 				var cardDescription = $(this).find('.card-description').text().toLowerCase();
+				var rowText = $(this).text().toLowerCase();
 
-				if (cardTitle.indexOf(value) !== -1 || cardDescription.indexOf(value) !== -1) {
+				if (cardTitle.indexOf(value) !== -1 || cardDescription.indexOf(value) !== -1 || rowText.indexOf(value) !== -1 ) {
 					$(this).closest('.col-md-4').show();
+					$(this).closest('tr').show();
 					found = true;
 				} else {
 					$(this).closest('.col-md-4').hide();
+					$(this).closest('tr').hide();
 				}
 			});
 			if(! found){
@@ -295,7 +300,73 @@ $(document).ready(function () {
 		}
 	});
 
+	//edit profile pic
+	$('#changePictureBtn').on('click', function() {
+        $('#profilePicInput').click();
+    });
+	$('#profilePicInput').on('change', function(e) {
+        const file = e.target.files[0];
+        if (file) {
+            const reader = new FileReader();
+            reader.onload = function(e) {
+                $('#profilePic').attr('src', e.target.result);
+            };
+            reader.readAsDataURL(file);
+        }
+		$("#UpdateProfilePic").removeClass('d-none');
+    });
 
+	//Update profile pic
+	$('#UpdateProfilePic').on('click', function() {
+		var data = new FormData();
+		data.append('profile_pic', $('#profilePicInput').prop('files')[0]);
+		data.append('action', 'update_profile_pic');
+		handel_form_data(data, 'POST');
+	});
+
+	//Change Password
+	$("#change_password").on("submit", function(e) {
+		e.preventDefault();
+		var data = new FormData(this);
+		data.append('action', 'change_password');
+		var validation_error = validate_form_data(data);
+		if (validation_error ) {
+			return false;
+		}
+		handel_form_data(data, 'POST');
+	});
+
+	//logout
+	$("#btn_logout").on("click", function(e) {
+		e.preventDefault();
+		var data = new FormData();
+		data.append('action', 'logout');
+		handel_form_data(data, 'POST');
+	});
+	//Frontend totla payment calculation
+	$(document).on('change', '#t_travels', function() {
+		console.log('change');
+
+		var travelers = $(this).val();
+		var price = $('#p_price').val();
+		$('#t_payment').val(travelers * price);
+	});
+
+	$(document).on('click', '#start_payment', function() {
+		var travelers = $('#t_travels').val();
+		var package_id = $('#hidden_package_id').val();
+		if(travelers < 1 || isNaN(travelers) || package_id === ''){
+			handel_client_side_validation_error('t_travels' , 'something went wrong ! Try Again');
+
+		}
+		var data = new FormData();
+		data.append('package_id', package_id);
+		data.append('travelers', travelers);
+		data.append('action', 'start_payment');
+		handel_form_data(data, 'POST');
+
+
+	});
 
 
 
@@ -447,6 +518,17 @@ validate_form_data = (data) => {
 					error = handel_client_side_validation_error(key , 'Comment must be at least 3 characters long.');
 				}
 				break;
+			case 'old_password':
+			case 'new_password':
+				if (value.length < 6) {
+					error = handel_client_side_validation_error(key , 'Password must be at least 6 characters long.');
+				}
+				break;
+			case 'new_confirm_password':
+				if (value !== data.get('new_password')) {
+					error = handel_client_side_validation_error(key , 'Password does not match.');
+				}
+				break;
 
 		};
 	}
@@ -472,6 +554,7 @@ handel_form_data = (data,method) => {
 		contentType: false,
 		processData: false,
 		complete: function (response) {
+
 			console.log(response.responseText);
 			// var res = typeof response.responseText === 'string' ? JSON.parse(response.responseText) : response.responseText;
 			var res =JSON.parse(response.responseText);
@@ -509,6 +592,19 @@ handel_form_data = (data,method) => {
 						}
                         alert_success(res);
 						break;
+					case 'update_profile_pic':
+						alert_success(res);
+						break;
+					case 'change_password':
+					case 'logout':
+						history.replaceState(null, null, 'login.php');
+						window.location.href = 'login.php';
+						window.reload();
+						break;
+					case 'start_payment':
+						$('.modal-body').append(res.html_form);
+						$('.modal-body').append('<div class="alert alert-success">Payment started successfully. Redirecting to payment gateway...</div>');
+
 					default:
 						break;
 				}

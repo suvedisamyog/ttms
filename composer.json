@@ -12,7 +12,8 @@
 	},
 	"require": {
 	  "composer/installers": "1.9.0",
-		"robmorgan/phinx": "^0.14.0"
+		"robmorgan/phinx": "^0.14.0",
+		"remotemerge/esewa-php-sdk": "^2.7"
 	},
 	"scripts": {
 
