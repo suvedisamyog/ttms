@@ -8,6 +8,7 @@ if ( file_exists( __DIR__ . '/vendor/autoload.php' ) ) {
 use App\TTMS\Admin\Dashboard;
 use App\TTMS\Admin\Settings;
 use App\TTMS\Admin\Packages;
+use App\TTMS\Admin\Bookings;
 session_start();
 if ( ! is_logged_in()  && get_current_user_attr('role') !== 'admin' ) {
 	header('Location: login.php');
@@ -34,6 +35,9 @@ switch ( $page ) {
 		break;
 	case 'packages':
 		get_tabs( $tab );
+		break;
+	case 'admin-bookings':
+		Bookings::bookings();
 		break;
 	default:
 		include '404.php';

@@ -145,15 +145,13 @@ if ( ! function_exists ('sidebar_menu') ){
 	function sidebar_menu(  ){
 		$menu = [
 			'Home' => ADMIN_URL,
-			'Users' => ADMIN_URL .'?page=users',
+			'Bookings' => ADMIN_URL .'?page=admin-bookings',
 			'Settings' => ADMIN_URL . '?page=settings',
-			'About' => ADMIN_URL . '?page=about',
 			'Packages' => [
 				'id' => 'packages',
 				'submenu' => [
 					'Create Package' => '?page=packages&tab=create-package',
 					'Manage Package' => '?page=packages&tab=manage-package',
-					'Page 3' => '#'
 				]
 			]
 

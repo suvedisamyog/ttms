@@ -1,38 +1,114 @@
-[2024-11-09 17:29:57] Array
-(
-    [0] => Array
-        (
-            [id] => 9
-            [package_id] => 54
-            [user_id] => 13
-            [created_at] => 2024-11-09 23:02:12
-            [payment_id] => 00090AA
-            [total_price] => 1080
-            [total_travelers] => 1
-        )
-
-)
-
-[2024-11-09 17:29:57] Array
-(
-    [0] => Array
-        (
-            [id] => 9
-            [package_id] => 54
-            [user_id] => 13
-            [created_at] => 2024-11-09 23:02:12
-            [payment_id] => 00090AA
-            [total_price] => 1080
-            [total_travelers] => 1
-        )
-
-)
-
-[09-Nov-2024 17:29:57 UTC] PHP Warning:  Undefined array key "total_users" in C:\laragon\www\ttms\templates\users\bookings.php on line 52
-[09-Nov-2024 17:39:34 UTC] PHP Fatal error:  Uncaught PDOException: SQLSTATE[42000]: Syntax error or access violation: 1064 You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'ORDER BY id DESC' at line 1 in C:\laragon\www\ttms\src\Database\Operations\UserOperations.php:25
-Stack trace:
-#0 C:\laragon\www\ttms\src\Database\Operations\UserOperations.php(25): PDOStatement->execute()
-#1 C:\laragon\www\ttms\templates\users\bookings.php(10): App\TTMS\Database\Operations\UserOperations->get_all_data(Array)
-#2 C:\laragon\www\ttms\index.php(59): include_once('C:\\laragon\\www\\...')
-#3 {main}
-  thrown in C:\laragon\www\ttms\src\Database\Operations\UserOperations.php on line 25
+[2024-11-09 18:34:29] Home
+[2024-11-09 18:34:29] admin-bookings
+[2024-11-09 18:34:29] Bookings
+[2024-11-09 18:34:29] admin-bookings
+[2024-11-09 18:34:29] Settings
+[2024-11-09 18:34:29] admin-bookings
+[2024-11-09 18:34:29] About
+[2024-11-09 18:34:29] admin-bookings
+[2024-11-09 18:34:29] Packages
+[2024-11-09 18:34:29] admin-bookings
+[2024-11-09 18:36:47] Home
+[2024-11-09 18:36:47] admin-bookings
+[2024-11-09 18:36:47] Bookings
+[2024-11-09 18:36:47] admin-bookings
+[2024-11-09 18:36:47] Settings
+[2024-11-09 18:36:47] admin-bookings
+[2024-11-09 18:36:47] About
+[2024-11-09 18:36:47] admin-bookings
+[2024-11-09 18:36:47] Packages
+[2024-11-09 18:36:47] admin-bookings
+[2024-11-09 18:37:34] Home
+[2024-11-09 18:37:34] admin-bookings
+[2024-11-09 18:37:34] Bookings
+[2024-11-09 18:37:34] admin-bookings
+[2024-11-09 18:37:34] Settings
+[2024-11-09 18:37:34] admin-bookings
+[2024-11-09 18:37:34] About
+[2024-11-09 18:37:34] admin-bookings
+[2024-11-09 18:37:34] Packages
+[2024-11-09 18:37:34] admin-bookings
+[2024-11-09 18:38:27] Home
+[2024-11-09 18:38:27] admin-bookings
+[2024-11-09 18:38:27] Bookings
+[2024-11-09 18:38:27] admin-bookings
+[2024-11-09 18:38:27] Settings
+[2024-11-09 18:38:27] admin-bookings
+[2024-11-09 18:38:27] About
+[2024-11-09 18:38:27] admin-bookings
+[2024-11-09 18:38:27] Packages
+[2024-11-09 18:38:27] admin-bookings
+[2024-11-09 18:38:29] Home
+[2024-11-09 18:38:29] dashboard
+[2024-11-09 18:38:29] Bookings
+[2024-11-09 18:38:29] Home
+[2024-11-09 18:38:29] Settings
+[2024-11-09 18:38:29] Home
+[2024-11-09 18:38:29] About
+[2024-11-09 18:38:29] Home
+[2024-11-09 18:38:29] Packages
+[2024-11-09 18:38:29] Home
+[2024-11-09 18:38:31] Home
+[2024-11-09 18:38:31] settings
+[2024-11-09 18:38:31] Bookings
+[2024-11-09 18:38:31] settings
+[2024-11-09 18:38:31] Settings
+[2024-11-09 18:38:31] settings
+[2024-11-09 18:38:31] About
+[2024-11-09 18:38:31] settings
+[2024-11-09 18:38:31] Packages
+[2024-11-09 18:38:31] settings
+[2024-11-09 18:38:33] Home
+[2024-11-09 18:38:33] about
+[2024-11-09 18:38:33] Bookings
+[2024-11-09 18:38:33] about
+[2024-11-09 18:38:33] Settings
+[2024-11-09 18:38:33] about
+[2024-11-09 18:38:33] About
+[2024-11-09 18:38:33] about
+[2024-11-09 18:38:33] Packages
+[2024-11-09 18:38:33] about
+[09-Nov-2024 18:38:33 UTC] PHP Warning:  include(about.php): Failed to open stream: No such file or directory in C:\laragon\www\ttms\admin.php on line 28
+[09-Nov-2024 18:38:33 UTC] PHP Warning:  include(): Failed opening 'about.php' for inclusion (include_path='.;C:/laragon/etc/php/pear') in C:\laragon\www\ttms\admin.php on line 28
+[2024-11-09 18:39:19] Home
+[2024-11-09 18:39:19] about
+[2024-11-09 18:39:19] Bookings
+[2024-11-09 18:39:19] about
+[2024-11-09 18:39:19] Settings
+[2024-11-09 18:39:19] about
+[2024-11-09 18:39:19] Packages
+[2024-11-09 18:39:19] about
+[09-Nov-2024 18:39:19 UTC] PHP Warning:  include(about.php): Failed to open stream: No such file or directory in C:\laragon\www\ttms\admin.php on line 28
+[09-Nov-2024 18:39:19 UTC] PHP Warning:  include(): Failed opening 'about.php' for inclusion (include_path='.;C:/laragon/etc/php/pear') in C:\laragon\www\ttms\admin.php on line 28
+[2024-11-09 18:39:22] Home
+[2024-11-09 18:39:22] dashboard
+[2024-11-09 18:39:22] Bookings
+[2024-11-09 18:39:22] Home
+[2024-11-09 18:39:22] Settings
+[2024-11-09 18:39:22] Home
+[2024-11-09 18:39:22] Packages
+[2024-11-09 18:39:22] Home
+[2024-11-09 18:39:23] Home
+[2024-11-09 18:39:23] admin-bookings
+[2024-11-09 18:39:23] Bookings
+[2024-11-09 18:39:23] admin-bookings
+[2024-11-09 18:39:23] Settings
+[2024-11-09 18:39:23] admin-bookings
+[2024-11-09 18:39:23] Packages
+[2024-11-09 18:39:23] admin-bookings
+[2024-11-09 18:39:24] Home
+[2024-11-09 18:39:24] settings
+[2024-11-09 18:39:24] Bookings
+[2024-11-09 18:39:24] settings
+[2024-11-09 18:39:24] Settings
+[2024-11-09 18:39:24] settings
+[2024-11-09 18:39:24] Packages
+[2024-11-09 18:39:24] settings
+[2024-11-09 18:39:26] Home
+[2024-11-09 18:39:26] dashboard
+[2024-11-09 18:39:26] Bookings
+[2024-11-09 18:39:26] Home
+[2024-11-09 18:39:26] Settings
+[2024-11-09 18:39:26] Home
+[2024-11-09 18:39:26] Packages
+[2024-11-09 18:39:26] Home

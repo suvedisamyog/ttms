@@ -7,7 +7,7 @@ use App\TTMS\Database\Operations\UserOperations;
 class Settings {
 
 	public function __construct() {
-		self::currencies_settings();
+		// self::currencies_settings();
 		self::category_settings();
 	}
 
