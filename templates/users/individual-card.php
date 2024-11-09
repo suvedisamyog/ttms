@@ -85,12 +85,35 @@ if (empty($banner_img)) {
                 <h5 class="text-secondary">Rating</h5>
                 <div class="text-warning">
                     <?php
-                    $filledStars = floor($package['rating']);
+					$ratings = new UserOperations('comments_and_ratings');
+					$ratings_data = $ratings->get_all_data([
+						'where_clause' => 'package_id',
+						'where_clause_value' => $package['id'],
+					]);
+					$average_rating = 0;
+					$total_reviews = 0;
+					if (!empty($ratings_data)) {
+
+						$total_ratings = array_sum(array_column($ratings_data, 'rating'));
+						$user_count = count($ratings_data);
+						$average_rating = $total_ratings / $user_count;
+
+
+						$average_rating = min($average_rating, 5);
+						$total_reviews = count($ratings_data);
+					}
+
+                    $filledStars = floor($average_rating);
                     for ($i = 0; $i < 5; $i++) {
                         echo $i < $filledStars ? "&#9733;" : "&#9734;";
                     }
                     ?>
-                    <span class="text-muted">(<?php echo htmlspecialchars($package['rating']); ?> / 5.0)</span>
+                    <span class="text-muted">(<?php echo htmlspecialchars($average_rating) ?> / 5.0)</span>
+					<?php
+					if ($total_reviews > 0) {
+						echo "<span class='text-muted'>($total_reviews reviews)</span>";
+					}
+					?>
                 </div>
             </div>
 
@@ -115,7 +138,7 @@ if (empty($banner_img)) {
 
             <?php
             $is_logged = is_logged_in() ? 'Book Now' : 'Login to Book';
-            $link = is_logged_in() ? 'booking.php' : 'login.php?redirect=' . SITE_URL . '?page=individual&id=' . $_GET['id'];
+            $link = is_logged_in() ? 'booking.php?page=hello' : 'login.php?redirect=' . SITE_URL . '?page=individual&id=' . $_GET['id'];
             ?>
             <a href="<?php echo $link; ?>" class="btn btn-warning mt-4"><?php echo $is_logged; ?></a>
         </div>

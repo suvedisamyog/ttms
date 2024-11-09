@@ -1,5 +1,10 @@
+
 <div id="carouselExampleCaptions" class="carousel slide" data-bs-ride="carousel">
-  <!-- Carousel Indicators -->
+   <!-- Blended Navigation Bar -->
+	<?php include_once TEMPLATE_PATH .'users/navigation.php'  ?>
+
+    <!-- Carousel Indicators -->
+
   <div class="carousel-indicators">
     <button type="button" data-bs-target="#carouselExampleCaptions" data-bs-slide-to="0" class="active" aria-current="true" aria-label="Slide 1"></button>
     <button type="button" data-bs-target="#carouselExampleCaptions" data-bs-slide-to="1" aria-label="Slide 2"></button>

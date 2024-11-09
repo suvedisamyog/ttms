@@ -42,7 +42,6 @@ $top_similar_packages = array_map(function($item) {
 $top_similar_packages = (empty($top_similar_packages)) ? array() : $top_similar_packages;
 echo '	<h4>Similar Packages</h4>';
 foreach($top_similar_packages as $package){
-	lg($package);
 	?>
 	<div class="card mt-3">
 		<div class="card shadow-sm">

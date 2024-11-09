@@ -10,6 +10,9 @@ $comments = $comments_query->get_all_data([
 $user_comments = array_filter($comments, function($comment) use ($current_user_id) {
     return $comment['user_id'] == $current_user_id;
 });
+usort($user_comments, function($a, $b) {
+    return $b['rating'] <=> $a['rating'];
+});
 $comment = $user_comments[0]['comment'] ?? '';
 $rating = $user_comments[0]['rating'] ?? 0 ;
 $btn_id = (! empty ($user_comments) ) ? 'update_comment' : 'submit_comment' ;
