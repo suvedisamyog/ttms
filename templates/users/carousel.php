@@ -25,7 +25,7 @@
   </div>
 
   <!-- Static Caption -->
-  <div class="carousel-caption d-none d-md-block">
+  <div class="carousel-caption ">
     <h5 ><span class="text-warning">Explore </span>the <span class="text-warning">World </span>  , <span class="text-warning">Create </span> the <span class="text-warning">Memories </span></h5>
 	<hr class="bg-white h-5">
     <p class="text-white">From exotic destinations to local hidden gems, we craft unique experiences that inspire and connect you to the beauty of our planet. Join us on a journey filled with adventure, discovery, and joy!"</p>

@@ -247,6 +247,57 @@ $(document).ready(function () {
 
 	})
 
+	//Handel search
+	$('#search_packages').on('keyup', function() {
+		var value = $(this).val().toLowerCase();
+		var found = false;
+
+		if (value === "") {
+			if($(this).data('page') === 'home'){
+			$(".carousel-indicators").show();
+			$(".carousel-inner").show();
+			$(".carousel-caption").show();
+			$(".carousel-control-prev").show();
+			$(".carousel-control-next").show();
+			$(".carousel-caption").show();
+			$(".navbar").removeAttr("style");
+			$(".navbar").attr("style", "position: absolute; top: 0; width: 100%; z-index: 10; background: transparent;");
+			}
+
+			// Show all cards when search is cleared
+			$('.col-md-4').show();
+		} else {
+			$(".carousel-indicators").hide();
+			$(".carousel-inner").hide();
+			$(".carousel-caption").hide();
+			$(".carousel-control-prev").hide();
+			$(".carousel-control-next").hide();
+			$(".carousel-caption").hide();
+			$(".navbar").removeAttr("style");
+			$(".navbar").attr("style", "background: gray;");
+
+
+			$('.card-body').each(function() {
+				var cardTitle = $(this).find('.card-title').text().toLowerCase();
+				var cardDescription = $(this).find('.card-description').text().toLowerCase();
+
+				if (cardTitle.indexOf(value) !== -1 || cardDescription.indexOf(value) !== -1) {
+					$(this).closest('.col-md-4').show();
+					found = true;
+				} else {
+					$(this).closest('.col-md-4').hide();
+				}
+			});
+			if(! found){
+				$('.no-found').remove();
+				$('body').append('<div class="alert alert-danger no-found">No results found</div>');
+			}
+		}
+	});
+
+
+
+
 
 
 });

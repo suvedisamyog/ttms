@@ -53,10 +53,10 @@
 
         </ul>
       </div>
+	  <?php $page = (isset($_GET['page']) ? $_GET['page'] : 'home'); ?>
 	  <div class="search">
-	  	<form class="form-inline my-2 my-lg-0 d-flex">
-      		<input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search">
-      		<button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
+		  <input class="form-control mr-sm-2" type="search" placeholder="Search" id="search_packages" aria-label="Search" data-page="<?php echo $page ?>">
+
     </form>
 	  </div>
     </div>
